@@ -1,0 +1,59 @@
+verificacao do Exercicio 01 · login eda-grupo07 · regiao us-east-1
+
+CRITERIO 0 - sem Crawler (elimina)
+  [PASSA]   nenhum Crawler, e ha AWS::Glue::Table
+
+CRITERIO 1 - os cinco outputs de contrato (10%)
+            BucketName = eda-a04-lake-eda-grupo07
+            DatabaseName = eda_a04_raw_eda-grupo07
+            TableName = corridas
+            WorkGroupName = eda-a04-wg-eda-grupo07
+            TetoBytes = 10716697
+  [PASSA]   os cinco existem e estao preenchidos
+
+CRITERIO 2 - schema declarado (25%)
+            colunas declaradas: 9
+            chave de particao: dt
+  [PASSA]   ≥ 8 colunas e chave de particao dt
+            valor foi declarado como: string  (DECISAO 01 - justifique)
+
+CRITERIO 3 - particoes declaradas (15%)
+            particoes registradas: 3
+            a particao de hoje (2026-08-22) esta declarada: sim
+  [PASSA]   ≥ 3 particoes, e a de hoje esta entre elas
+  [PASSA]   todo Location bate com a chave dt= do objeto
+
+CRITERIO 4 - o teto mata a larga e deixa passar a estreita (15%)
+            consulta larga   (sem WHERE dt): CANCELLED · 10716697 bytes
+            consulta estreita (com WHERE dt): SUCCEEDED · 3921495 bytes
+            teto declarado: 10716697 bytes
+  [FALHA]   a consulta estreita nao respondeu - confira Location e particoes
+
+CRITERIO 6 - DECISOES.md (20%)
+            decisoes encontradas no arquivo: 5 de 5
+  [PASSA]   as cinco decisoes aparecem (o texto e lido por uma pessoa)
+
+----- cole no PR a partir daqui -----
+[PASSA]   nenhum Crawler, e ha AWS::Glue::Table
+          BucketName = eda-a04-lake-eda-grupo07
+          DatabaseName = eda_a04_raw_eda-grupo07
+          TableName = corridas
+          WorkGroupName = eda-a04-wg-eda-grupo07
+          TetoBytes = 10716697
+[PASSA]   os cinco existem e estao preenchidos
+          colunas declaradas: 9
+          chave de particao: dt
+[PASSA]   ≥ 8 colunas e chave de particao dt
+          valor foi declarado como: string  (DECISAO 01 - justifique)
+          particoes registradas: 3
+          a particao de hoje (2026-08-22) esta declarada: sim
+[PASSA]   ≥ 3 particoes, e a de hoje esta entre elas
+[PASSA]   todo Location bate com a chave dt= do objeto
+          consulta larga   (sem WHERE dt): CANCELLED · 10716697 bytes
+          consulta estreita (com WHERE dt): SUCCEEDED · 3921495 bytes
+          teto declarado: 10716697 bytes
+[FALHA]   a consulta estreita nao respondeu - confira Location e particoes
+          decisoes encontradas no arquivo: 5 de 5
+[PASSA]   as cinco decisoes aparecem (o texto e lido por uma pessoa)
+resumo: 1 criterio(s) em FALHA
+-------------------------------------
