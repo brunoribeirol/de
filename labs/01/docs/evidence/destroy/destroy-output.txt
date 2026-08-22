@@ -1,0 +1,11 @@
+esvaziando s3://eda-a04-lake-eda-grupo07
+apagando a stack eda-a04-eda-grupo07
+
+conferencia:
+  [limpo]    stack
+  [limpo]    bucket
+  [limpo]    database
+  [limpo]    tabela
+  [limpo]    workgroup
+
+conta limpa: nenhum recurso desta stack sobrou.
