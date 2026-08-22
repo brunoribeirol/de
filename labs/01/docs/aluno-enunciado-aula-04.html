@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exercício 01 — O schema é seu · Engenharia de Dados · CESAR School</title>
+<style>
+  :root{--laranja:#F15A22;--tinta:#1A1A1A;--grafite:#4D4D4D;--cinza:#8A8A8A;--regua:#E8E8E8;--zebra:#FCFCFC;}
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{font-family:Arial,Helvetica,sans-serif;color:var(--tinta);background:#fff;margin:0;padding:0 24px 72px;line-height:1.5;font-size:15px;}
+  .folha{max-width:1000px;margin:0 auto;}
+  header.capa{padding:40px 0 8px;}
+  .marca{display:flex;align-items:center;gap:12px;margin-bottom:28px;}
+  .marca span{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--cinza);}
+  .overline{font-size:11px;font-weight:bold;letter-spacing:1.6px;text-transform:uppercase;color:var(--laranja);margin:0 0 8px;}
+  h1{font-size:31px;line-height:1.18;margin:0 0 12px;font-weight:bold;}
+  h2{font-size:21px;line-height:1.25;margin:0 0 14px;font-weight:bold;}
+  h3{font-size:16px;margin:0 0 8px;font-weight:bold;}
+  .tese{font-size:16px;color:var(--grafite);margin:0 0 22px;max-width:76ch;}
+  .filete-laranja{width:64px;height:4px;background:var(--laranja);margin:0 0 22px;}
+  hr.fina{border:0;border-top:1px solid var(--regua);margin:34px 0;}
+  section{margin:0 0 36px;}
+  p{margin:0 0 12px;max-width:78ch;}
+  ul{margin:0 0 12px;padding-left:0;list-style:none;max-width:78ch;}
+  ul li{position:relative;padding-left:18px;margin-bottom:7px;}
+  ul li::before{content:"";position:absolute;left:0;top:.55em;width:7px;height:7px;background:var(--laranja);}
+  ol{margin:0 0 12px;padding-left:22px;max-width:78ch;}
+  ol li{margin-bottom:7px;}
+  code,kbd{font-family:"Courier New",Courier,monospace;font-size:.93em;}
+  table{border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;}
+  th{background:var(--laranja);color:#fff;text-align:left;font-weight:bold;padding:7px 10px;font-size:13px;}
+  td{padding:7px 10px;border-bottom:1px solid var(--regua);vertical-align:top;}
+  tbody tr:nth-child(even) td{background:var(--zebra);}
+  td.num,th.num{text-align:right;}
+  .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0;border-top:1px solid var(--regua);border-bottom:1px solid var(--regua);margin:0 0 30px;}
+  .meta div{padding:12px 16px 12px 0;}
+  .meta dt{font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--laranja);font-weight:bold;margin-bottom:4px;}
+  .meta dd{margin:0;font-size:14px;}
+  pre{background:var(--regua);margin:0 0 6px;padding:14px 16px;overflow-x:auto;font-family:"Courier New",Courier,monospace;font-size:13.5px;line-height:1.55;}
+  pre .c{color:var(--cinza);}
+  pre .g{color:var(--laranja);font-weight:bold;}
+  .bloco-cmd{position:relative;margin:0 0 16px;}
+  button.copiar{position:absolute;top:8px;right:8px;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--grafite);background:#fff;border:1px solid var(--cinza);padding:4px 9px;cursor:pointer;}
+  button.copiar:hover{color:var(--laranja);border-color:var(--laranja);}
+  .destaque{border-left:4px solid var(--laranja);padding:2px 0 2px 16px;margin:0 0 18px;}
+  .destaque p{margin:0;}
+  .nota{border-left:4px solid var(--regua);padding:2px 0 2px 16px;margin:0 0 18px;}
+  .nota p{margin:0;}
+  .rotulo{font-size:10.5px;font-weight:bold;letter-spacing:1.3px;text-transform:uppercase;color:var(--laranja);margin:0 0 5px;}
+  .decisao{border:1px solid var(--regua);padding:16px 18px;margin:0 0 16px;}
+  .decisao h3{margin:0 0 6px;}
+  .decisao p{margin:0 0 8px;}
+  .decisao p:last-child{margin:0;}
+  figure{margin:0 0 26px;}
+  figcaption{font-size:12.5px;color:var(--cinza);margin-top:8px;max-width:82ch;}
+  footer{border-top:1px solid var(--regua);padding-top:14px;margin-top:12px;font-size:12.5px;color:var(--cinza);}
+  @media print{body{font-size:10.5pt;padding:0;} button.copiar{display:none;} .decisao,figure{page-break-inside:avoid;}}
+</style>
+</head>
+<body>
+<div class="folha">
+
+<header class="capa">
+  <div class="marca">
+    <img src="data:image/png;base64,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" alt="CESAR School" width="34" height="31">
+    <span>CESAR School · Engenharia de Dados</span>
+  </div>
+
+  <p class="overline">Exercício 01 · Aula 04 · Ciclo 1</p>
+  <h1>O schema é seu</h1>
+  <p class="tese">
+    Na Aula 03 o Crawler decidiu por você o que cada coluna era. Hoje não existe
+    Crawler. Você declara o schema, registra a partição e põe um teto na conta — e
+    escreve por que escolheu cada uma dessas coisas.
+  </p>
+  <div class="filete-laranja"></div>
+
+  <div class="meta">
+    <div><dt>Duração</dt><dd>90 minutos, em aula</dd></div>
+    <div><dt>Região</dt><dd><code>us-east-1</code></dd></div>
+    <div><dt>Custo teto</dt><dd>US$ 1,00</dd></div>
+    <div><dt>Ferramenta</dt><dd>CloudFormation</dd></div>
+    <div><dt>Entrega</dt><dd>PR ao fim da aula</dd></div>
+  </div>
+</header>
+
+<section>
+  <h2>Por que sem Crawler</h2>
+  <p>
+    No laboratório, o Crawler leu os arquivos e concluiu que <code>valor</code> era
+    <code>double</code>. <strong>Está certo — em 98,5% dos eventos.</strong> Nos
+    outros 1,5% o produtor manda <code>"17,82"</code>, com vírgula. Um dia esse
+    arquivo cai na amostra, o Crawler muda a coluna para <code>string</code>, e
+    <strong>todo painel que fazia <code>sum(valor)</code> quebra sem que ninguém
+    tenha mexido em nada</strong>.
+  </p>
+  <p>
+    Inferir schema é delegar uma decisão de arquitetura a um processo que roda de
+    madrugada. Hoje a decisão é sua, e o preço dela também.
+  </p>
+</section>
+
+<section>
+  <h2>O que você vai construir</h2>
+
+  <figure>
+<svg viewBox="0 0 1000 330" width="100%" role="img" aria-label="Estado final do exercicio: bucket, database, tabela declarada, particoes e workgroup com teto">
+  <defs>
+    <marker id="e1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,1 L9,5 L0,9 z" fill="#8A8A8A"/>
+    </marker>
+  </defs>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="6" y="30" width="226" height="140" fill="#fff" stroke="#E8E8E8"/>
+    <text x="24" y="56" font-size="10.5" font-weight="bold" fill="#F15A22" letter-spacing="1.3">VEM PRONTO</text>
+    <text x="24" y="80" font-size="15" font-weight="bold" fill="#1A1A1A">Amazon S3</text>
+    <text x="24" y="102" font-size="11.5" fill="#4D4D4D">raw/corridas/dt=…</text>
+    <text x="24" y="120" font-size="11.5" fill="#4D4D4D">30 objetos · 112,21 MB</text>
+    <text x="24" y="146" font-size="11" fill="#8A8A8A">o dado é o mesmo do lab</text>
+    <text x="24" y="162" font-size="11" fill="#8A8A8A">--seed 42</text>
+
+    <line x1="238" y1="100" x2="272" y2="100" stroke="#8A8A8A" stroke-width="1.4" marker-end="url(#e1)"/>
+
+    <rect x="278" y="30" width="290" height="140" fill="#fff" stroke="#F15A22" stroke-width="1.8"/>
+    <text x="296" y="56" font-size="10.5" font-weight="bold" fill="#F15A22" letter-spacing="1.3">É SEU — AWS::GLUE::TABLE</text>
+    <text x="296" y="80" font-size="15" font-weight="bold" fill="#1A1A1A">Tabela declarada</text>
+    <text x="296" y="102" font-size="11.5" fill="#4D4D4D">9 colunas, uma a uma</text>
+    <text x="296" y="120" font-size="11.5" fill="#4D4D4D">chave de partição dt</text>
+    <text x="296" y="146" font-size="11" fill="#8A8A8A">DECISÕES 01, 02 e 03</text>
+    <text x="296" y="162" font-size="11" fill="#8A8A8A">nenhum Crawler no template</text>
+
+    <line x1="574" y1="100" x2="608" y2="100" stroke="#8A8A8A" stroke-width="1.4" marker-end="url(#e1)"/>
+
+    <rect x="614" y="30" width="180" height="140" fill="#fff" stroke="#F15A22" stroke-width="1.8"/>
+    <text x="632" y="56" font-size="10.5" font-weight="bold" fill="#F15A22" letter-spacing="1.3">É SEU — PARTITION</text>
+    <text x="632" y="80" font-size="15" font-weight="bold" fill="#1A1A1A">Partições</text>
+    <text x="632" y="102" font-size="11.5" fill="#4D4D4D">≥ 3 das 30</text>
+    <text x="632" y="120" font-size="11.5" fill="#4D4D4D">uma delas é a de hoje</text>
+    <text x="632" y="146" font-size="11" fill="#8A8A8A">DECISÃO 04</text>
+
+    <line x1="800" y1="100" x2="834" y2="100" stroke="#8A8A8A" stroke-width="1.4" marker-end="url(#e1)"/>
+
+    <rect x="840" y="30" width="154" height="140" fill="#fff" stroke="#F15A22" stroke-width="1.8"/>
+    <text x="858" y="56" font-size="10.5" font-weight="bold" fill="#F15A22" letter-spacing="1.3">É SEU — TETO</text>
+    <text x="858" y="80" font-size="15" font-weight="bold" fill="#1A1A1A">Workgroup</text>
+    <text x="858" y="102" font-size="11.5" fill="#4D4D4D">o número sai de</text>
+    <text x="858" y="120" font-size="11.5" fill="#4D4D4D">uma medição sua</text>
+    <text x="858" y="146" font-size="11" fill="#8A8A8A">DECISÃO 05</text>
+
+    <line x1="6" y1="208" x2="994" y2="208" stroke="#E8E8E8"/>
+    <text x="6" y="234" font-size="13" font-weight="bold" fill="#1A1A1A">O que sumiu em relação ao laboratório</text>
+    <text x="6" y="258" font-size="12.5" fill="#4D4D4D">AWS::Glue::Crawler — e o AWS::IAM::Role sai junto: sem processo, não há permissão a conceder.</text>
+    <text x="6" y="282" font-size="12.5" fill="#4D4D4D">Com o Crawler vai embora 88% do custo: o exercício inteiro fica em torno de US$ 0,02.</text>
+    <text x="6" y="308" font-size="12.5" fill="#F15A22" font-weight="bold">O que ele fazia por dedução, você faz por declaração — e assina embaixo.</text>
+  </g>
+</svg>
+    <figcaption>
+      Três dos cinco blocos do template são seus. O bucket e o database vêm
+      prontos, porque o assunto de hoje é o catálogo, não o armazenamento.
+    </figcaption>
+  </figure>
+
+  <h3>A diferença para o laboratório, linha a linha</h3>
+  <table>
+    <thead><tr><th>Dimensão</th><th>Lab-demo 01 (Aula 03)</th><th>Exercício 01 (hoje)</th></tr></thead>
+    <tbody>
+      <tr><td>Ferramenta</td><td>CloudFormation, o professor no volante</td><td><strong>o mesmo</strong> CloudFormation, você no volante</td></tr>
+      <tr><td>Schema</td><td>inferido pelo Glue Crawler</td><td>declarado em <code>AWS::Glue::Table</code>, coluna a coluna</td></tr>
+      <tr><td>Partição</td><td>descoberta pelo Crawler</td><td>declarada em <code>AWS::Glue::Partition</code></td></tr>
+      <tr><td>Crawler</td><td>é o centro da aula</td><td><strong>apagado</strong> — e o papel IAM sai junto</td></tr>
+      <tr><td>Teto de bytes</td><td>10 GiB de presente, nunca tocou</td><td><strong>calculado</strong> da partição medida — e ele mata</td></tr>
+      <tr><td>Custo</td><td>US$ 0,17 (88% era o Crawler)</td><td>~US$ 0,02</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<hr class="fina">
+
+<section>
+  <h2>Critérios de aceite</h2>
+  <p>
+    Esta tabela é pública desde a Aula 03 e <strong>não muda</strong>. É a mesma
+    que o <code>verifica.sh</code> imprime, critério a critério.
+  </p>
+  <table>
+    <thead><tr><th>#</th><th>Critério</th><th>Como é verificado</th><th class="num">Peso</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td><strong>Sem Crawler.</strong> Não existe <code>AWS::Glue::Crawler</code>; existe <code>AWS::Glue::Table</code></td><td><code>verifica.sh</code></td><td class="num"><strong>elimina</strong></td></tr>
+      <tr><td>1</td><td>Os cinco outputs de contrato existem e estão preenchidos</td><td><code>verifica.sh</code></td><td class="num">10%</td></tr>
+      <tr><td>2</td><td>Schema declarado: ≥ 8 colunas e chave de partição <code>dt</code></td><td>Glue API</td><td class="num">25%</td></tr>
+      <tr><td>3</td><td>≥ 3 partições, uma delas a de hoje, com <code>Location</code> certo</td><td>Glue API</td><td class="num">15%</td></tr>
+      <tr><td>4</td><td>O teto mata a consulta larga e deixa passar a estreita</td><td>Athena</td><td class="num">15%</td></tr>
+      <tr><td>5</td><td><code>destroy</code> limpo: nenhum recurso órfão</td><td><code>--pos-destroy</code></td><td class="num">15%</td></tr>
+      <tr><td>6</td><td><code>DECISOES.md</code>: uma justificativa por decisão</td><td>leitura</td><td class="num">20%</td></tr>
+    </tbody>
+  </table>
+
+  <div class="destaque">
+    <p>
+      <strong>O critério 0 não tem peso porque não é nota: é o requisito.</strong>
+      Template com Crawler não é uma entrega pior — é outra entrega, a da Aula 03,
+      e ela já foi feita pelo professor.
+    </p>
+  </div>
+
+  <h3>Os cinco outputs de contrato</h3>
+  <p>
+    <code>BucketName</code> · <code>DatabaseName</code> · <code>TableName</code> ·
+    <code>WorkGroupName</code> · <code>TetoBytes</code>. Vêm prontos no esqueleto e
+    <strong>não se mexe</strong>: o <code>verifica.sh</code> lê estes nomes. A
+    interface é contrato.
+  </p>
+
+  <h3>O que não conta na nota</h3>
+  <p>
+    Elegância do YAML, número de recursos, <code>Mappings</code> ou
+    <code>Conditions</code> que ninguém pediu, recurso extra não solicitado — e
+    <strong>ter chegado à mesma resposta do gabarito</strong>.
+  </p>
+  <div class="destaque">
+    <p>
+      Uma decisão <strong>diferente</strong> da do gabarito, bem justificada, vale
+      10. Uma decisão <strong>igual</strong> à do gabarito, sem justificativa, não
+      passa de 8.
+    </p>
+  </div>
+</section>
+
+<hr class="fina">
+
+<section>
+  <h2>As cinco decisões</h2>
+  <p>
+    Cada uma está marcada no esqueleto, no ponto exato do arquivo onde ela acontece.
+    <strong>Uma frase por decisão em <code>DECISOES.md</code>. Não repita o
+    enunciado: diga o que você aceitou perder.</strong>
+  </p>
+
+  <div class="decisao">
+    <h3>DECISÃO 01 — o tipo de <code>valor</code></h3>
+    <p><code>double</code>, <code>string</code> ou <code>decimal(10,2)</code>. Em 1,5% dos eventos o produtor manda <code>"17,82"</code>, com vírgula decimal.</p>
+    <p class="rotulo">a frase precisa dizer</p>
+    <p>o que você aceita perder com esses 1,5%.</p>
+  </div>
+
+  <div class="decisao">
+    <h3>DECISÃO 02 — o tipo das colunas de tempo</h3>
+    <p><code>timestamp</code> ou <code>string</code>, para <code>data_corrida</code> e <code>fim</code>. <strong>Teste antes de decidir:</strong> declare, suba, rode <code>SELECT fim FROM corridas WHERE dt = '&lt;hoje&gt;' LIMIT 5</code> e olhe o que voltou.</p>
+    <p class="rotulo">a frase precisa dizer</p>
+    <p>o que o <code>SELECT</code> devolveu quando você testou — não o que você supôs.</p>
+  </div>
+
+  <div class="decisao">
+    <h3>DECISÃO 03 — <code>ignore.malformed.json</code></h3>
+    <p><code>true</code> faz a linha quebrada virar nulo e a consulta responder. <code>false</code> faz uma linha ruim derrubar a consulta inteira com <code>HIVE_BAD_DATA</code>.</p>
+    <p class="rotulo">a frase precisa dizer</p>
+    <p>se você prefere barulho ou silêncio, e quem paga o que você escolheu.</p>
+  </div>
+
+  <div class="decisao">
+    <h3>DECISÃO 04 — quantas das 30 partições</h3>
+    <p>O critério 3 exige no mínimo 3, e uma delas precisa ser a de hoje. O esqueleto traz uma pronta como modelo.</p>
+    <p class="rotulo">a frase precisa dizer</p>
+    <p>o que acontece com as que você não declarou, e o que acontece <strong>no dia 31</strong>.</p>
+  </div>
+
+  <div class="decisao">
+    <h3>DECISÃO 05 — o teto de bytes por consulta</h3>
+    <p>Meça antes: <code>aws s3 ls "s3://$BUCKET/raw/corridas/" --recursive --summarize</code> devolve o lake inteiro; a mesma linha com <code>dt=&lt;hoje&gt;</code> devolve uma partição. O intervalo útil é <code>[10.485.760, 117.655.605]</code>.</p>
+    <p class="rotulo">a frase precisa dizer</p>
+    <p>de que medição o número saiu, e por que ele não é o piso nem o topo do intervalo.</p>
+  </div>
+</section>
+
+<hr class="fina">
+
+<section>
+  <h2>Como rodar</h2>
+
+  <p>
+    Todos os comandos saem da <strong>raiz do pacote</strong>, nunca de dentro de
+    <code>infra/</code>. Antes do primeiro:
+  </p>
+  <div class="bloco-cmd">
+    <pre><code>chmod +x infra/*.sh verificacao/*.sh
+aws sts get-caller-identity   <span class="c"># confirme que é a conta da disciplina</span></code></pre>
+    <button class="copiar" type="button">copiar</button>
+  </div>
+
+  <p><strong>1. Preencha o <code>infra/parameters.json</code>.</strong> Os três
+  placeholders <strong>falham de propósito</strong>: o <code>AllowedPattern</code>
+  do template os recusa, e a stack não sobe pela metade.</p>
+  <div class="bloco-cmd">
+    <pre><code>[
+  { "ParameterKey": "Turma",                "ParameterValue": "PREENCHER-TURMA" },
+  { "ParameterKey": "Owner",                "ParameterValue": "PREENCHER-SEU-EMAIL@cesar.school" },
+  { "ParameterKey": "TetoBytesPorConsulta", "ParameterValue": "PREENCHER-DECISAO-05" }
+]</code></pre>
+    <button class="copiar" type="button">copiar</button>
+  </div>
+
+  <p><strong>2. Complete o <code>infra/template.yaml</code></strong> nos cinco
+  pontos marcados <code>DECISÃO NN</code>, e suba:</p>
+  <div class="bloco-cmd">
+    <pre><code>./infra/deploy.sh &lt;seu-login&gt;</code></pre>
+    <button class="copiar" type="button">copiar</button>
+  </div>
+  <p>
+    Cole as seis linhas <code>export</code> que ele imprime. O
+    <code>&lt;seu-login&gt;</code> é o sufixo de todos os seus recursos: a conta é
+    compartilhada com a turma inteira, e é o login que separa o seu lake do lake do
+    colega.
+  </p>
+
+  <p><strong>3. Ponha o dado no seu bucket.</strong> É o mesmo gerador do
+  laboratório, com a mesma semente:</p>
+  <div class="bloco-cmd">
+    <pre><code>python3 app/gerador-eventos.py --dias 30 --taxa 12 --seed 42 --saida ./saida
+aws s3 sync ./saida "s3://$BUCKET/raw/corridas/" --region us-east-1</code></pre>
+    <button class="copiar" type="button">copiar</button>
+  </div>
+
+  <p><strong>4. Prove que responde</strong>, no seu workgroup e no seu database:</p>
+  <div class="bloco-cmd">
+    <pre><code><span class="c">-- estreita: precisa responder</span>
+SELECT bairro, count(*) FROM corridas <span class="g">WHERE dt = '$DT'</span> GROUP BY bairro ORDER BY 2 DESC LIMIT 10;
+
+<span class="c">-- larga: precisa MORRER no teto</span>
+SELECT count(*) FROM corridas;</code></pre>
+    <button class="copiar" type="button">copiar</button>
+  </div>
+
+  <p><strong>5. Verifique, e só então entregue:</strong></p>
+  <div class="bloco-cmd">
+    <pre><code>./verificacao/verifica.sh &lt;seu-login&gt;</code></pre>
+    <button class="copiar" type="button">copiar</button>
+  </div>
+
+  <p><strong>6. Limpe, e prove que limpou:</strong></p>
+  <div class="bloco-cmd">
+    <pre><code>./infra/destroy.sh &lt;seu-login&gt;
+./verificacao/verifica.sh &lt;seu-login&gt; --pos-destroy</code></pre>
+    <button class="copiar" type="button">copiar</button>
+  </div>
+</section>
+
+<section>
+  <h2>Como ler o <code>verifica.sh</code></h2>
+  <p>
+    Ele imprime <code>[PASSA]</code> ou <code>[FALHA]</code> por critério e, no fim,
+    um bloco de evidência para colar no PR. Ele roda na <strong>sua</strong> conta,
+    antes da entrega: <strong>a nota não é surpresa.</strong>
+  </p>
+  <div class="nota">
+    <p>
+      O critério 0 é eliminatório e a verificação <strong>para nele</strong> se
+      encontrar um Crawler. Se isso acontecer, não é um aviso: é o exercício
+      inteiro.
+    </p>
+  </div>
+  <p>
+    O critério 6 não é verificado por script — o texto é lido por uma pessoa. O que
+    o script confere é apenas que as cinco decisões aparecem no arquivo.
+  </p>
+</section>
+
+<section>
+  <h2>Checkpoints e socorro</h2>
+  <table>
+    <thead><tr><th class="num">Minuto</th><th>O que precisa estar de pé</th></tr></thead>
+    <tbody>
+      <tr><td class="num">20</td><td>o <code>deploy</code> passou — a stack está <code>CREATE_COMPLETE</code></td></tr>
+      <tr><td class="num">40</td><td>a consulta estreita responde com as dez linhas</td></tr>
+      <tr><td class="num">75</td><td><code>verifica.sh</code> verde e PR aberto</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Quem estiver fora do checkpoint levanta a mão ali, não aos 85
+  minutos.</strong></p>
+
+  <div class="destaque">
+    <p class="rotulo">a ordem do socorro</p>
+    <p>
+      Leia o erro · leia os eventos da stack no console · leia o roteiro do
+      laboratório · chame o professor. <strong>Nessa ordem.</strong>
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>O que mais reprova</h2>
+  <ol>
+    <li><strong><code>destroy</code> deixando bucket órfão</strong> — derruba o critério 5 inteiro.</li>
+    <li><strong><code>Location</code> de partição que não bate com a chave real</strong> — o Athena devolve zero linha sem erro nenhum, e o critério 3 cai levando o 4 junto.</li>
+    <li><strong>Teto abaixo de 10.485.760</strong> — o Athena recusa e a stack não sobe.</li>
+    <li><strong>Teto acima de 117.655.605</strong> — o freio nunca toca e o critério 4 cai.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Entrega</h2>
+  <p>PR até o fim da aula, com:</p>
+  <ul>
+    <li><code>infra/template.yaml</code> — o seu, completo</li>
+    <li><code>infra/parameters.json</code> — preenchido</li>
+    <li><code>DECISOES.md</code> — as cinco frases</li>
+    <li>a saída do <code>verifica.sh</code> colada, incluindo a do <code>--pos-destroy</code></li>
+  </ul>
+  <p>
+    Trabalho fora do prazo entra com nota inicial 8,0. O exercício não tem nota
+    própria: ele é o <strong>primeiro incremento da Parte 1 do projeto</strong>,
+    cobrado na AV1, na Aula 16.
+  </p>
+</section>
+
+<footer>
+  Engenharia de Dados · Aula 04 — CESAR School · Graduação em Ciência da Computação<br>
+  Prof. Carlos Diego Cavalcanti Pereira · cdcp@cesar.school
+</footer>
+
+</div>
+
+<script>
+(function () {
+  document.querySelectorAll("button.copiar").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var txt = b.parentNode.querySelector("code").innerText;
+      var ok = function () { b.textContent = "copiado"; setTimeout(function () { b.textContent = "copiar"; }, 1400); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(ok, function () { fallback(txt, ok); });
+      } else { fallback(txt, ok); }
+    });
+  });
+  function fallback(txt, ok) {
+    var ta = document.createElement("textarea");
+    ta.value = txt; ta.setAttribute("readonly", "");
+    ta.style.position = "absolute"; ta.style.left = "-9999px";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); ok(); } catch (e) { /* sem area de transferencia */ }
+    document.body.removeChild(ta);
+  }
+})();
+</script>
+</body>
+</html>
