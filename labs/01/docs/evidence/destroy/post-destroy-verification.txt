@@ -1,0 +1,8 @@
+verificacao do Exercicio 01 · login eda-grupo07 · regiao us-east-1
+
+CRITERIO 5 - destroy limpo (15%)
+  [PASSA]   nenhum recurso orfao
+
+----- cole no PR a partir daqui -----
+[PASSA]   nenhum recurso orfao
+-------------------------------------

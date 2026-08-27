@@ -1,0 +1,13 @@
+=== POST-DESTROY MANUAL CHECK ===
+
+[CloudFormation stack]
+ABSENT
+
+[S3 bucket]
+ABSENT
+
+[Glue database]
+ABSENT
+
+[Athena WorkGroup]
+ABSENT
