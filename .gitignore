@@ -1,0 +1,33 @@
+# agent-workspace:v8:start
+# Python bytecode cache (any directory, not just the hook runtime -- this
+# framework's own repo ships real Python source under lib/, and running any
+# python3 command against it generates __pycache__/*.pyc that must never be
+# committed).
+__pycache__/
+*.pyc
+
+# Agent workspace local state
+.agents/state/
+CLAUDE.local.md
+
+# Optional generated indexes
+graphify-out/cache/
+# agent-workspace:v8:end
+
+# Class reference material - instructor demos, slides, and gabaritos copied
+# locally for study. Never publish: contains copyrighted slides, at least
+# one instructor gabarito (class/demos/01/docs/gabarito-*), a nested .git
+# (class/demos/terraform-base-project/), and a stray terraform.tfstate.
+class/
+
+# AI-assisted workflow tooling (agent-workspace: Claude Code / Codex config).
+# Kept local-only for this academic repository - out of scope for what's
+# graded, and avoids any ambiguity about decision authorship in a graded
+# submission.
+.agents/
+.claude/
+.codex/
+.claudeignore
+.gitignore.agent-workspace
+AGENTS.md
+CLAUDE.md
