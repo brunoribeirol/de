@@ -31,3 +31,9 @@ class/
 .gitignore.agent-workspace
 AGENTS.md
 CLAUDE.md
+
+# Root-level project-tracking scaffold (CURRENT_STATE.md, templates, specs)
+# - development process notes, not lab/course content. Anchored with a
+# leading slash so it does NOT match labs/01/docs/ or labs/02/docs/, which
+# hold graded material (enunciado, evidence, rubrica) and must stay tracked.
+/docs/
