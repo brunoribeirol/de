@@ -1,0 +1,12 @@
+output/
+
+# Answer key and professor material
+answer-key/
+docs/aula-08.pptx
+
+# Terraform State
+terraform/.terraform/
+terraform/.terraform.tfstate.lock.info
+**/*.tfstate
+**/*.tfstate.backup
+**/*.tfstate.*.backup
