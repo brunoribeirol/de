@@ -1,0 +1,12 @@
+output/
+
+# Gabarito e material do professor - nunca commitar
+answer-key/
+docs/aula-08.pptx
+
+# Estado do Terraform - local de proposito, nunca commitar
+terraform/.terraform/
+terraform/.terraform.tfstate.lock.info
+**/*.tfstate
+**/*.tfstate.backup
+**/*.tfstate.*.backup
