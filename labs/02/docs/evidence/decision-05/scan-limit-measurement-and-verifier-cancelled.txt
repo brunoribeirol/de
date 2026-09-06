@@ -1,0 +1,44 @@
+Evidencia da Decisao 05 (teto de bytes) - Exercicio 02, Aula 08
+
+Medicoes reais via AWS CLI (Athena):
+
+  Consulta estreita (1 particao, dt=2026-09-06):
+    estado=SUCCEEDED  bytes=3.393.451
+
+  Consulta larga (4 particoes registradas: 2026-09-06, 2026-09-03,
+  2026-08-30, 2026-08-31), sem teto (teto provisorio 117.455.962):
+    estado=SUCCEEDED  bytes=13.571.123
+
+Piso permitido por variables.tf: 10.485.760 bytes.
+Com apenas 3 particoes registradas, a larga varria 10.178.476 bytes -
+MENOR que o piso permitido, o que tornava a Decisao 05 matematicamente
+impossivel (nenhum teto valido, por definicao >= piso, poderia ficar
+abaixo de 10.178.476). Por isso foi registrada uma 4a particao
+(2026-08-31), usando dado que ja estava no S3, elevando a larga para
+13.571.123 bytes e abrindo uma janela valida de teto.
+
+Teto escolhido: 12.522.547 bytes (= 13.571.123 - 1.048.576, mesmo criterio
+de folga usado no Lab 01: total menos ~1 MiB).
+
+Resultado do verifica.sh apos aplicar o teto:
+
+  Critério 4 — o teto mata a consulta larga e deixa passar a estreita
+         teto declarado: 12522547 bytes
+         larga:    estado=CANCELLED  motivo=Bytes scanned limit was exceeded
+         estreita: estado=SUCCEEDED  bytes=3393451
+  FALHA  [4]  (15%)  larga_barrada=0 estreita_passou=1
+
+BUG CONHECIDO DO VERIFICADOR (recorrente do Lab 01): o campo "motivo" da
+propria saida do script confirma que a larga foi cancelada por
+"Bytes scanned limit was exceeded" - ou seja, o freio funcionou EXATAMENTE
+como pretendido. O verifica.sh so reconhece o estado FAILED como sucesso
+para a consulta larga; quando o Athena retorna CANCELLED (que foi o caso
+aqui, igual no Lab 01), o script cai no FALHA por engano. Ver nota
+reutilizavel no vault: bugs-solved/athena-verifier-cancelled-false-negative
+(criada no Lab 01, mesmo padrao confirmado de novo neste exercicio - ou
+seja, nao e um acaso de ambiente, e um comportamento consistente do
+Athena/verificador nesta conta).
+
+A infraestrutura nao foi alterada para contornar o bug do verificador.
+O comportamento real (guardrail funcionando) fica documentado aqui e no
+DECISOES.md.

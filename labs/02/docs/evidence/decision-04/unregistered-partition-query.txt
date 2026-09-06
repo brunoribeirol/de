@@ -1,0 +1,24 @@
+Evidencia da Decisao 04 (particoes) - Exercicio 02, Aula 08
+
+Contexto: 8 dias de dados foram subidos para o S3 (raw/corridas/dt=AAAA-MM-DD/),
+mas apenas 3 particoes foram registradas no Glue Data Catalog via
+var.dias_particao: 2026-09-06, 2026-09-03, 2026-08-30.
+
+Consulta rodada via AWS CLI (Athena), sobre um dia NAO registrado
+(2026-09-05), que existe fisicamente no S3:
+
+  aws athena start-query-execution \
+    --query-string "SELECT count(*) FROM corridas WHERE dt = '2026-09-05'" \
+    --query-execution-context Database=<database_name> \
+    --work-group <workgroup_name>
+
+Resultado:
+
+  _col0
+  0
+
+Conclusao: mesmo com o objeto s3://<bucket>/raw/corridas/dt=2026-09-05/
+existindo de verdade, a consulta retorna 0 linhas, sem erro. Isso confirma
+que o Athena so enxerga particoes registradas no Glue Data Catalog - uma
+pasta dt= no S3 nao vira automaticamente uma particao consultavel. Mesmo
+padrao observado no Lab 01 (dt=2026-08-19).
