@@ -1,10 +1,10 @@
 output/
 
-# Gabarito e material do professor - nunca commitar
+# Answer key and professor material
 answer-key/
 docs/aula-08.pptx
 
-# Estado do Terraform - local de proposito, nunca commitar
+# Terraform State
 terraform/.terraform/
 terraform/.terraform.tfstate.lock.info
 **/*.tfstate
