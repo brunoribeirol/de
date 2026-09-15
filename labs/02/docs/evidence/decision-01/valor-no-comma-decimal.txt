@@ -1,0 +1,44 @@
+Evidencia da Decisao 01 (tipo de "valor") - Exercicio 02, Aula 08
+Verificacao rodada nos dados gerados localmente antes do apply, 8 dias
+(dt=2026-08-30 ate dt=2026-09-06), diretamente no terminal.
+
+Comando 1 - contar linhas onde "valor" aparece entre aspas (indicaria string,
+formato inconsistente tipo "8,43" como no Lab 01):
+
+  $ grep -c '"valor": "' output/*/parte-0001.json
+
+  output/dt=2026-08-30/parte-0001.json:0
+  output/dt=2026-08-31/parte-0001.json:0
+  output/dt=2026-09-01/parte-0001.json:0
+  output/dt=2026-09-02/parte-0001.json:0
+  output/dt=2026-09-03/parte-0001.json:0
+  output/dt=2026-09-04/parte-0001.json:0
+  output/dt=2026-09-05/parte-0001.json:0
+  output/dt=2026-09-06/parte-0001.json:0
+
+Comando 2 - total de linhas geradas (base de comparacao):
+
+  $ wc -l output/*/parte-0001.json | tail -1
+
+  128000 total
+
+Comando 3 - amostra de valores de "valor" (10 primeiros, sem filtro):
+
+  $ grep -o '"valor": [^,}]*' output/*/parte-0001.json | head -n 10
+
+  output/dt=2026-08-30/parte-0001.json:"valor": 30.26
+  output/dt=2026-08-30/parte-0001.json:"valor": 38.38
+  output/dt=2026-08-30/parte-0001.json:"valor": 46.8
+  output/dt=2026-08-30/parte-0001.json:"valor": 14.6
+  output/dt=2026-08-30/parte-0001.json:"valor": 41.92
+  output/dt=2026-08-30/parte-0001.json:"valor": 53.07
+  output/dt=2026-08-30/parte-0001.json:"valor": 42.62
+  output/dt=2026-08-30/parte-0001.json:"valor": 13.54
+  output/dt=2026-08-30/parte-0001.json:"valor": 37.8
+
+Conclusao: 0 de 128.000 linhas tem "valor" com virgula decimal ou como string.
+Diferente do Lab 01 (onde ~1,5% dos eventos vinham com virgula e double gerava
+BAD_DATA), este gerador nao produz essa inconsistencia. Por isso a Decisao 01
+aqui nao precisa proteger contra perda de dado via string - a escolha de
+decimal(10,2) e sobre precisao monetaria (evitar erro de arredondamento de
+ponto flutuante binario em somas), nao sobre preservar formato de origem.

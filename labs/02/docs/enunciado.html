@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exercício 02 — do zero em Terraform</title>
+<style>
+  :root{--laranja:#F15A22;--ink:#1A1A1A;--grafite:#4D4D4D;--cinza:#8A8A8A;--claro:#E8E8E8;--papel:#FFFFFF;--codebg:#F4F4F4;--outbg:#FBFBFB;}
+  *{box-sizing:border-box}
+  body{font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--papel);margin:0;line-height:1.5;font-size:16px}
+  .wrap{max-width:980px;margin:0 auto;padding:40px 26px 90px}
+  .overline{font-size:12px;font-weight:bold;letter-spacing:2px;color:var(--laranja);text-transform:uppercase;margin:0 0 6px}
+  h1{font-size:30px;margin:0 0 6px;line-height:1.15}
+  h1 .k{color:var(--laranja)}
+  .sub{color:var(--grafite);font-size:16px;margin:0 0 22px}
+  .rule{height:4px;width:64px;background:var(--laranja);border:0;margin:16px 0 24px}
+  h2{font-size:21px;margin:42px 0 6px;padding-top:22px;border-top:2px solid var(--ink)}
+  h2 .num{color:var(--laranja);font-weight:bold}
+  h2 .clk{font-size:13px;font-weight:normal;color:var(--cinza);margin-left:8px}
+  .intro{color:var(--grafite);margin:6px 0 14px}
+  .frase{background:#FDECE4;border-left:5px solid var(--laranja);padding:16px 20px;border-radius:0 6px 6px 0;font-size:18px;margin:18px 0}
+  .lead{background:#FAFAFA;border:1px solid var(--claro);border-radius:6px;padding:16px 18px;margin:16px 0}
+  .lead .lbl{font-size:11px;font-weight:bold;letter-spacing:1.5px;color:var(--laranja);text-transform:uppercase;display:block;margin-bottom:4px}
+  .meta{display:flex;gap:22px;flex-wrap:wrap;margin:10px 0 0;font-size:14px;color:var(--grafite)}
+  .meta b{color:var(--ink)}
+  .step{display:grid;grid-template-columns:44px 1fr;gap:14px;margin:18px 0;align-items:start}
+  .badge{background:var(--ink);color:#fff;font-weight:bold;font-size:15px;border-radius:8px;text-align:center;padding:7px 0;line-height:1.1}
+  .stepbody h3{font-size:16px;margin:2px 0 8px}
+  .do{font-size:11px;font-weight:bold;letter-spacing:1.2px;color:var(--laranja);text-transform:uppercase;margin:12px 0 3px}
+  code,kbd{font-family:"Courier New",monospace;background:var(--codebg);padding:1px 5px;border-radius:3px;font-size:14px}
+  pre{font-family:"Courier New",monospace;background:var(--codebg);border:1px solid var(--claro);padding:11px 13px;border-radius:5px;overflow-x:auto;font-size:13.5px;line-height:1.45;margin:6px 0;white-space:pre}
+  pre.out{background:var(--outbg);border-style:dashed}
+  pre .c{color:var(--cinza)}
+  .outlbl{font-size:11px;font-weight:bold;letter-spacing:1px;color:var(--grafite);text-transform:uppercase;margin:10px 0 2px}
+  .warn{border-left:4px solid var(--laranja);background:#FDECE4;padding:9px 13px;margin:10px 0;border-radius:0 4px 4px 0;font-size:14px}
+  .warn b{color:var(--ink)}
+  .info{border-left:4px solid var(--cinza);background:#F6F6F6;padding:9px 13px;margin:10px 0;border-radius:0 4px 4px 0;font-size:14px;color:var(--grafite)}
+  table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}
+  th,td{border-bottom:1px solid var(--claro);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--ink);color:#fff;font-size:12px}
+  td.p{white-space:nowrap;font-weight:bold}
+  ul.sq{list-style:none;padding-left:0}
+  ul.sq li{position:relative;padding-left:22px;margin:6px 0}
+  ul.sq li::before{content:"";position:absolute;left:0;top:7px;width:9px;height:9px;background:var(--laranja)}
+  .foot{margin-top:52px;padding-top:16px;border-top:1px solid var(--claro);color:var(--cinza);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="overline">Engenharia de Dados · Ciclo 2 · Exercício</p>
+  <h1>Exercício 02 — do zero em <span class="k">Terraform</span></h1>
+  <p class="sub">Você implementa; o professor circula. Rode o <code>verifica.sh</code> antes de entregar: a nota não é surpresa.</p>
+  <hr class="rule">
+
+  <div class="frase">
+    Na Aula 07 você viu o lake subir nas duas ferramentas. Agora você o constrói <b>do zero, só em Terraform</b>: declara o schema, registra as partições, põe um teto que <b>você mediu</b>, e prova que o <code>destroy</code> não deixa nada de pé — escrevendo por que escolheu cada coisa.
+  </div>
+
+  <div class="lead">
+    <span class="lbl">A diferença em relação ao Lab 02</span>
+    <p style="margin:0">O laboratório subiu o lake pronto, com <b>uma</b> partição e um teto já escolhido. Aqui, três coisas mudam e são suas: você registra <b>no mínimo três</b> partições (uma delas a de hoje), escolhe o teto <b>a partir de uma medição sua</b> (não copiado do lab), e justifica cinco decisões de schema e custo. Não é "refaça o lab em Terraform" — é decidir o que o lab decidiu por você.</p>
+  </div>
+
+  <div class="meta">
+    <div><b>Tempo:</b> 90 min, em aula</div>
+    <div><b>Região:</b> us-east-1</div>
+    <div><b>Custo teto:</b> US$ 1,00</div>
+    <div><b>Provisionamento:</b> Terraform, <b>state local</b></div>
+    <div><b>Entrega:</b> PR ao fim da aula</div>
+    <div><b>Vale:</b> 1º incremento da AV1</div>
+  </div>
+  <div class="info"><b>State local, de propósito.</b> Não há <code>backend.tf</code>. O <code>terraform.tfstate</code> vai nascer na sua pasta, no laptop — e você vai sentir a dor disso. A cura (estado remoto, com trava) é o Ciclo 3.</div>
+
+  <!-- O QUE VOCÊ RECEBE -->
+  <h2><span class="num">O que você recebe</span></h2>
+  <p>Na pasta <code>terraform/</code>, um andaime — não é pasta vazia nem solução com <code>TODO</code>:</p>
+  <table>
+    <tr><th>Arquivo</th><th>Estado</th><th>O que fazer</th></tr>
+    <tr><td class="p">versions.tf</td><td>pronto</td><td>nada (state local, sem backend)</td></tr>
+    <tr><td class="p">providers.tf</td><td>pronto</td><td>nada (região e tags)</td></tr>
+    <tr><td class="p">variables.tf</td><td>parcial</td><td><code>teto_bytes</code> e <code>dias_particao</code> <b>não têm default</b>: você preenche no tfvars</td></tr>
+    <tr><td class="p">main.tf</td><td>esqueleto</td><td>campos marcados <code># DECISAO 01/02/03</code> para você decidir</td></tr>
+    <tr><td class="p">outputs.tf</td><td>contrato</td><td><b>não mexa</b> — o <code>verifica.sh</code> lê estes nomes</td></tr>
+    <tr><td class="p">terraform.tfvars.example</td><td>pronto</td><td>copie para <code>terraform.tfvars</code> e preencha</td></tr>
+    <tr><td class="p">dados/gerar-corridas.py</td><td>pronto</td><td>gera os dados por dia; você roda e sobe</td></tr>
+    <tr><td class="p">verificacao/verifica.sh</td><td>pronto</td><td>roda na sua conta e imprime PASSA/FALHA</td></tr>
+  </table>
+
+  <!-- PASSO A PASSO -->
+  <h2><span class="num">Passo a passo da entrega</span></h2>
+  <p class="intro">Os comandos estão completos. As <b>decisões</b> (tipos, número de partições, teto) são suas — o passo a passo mostra <b>onde</b> decidir, não <b>o que</b> decidir.</p>
+
+  <div class="step"><div class="badge">1</div><div class="stepbody">
+    <h3>Prepare o ambiente e as variáveis</h3>
+    <div class="do">Digite (troque joao pelo seu login)</div>
+    <pre>export AWS_REGION=us-east-1
+export SUFIXO=joao
+cd terraform
+cp terraform.tfvars.example terraform.tfvars</pre>
+    <div class="info">Abra <code>terraform.tfvars</code> e preencha <code>sufixo</code>. As linhas de <code>teto_bytes</code> e <code>dias_particao</code> ficam comentadas por enquanto — você as preenche nos Passos 3 e 5.</div>
+  </div></div>
+
+  <div class="step"><div class="badge">2</div><div class="stepbody">
+    <h3>Gere os dados e complete as decisões de schema no main.tf</h3>
+    <div class="do">Digite (gera 8 dias, ~3,4 MB cada)</div>
+    <pre>python3 ../dados/gerar-corridas.py --dias 8</pre>
+    <div class="do">Abra <code>main.tf</code> e decida os três campos marcados</div>
+    <ul class="sq">
+      <li><b>DECISÃO 01</b> — o tipo de <code>valor</code> (<code>double</code>, <code>string</code> ou <code>decimal(10,2)</code>).</li>
+      <li><b>DECISÃO 02</b> — o tipo das colunas de tempo (<code>string</code> ou <code>timestamp</code>) — decida testando, não supondo.</li>
+      <li><b>DECISÃO 03</b> — <code>ignore.malformed.json</code> (<code>true</code> ou <code>false</code>).</li>
+    </ul>
+    <div class="warn"><b>Guarde o que você aceitou perder em cada escolha.</b> É isso que vai para o <code>DECISOES.md</code> (critério 6).</div>
+  </div></div>
+
+  <div class="step"><div class="badge">3</div><div class="stepbody">
+    <h3>Decida quantas partições registrar (DECISÃO 04) e preencha o tfvars</h3>
+    <div class="do">Veja os dias que o gerador criou</div>
+    <pre>ls ../dados/saida</pre>
+    <div class="outlbl">Você deve ver 8 pastas dt=…</div>
+    <pre class="out">dt=2026-08-19  dt=2026-08-20  ...  dt=2026-08-26</pre>
+    <p>No <code>terraform.tfvars</code>, descomente e preencha <code>dias_particao</code> com <b>no mínimo três</b> desses dias — <b>uma delas precisa ser a de hoje</b>. O que você faz com os dias que <b>não</b> registrar é parte da sua justificativa.</p>
+  </div></div>
+
+  <div class="step"><div class="badge">4</div><div class="stepbody">
+    <h3>Meça o teto (DECISÃO 05) — não copie do lab</h3>
+    <p>Para escolher o teto, você precisa saber quanto uma consulta varre. Suba os dados e faça uma medição antes de fixar o número. Comece subindo:</p>
+    <div class="do">Digite (o bucket ainda não existe; você sobe os dados depois do apply — veja o Passo 6)</div>
+    <div class="info">Sequência: aplique com um teto provisório alto (ex.: 117455962), rode a consulta larga uma vez, leia o <code>Data scanned</code>, e então baixe o teto para um valor que <b>mate a larga e deixe passar a estreita</b>. Preencha <code>teto_bytes</code> no tfvars com o número que você mediu. O piso é <code>10485760</code>; acima de <code>117455962</code> o freio nunca toca.</div>
+  </div></div>
+
+  <div class="step"><div class="badge">5</div><div class="stepbody">
+    <h3>Aplique</h3>
+    <div class="do">Digite e, quando pedir <code>Enter a value:</code>, digite <code>yes</code></div>
+    <pre>terraform init
+terraform apply</pre>
+    <div class="outlbl">Você deve ver, ao final (7 recursos fixos + uma por partição — 10 se você registrou 3)</div>
+    <pre class="out">Apply complete! Resources: 10 added, 0 changed, 0 destroyed.</pre>
+    <div class="warn"><b>Se reclamar de variável sem valor:</b> você não preencheu <code>teto_bytes</code> ou <code>dias_particao</code> no tfvars. Volte aos Passos 3 e 4 — é de propósito que o andaime não sobe sem essas duas decisões.</div>
+  </div></div>
+
+  <div class="step"><div class="badge">6</div><div class="stepbody">
+    <h3>Suba os dados para o bucket</h3>
+    <div class="do">Digite</div>
+    <pre>aws s3 cp ../dados/saida/ "s3://$(terraform output -raw bucket_name)/raw/corridas/" --recursive</pre>
+    <div class="info">Isto copia cada pasta <code>dt=…</code> para a chave que a partição espera. Se o caminho não bater com a <code>location</code> da partição, o Athena devolve zero linhas sem erro — confira que os dois usam <code>raw/corridas/dt=DIA/</code>.</div>
+  </div></div>
+
+  <div class="step"><div class="badge">7</div><div class="stepbody">
+    <h3>Rode a verificação</h3>
+    <div class="do">Digite</div>
+    <pre>cd ../verificacao
+./verifica.sh</pre>
+    <div class="info">Ele imprime PASSA/FALHA dos critérios 1 a 4 e checa o 6. Se o critério 4 falhar, seu teto está alto demais para o volume que você subiu, ou você registrou partições de menos — ajuste e rode de novo.</div>
+  </div></div>
+
+  <div class="step"><div class="badge">8</div><div class="stepbody">
+    <h3>Escreva o DECISOES.md</h3>
+    <p>Na raiz do seu repositório, crie <code>DECISOES.md</code> com <b>uma frase por decisão</b> (01 a 05). Não repita o enunciado: diga <b>o que você aceitou perder</b>. É o único critério que não é script (20%).</p>
+  </div></div>
+
+  <div class="step"><div class="badge">9</div><div class="stepbody">
+    <h3>Derrube tudo e prove que ficou limpo</h3>
+    <div class="do">Digite (na pasta terraform; confirme com <code>yes</code>)</div>
+    <pre>cd ../terraform
+terraform destroy
+cd ../verificacao
+./verifica.sh --pos-destroy</pre>
+    <div class="outlbl">Você deve ver</div>
+    <pre class="out">PASSA  [5]  (15%)  nenhum bucket órfão.</pre>
+  </div></div>
+
+  <div class="step"><div class="badge">10</div><div class="stepbody">
+    <h3>Abra o PR</h3>
+    <p>Com a pasta <code>terraform/</code> completa, o <code>terraform.tfvars</code>, o <code>DECISOES.md</code> e <b>a saída do <code>verifica.sh</code> colada</b> na descrição. <b>Não</b> comite <code>terraform.tfstate</code>.</p>
+  </div></div>
+
+  <!-- AS 5 DECISÕES -->
+  <h2><span class="num">As cinco decisões</span> <span class="clk">critério 6 · 20%</span></h2>
+  <table>
+    <tr><th>#</th><th>Onde</th><th>A escolha</th><th>O que a frase precisa dizer</th></tr>
+    <tr><td class="p">01</td><td><code>valor</code></td><td>double · string · decimal(10,2)</td><td>o que você aceita perder com os ~1,5% que mandam <code>"17,82"</code></td></tr>
+    <tr><td class="p">02</td><td>colunas de tempo</td><td>string · timestamp</td><td>o que o <code>SELECT</code> devolveu <b>quando você testou</b></td></tr>
+    <tr><td class="p">03</td><td>SerDe</td><td>ignore.malformed.json</td><td>barulho ou silêncio — e quem paga o que você escolheu</td></tr>
+    <tr><td class="p">04</td><td>partições</td><td>quantos dias registrar</td><td>o que acontece com os dias que você não registrou, e amanhã</td></tr>
+    <tr><td class="p">05</td><td>teto de bytes</td><td>o número</td><td>de que medição ele saiu, e por que não é o piso nem o topo</td></tr>
+  </table>
+  <div class="info"><b>Uma frase por decisão.</b> Uma decisão diferente do gabarito, bem justificada, vale 10. Igual ao gabarito, sem justificativa, não passa de 8.</div>
+
+  <!-- RUBRICA -->
+  <h2><span class="num">Rubrica</span></h2>
+  <table>
+    <tr><th>#</th><th>Critério</th><th>Verificação</th><th>Peso</th></tr>
+    <tr><td class="p">0</td><td>Terraform, schema declarado, sem Crawler</td><td>verifica.sh (grep)</td><td class="p">elimina</td></tr>
+    <tr><td class="p">1</td><td>Os cinco outputs de contrato preenchidos</td><td>verifica.sh · output</td><td class="p">10%</td></tr>
+    <tr><td class="p">2</td><td>Schema declarado (≥8 colunas) e partição dt</td><td>verifica.sh · Glue</td><td class="p">25%</td></tr>
+    <tr><td class="p">3</td><td>≥3 partições, uma de hoje, location correta</td><td>verifica.sh · Glue</td><td class="p">15%</td></tr>
+    <tr><td class="p">4</td><td>O teto mata a larga e deixa passar a estreita</td><td>verifica.sh · Athena</td><td class="p">15%</td></tr>
+    <tr><td class="p">5</td><td>destroy limpo, sem órfão</td><td>verifica.sh --pos-destroy</td><td class="p">15%</td></tr>
+    <tr><td class="p">6</td><td>DECISOES.md: uma justificativa por decisão</td><td>leitura</td><td class="p">20%</td></tr>
+  </table>
+
+  <!-- CHECKPOINTS -->
+  <h2><span class="num">Checkpoints</span></h2>
+  <ul class="sq">
+    <li><b>20 min</b> — <code>terraform apply</code> passou.</li>
+    <li><b>40 min</b> — a consulta responde.</li>
+    <li><b>75 min</b> — <code>verifica.sh</code> verde e PR aberto.</li>
+  </ul>
+  <p>Quem estiver fora do checkpoint <b>levanta a mão ali</b>, não aos 85 minutos.</p>
+
+  <!-- ERROS -->
+  <h2><span class="num">O que mais reprova</span></h2>
+  <ul class="sq">
+    <li><code>destroy</code> deixando bucket órfão — derruba o critério 5 inteiro.</li>
+    <li><code>location</code> de partição que não bate com a chave no S3 — o Athena devolve zero linhas sem erro, e os critérios 3 e 4 caem juntos.</li>
+    <li>Teto abaixo de <code>10485760</code> — o Athena recusa e a stack não sobe.</li>
+    <li>Teto acima do volume que você subiu — o freio nunca toca e o critério 4 cai.</li>
+    <li>Comitar o <code>terraform.tfstate</code> no PR.</li>
+  </ul>
+
+  <p class="foot">Engenharia de Dados · Exercício 02 (Aula 08) · CESAR School · Graduação em Ciência da Computação. Este enunciado abre offline; nenhuma dependência externa.</p>
+
+</div>
+</body>
+</html>

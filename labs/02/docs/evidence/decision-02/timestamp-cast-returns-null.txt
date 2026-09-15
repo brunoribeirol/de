@@ -1,0 +1,30 @@
+Evidencia da Decisao 02 (colunas de tempo) - Exercicio 02, Aula 08
+
+Consulta rodada via AWS CLI (Athena), tentando converter data_corrida (coluna
+declarada como string) para timestamp dentro do proprio SQL, sem alterar o
+schema declarado no Glue:
+
+  SELECT data_corrida, try(CAST(data_corrida AS timestamp)) AS tentativa_timestamp
+  FROM corridas LIMIT 5
+
+Resultado (aws athena get-query-results --query
+'ResultSet.Rows[*].Data[*].VarCharValue' --output text):
+
+  data_corrida    tentativa_timestamp
+  00:21:00
+  00:08:00
+  01:10:00
+  04:45:00
+  00:52:00
+
+Cada linha mostra apenas o valor de data_corrida; a coluna
+tentativa_timestamp vem vazia (NULL) nas 5 linhas testadas - 0 de 5 conversoes
+bem-sucedidas.
+
+Conclusao: data_corrida (e fim, mesmo formato) contem apenas hora
+("HH:MM:SS"), sem componente de data. O tipo timestamp do Athena/Hive espera
+"AAAA-MM-DD HH:MM:SS" e nao consegue parsear um valor sem data - toda tentativa
+de CAST retorna NULL, silenciosamente (sem erro de execucao). Por isso a
+Decisao 02 mantem essas colunas como string: declarar timestamp faria a coluna
+inteira virar NULL em 100% das linhas, o que e estritamente pior do que manter
+string e fazer o parse/recorte via substr()/regex quando necessario.

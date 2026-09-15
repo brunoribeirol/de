@@ -1,0 +1,7 @@
+Verificacao pos-destroy do Exercicio 02 (Aula 08) - ./verifica.sh --pos-destroy
+
+Critério 5 — destroy limpo
+----------------------------------------------------------------
+PASSA  [5]  (15%)  nenhum bucket órfão.
+----------------------------------------------------------------
+Critério 5: 15/15%

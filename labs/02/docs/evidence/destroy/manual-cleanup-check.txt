@@ -1,0 +1,13 @@
+=== POST-DESTROY MANUAL CHECK ===
+
+[S3 bucket]
+aws s3api head-bucket --bucket eda-a08-lake-brlla
+ABSENT
+
+[Glue database]
+aws glue get-database --name eda_a08_lake_brlla
+ABSENT
+
+[Athena WorkGroup]
+aws athena get-work-group --work-group eda-a08-wg-brlla
+ABSENT

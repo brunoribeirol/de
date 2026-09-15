@@ -1,0 +1,39 @@
+Exercício 02 — verificação (região us-east-1, hoje 2026-09-06)
+----------------------------------------------------------------
+Critério 0 — Terraform, schema declarado, sem Crawler (ELIMINATÓRIO)
+OK     [0]  requisito atendido (não pontua; libera o resto)
+----------------------------------------------------------------
+Critério 1 — os cinco outputs de contrato
+       bucket_name = eda-a08-lake-brlla
+       database_name = eda_a08_lake_brlla
+       table_name = corridas
+       workgroup_name = eda-a08-wg-brlla
+       teto_bytes = 12522547
+PASSA  [1]  (10%)  os cinco outputs existem e estão preenchidos.
+----------------------------------------------------------------
+Critério 2 — schema declarado (≥8 colunas) e partição dt
+       colunas declaradas: 9 · chave de partição: dt
+PASSA  [2]  (25%)  schema com 9 colunas e partição dt.
+----------------------------------------------------------------
+Critério 3 — ≥3 partições, uma delas a de hoje
+       partições registradas: 4 -> 2026-09-03    2026-08-31    2026-09-06    2026-08-30
+PASSA  [3]  (15%)  4 partições, incluindo a de hoje (2026-09-06).
+----------------------------------------------------------------
+Critério 4 — o teto mata a consulta larga e deixa passar a estreita
+       teto declarado: 12522547 bytes
+       larga:    estado=CANCELLED  motivo=Bytes scanned limit was exceeded
+       estreita: estado=SUCCEEDED  bytes=3393451
+FALHA  [4]  (15%)  larga_barrada=0 estreita_passou=1
+       se a larga não morreu: seu teto está alto demais para o volume que você subiu
+       (suba mais dias, registre mais partições, ou baixe o teto — é a DECISÃO 05).
+----------------------------------------------------------------
+Critério 6 — DECISOES.md (avaliação manual da justificativa)
+       encontrei 6 decisões em ../DECISOES.md — o CONTEÚDO é avaliado à mão (20%).
+       lembre: decisão diferente do gabarito, bem justificada, vale 10; igual sem justificar, no máximo 8.
+----------------------------------------------------------------
+Resumo dos critérios automáticos: 50 / 65 pontos-percentuais
+       faltam o critério 5 (rode ./verifica.sh --pos-destroy depois do destroy) e o 6 (manual).
+
+Cole o bloco abaixo no seu PR:
+  bucket=eda-a08-lake-brlla  db=eda_a08_lake_brlla  table=corridas  wg=eda-a08-wg-brlla  teto=12522547
+  criterios_automaticos=50/65  data=2026-09-06T18:32:08Z
