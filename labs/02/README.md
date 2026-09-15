@@ -1,60 +1,81 @@
-# Exercício 02 (Aula 08) — do zero em Terraform
+# Lab 02 (Aula 08) — Declared data lake in Terraform, from scratch
 
-Exercício do Ciclo 2. O aluno provisiona, **100% em Terraform e com state local**,
-um Data Lake mínimo (bucket, catálogo com schema declarado, ≥3 partições e workgroup
-Athena com teto medido) e justifica cinco decisões. É o **primeiro incremento da
-Parte 1 do projeto** (AV1, Aula 16).
+The same raw data lake idea as Lab 01, now provisioned **100% in Terraform**
+with **local state** (by design for this cycle): bucket, declared Glue schema,
+registered partitions, and an Athena WorkGroup with a measured scan limit.
 
-## Conteúdo do pacote
+## Assignment in short
+
+- HCL only, `aws_glue_catalog_table` with a declared schema (≥ 8 columns,
+  partition key `dt`) — a Crawler or a YAML delivery is an automatic fail;
+- the five contract outputs (`bucket_name`, `database_name`, `table_name`,
+  `workgroup_name`, `teto_bytes`) — the verifier reads these names;
+- ≥ 3 registered partitions, one of them today's, `location` matching the S3 key;
+- a scan limit that blocks the broad query and lets the narrow one through;
+- a clean `terraform destroy` with no orphaned resources;
+- `DECISOES.md` with one justified decision per open choice (01–05).
+
+## What was built
+
+| Resource | Purpose |
+|---|---|
+| `aws_s3_bucket.lake` + public access block | raw events under `raw/corridas/dt=YYYY-MM-DD/` |
+| `aws_s3_bucket.results` + public access block | Athena query results |
+| `aws_glue_catalog_database.db` | catalog database |
+| `aws_glue_catalog_table.corridas` | 9 declared columns, partition key `dt` |
+| `aws_glue_partition.p` | `for_each` over `dias_particao` (4 registered) |
+| `aws_athena_workgroup.wg` | enforced scan limit `12,522,547` bytes |
+
+Key decisions (full reasoning and evidence in [`DECISOES.md`](DECISOES.md)):
+
+| # | Decision | Choice |
+|---|---|---|
+| 01 | `valor` type | `decimal(10,2)` — 0 comma decimals in 128,000 rows, so exact money precision wins |
+| 02 | Temporal columns | `string` — values are time-only; `CAST` to `timestamp` returned `NULL` in 5/5 rows |
+| 03 | `ignore.malformed.json` | `true` — preventive, availability first |
+| 04 | Registered partitions | 4 — with 3, the broad scan (~10.18 MB) sits below the Athena limit floor (10,485,760) |
+| 05 | Scan limit | broad scan (13,571,123) minus 1 MiB, measured |
+
+Also documented: a Terraform 1.16 HCL incompatibility in the course scaffold
+([`docs/evidence/environment/`](docs/evidence/environment/)).
+
+## Layout
 
 ```
-aula-08-iac-do-zero/
-├── enunciado.html               # enunciado do aluno (abre offline)
-├── rubrica.md                   # critérios, pesos e o que não conta
-├── aula-08.pptx                 # deck do professor (com notas)     [só no pacote do professor]
-├── aluno-slides-aula-08.pptx    # deck da turma (sem notas)
-├── terraform/                   # ANDAIME que o aluno recebe (não é solução)
-│   ├── versions.tf              # pronto (state local, sem backend)
-│   ├── providers.tf             # pronto (região + default_tags)
-│   ├── variables.tf             # parcial (teto e dias sem default)
-│   ├── main.tf                  # esqueleto com # DECISAO 01/02/03
-│   ├── outputs.tf               # CONTRATO — o verifica.sh lê estes nomes
-│   └── terraform.tfvars.example
-├── dados/
-│   └── gerar-corridas.py        # gera ~3,4 MB/dia por partição
-├── verificacao/
-│   └── verifica.sh              # PASSA/FALHA por critério
-└── gabarito/                    # SOLUÇÃO — não distribuir antes da entrega [só no pacote do professor]
-    ├── DECISOES.md
-    ├── terraform.tfvars
-    └── README.md
+labs/02/
+├── DECISOES.md            # the five decisions, with evidence
+├── terraform/             # versions, providers, variables, main, outputs, tfvars example
+├── scripts/               # synthetic ride generator (course-provided)
+├── verification/          # verifica.sh — PASS/FAIL per rubric criterion (course-provided)
+└── docs/evidence/         # command output behind each decision and verification step
 ```
 
-## Fluxo do aluno (resumido — o passo a passo está no enunciado.html)
+## Run it
+
+Prerequisites: AWS CLI authenticated, Terraform ≥ 1.5 (validated on 1.16.0), Python 3.
 
 ```bash
 export AWS_REGION=us-east-1
-cd terraform && cp terraform.tfvars.example terraform.tfvars   # preencha sufixo
-python3 ../dados/gerar-corridas.py --dias 8                     # gera os dados
-# decida no main.tf: valor, tempo, serde; no tfvars: dias_particao e teto_bytes
+cd labs/02/terraform
+cp terraform.tfvars.example terraform.tfvars      # fill sufixo, teto_bytes, dias_particao
+python3 ../scripts/gerar-corridas.py --dias 8 --saida ../output
 terraform init && terraform apply
-aws s3 cp ../dados/saida/ "s3://$(terraform output -raw bucket_name)/raw/corridas/" --recursive
-cd ../verificacao && ./verifica.sh
-# escreva DECISOES.md, depois:
+aws s3 cp ../output/ "s3://$(terraform output -raw bucket_name)/raw/corridas/" --recursive
+cd ../verification && ./verifica.sh
 cd ../terraform && terraform destroy
-cd ../verificacao && ./verifica.sh --pos-destroy
+cd ../verification && ./verifica.sh --pos-destroy
 ```
 
-## Números
+`terraform.tfvars` and `terraform.tfstate` are gitignored — never commit them.
 
-- Recursos Terraform: **7 fixos** (2 buckets + 2 bloqueios + database + tabela + workgroup)
-  **+ N partições** (`for_each` sobre `dias_particao`). Com 3 partições, o `apply` cria 10.
-- Dados: **~3,4 MB por dia** de partição (gerador determinístico por dia).
-- Teto: o aluno **mede e escolhe** (piso 10.485.760; topo útil 117.455.962).
-- Custo por aluno: **< US$ 1,00**. State **local**, de propósito.
+## Results
 
-## Regras de entrega
+- Criteria 0–3: `PASSA`; criterion 6 found all decisions. Criterion 5
+  (post-destroy): `PASSA`, plus a manual AWS CLI check (bucket, database, and
+  WorkGroup all absent).
+- Criterion 4: the verifier reports `FALHA`, but the broad query ended
+  `CANCELLED` with `Bytes scanned limit was exceeded` and the narrow query
+  `SUCCEEDED` (3,393,451 bytes). Same verifier false-negative as Lab 01
+  (it only accepts `FAILED`).
 
-- **Nunca entregar ao aluno:** `gabarito/`, `terraform.tfstate`, credenciais.
-- O `verifica.sh` roda na conta do aluno e vale como aceite; a **nota cai no projeto** (AV1).
-- `destroy` limpo é critério: bucket órfão reprova o item.
+Evidence: [`docs/evidence/`](docs/evidence/).
