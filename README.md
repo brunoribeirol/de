@@ -10,7 +10,7 @@ infer it — with a different piece of the stack per cycle.
 | Lab | Topic | IaC | Status |
 |---|---|---|---|
 | [`labs/01`](labs/01) | Declared Glue schema, no Crawler, Athena scan-limit guardrail | CloudFormation | [PR #1](https://github.com/brunoribeirol/de/pull/1) — merged |
-| [`labs/02`](labs/02) | Same data lake, provisioned from scratch, local Terraform state | Terraform | [PR #2](https://github.com/brunoribeirol/de/pull/2) |
+| [`labs/02`](labs/02) | Same data lake, provisioned from scratch, local Terraform state | Terraform | [PR #2](https://github.com/brunoribeirol/de/pull/2) — merged |
 
 Each lab's own `README.md` has the exact deploy/verify/destroy commands.
 Each lab's `DECISOES.md` documents the required engineering decisions —
@@ -30,5 +30,13 @@ for synthetic data generation.
   backed by a measurement or a query result, not a guess.
 - `docs/evidence/` per lab: the raw command output or screenshot behind
   each decision and each verification step.
-- No `terraform.tfstate`, no instructor answer keys, and no course-provided
-  material marked as instructor-only ever get committed here.
+- Only authored work is published. Course-provided material (slides,
+  enunciados, rubricas, answer keys) stays local; each lab's `README.md`
+  summarizes the assignment instead. Scripts the course ships and the
+  solution depends on (data generator, `verifica.sh`) are kept so each lab
+  stays reproducible.
+- No `terraform.tfstate` or filled-in `terraform.tfvars`/`backend.hcl` —
+  only their `*.example` templates.
+- Language: code, READMEs, and commits are in English. `DECISOES.md` and the
+  course-provided scripts are in Portuguese, because the rubric grades them in
+  that language under that file name.

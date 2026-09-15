@@ -34,6 +34,27 @@ CLAUDE.md
 
 # Root-level project-tracking scaffold (CURRENT_STATE.md, templates, specs)
 # - development process notes, not lab/course content. Anchored with a
-# leading slash so it does NOT match labs/01/docs/ or labs/02/docs/, which
-# hold graded material (enunciado, evidence, rubrica) and must stay tracked.
+# leading slash so it does NOT match labs/NN/docs/, whose evidence/ must stay
+# tracked.
 /docs/
+
+# Course-provided material (slides, enunciados, rubricas) - authored by the
+# course, not by me. Kept locally for reference; each lab's README.md
+# summarizes the assignment instead. Only authored work is published here.
+labs/*/docs/*.pptx
+labs/*/docs/*enunciado*.html
+labs/*/docs/*rubrica*.md
+labs/*/answer-key/
+
+# Terraform - local state, provider cache, and filled-in variable/backend
+# files. Only the *.example templates are versioned.
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.tfstate.lock.info
+terraform.tfvars
+backend.hcl
+
+# OS noise (repo-level, so it does not depend on each contributor's global
+# gitignore)
+.DS_Store
