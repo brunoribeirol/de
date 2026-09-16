@@ -1,0 +1,8 @@
+# Step 12 — course verifier, post-destroy run (criterion 5, 15%).
+# captured: 2026-09-15T23:47Z · Terraform v1.16.1
+$ ./verifica.sh --pos-destroy
+Critério 5 — destroy limpo
+----------------------------------------------------------------
+PASSA  [5]  (15%)  nenhum bucket órfão.
+----------------------------------------------------------------
+Critério 5: 15/15%

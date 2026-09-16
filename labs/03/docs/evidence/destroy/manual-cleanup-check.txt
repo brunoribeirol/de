@@ -1,0 +1,21 @@
+# Independent post-destroy check with the AWS CLI, not relying on verifica.sh.
+# Same practice as Labs 01 and 02: the verifier only looks for orphaned buckets,
+# so the Glue database and the Athena WorkGroup are confirmed separately.
+# captured: 2026-09-15T23:47Z · region us-east-1 · IAM user eda-grupo07
+
+$ aws s3 ls | grep eda-
+2026-09-15 08:53:33 eda-tfstate-grupo02
+2026-09-15 23:29:08 eda-tfstate-grupo07
+
+# Both lab buckets (eda-a12-brlla-lake, eda-a12-brlla-results) are gone.
+# The two remaining buckets are state backends, not lab resources:
+# grupo02 belongs to another group; grupo07 is ours, protected by prevent_destroy.
+
+$ aws glue get-database --name eda_a12_brlla
+An error occurred (EntityNotFoundException) when calling the GetDatabase operation: Database eda_a12_brlla not found.
+
+$ aws athena get-work-group --work-group eda-a12-brlla-wg
+An error occurred (InvalidRequestException) when calling the GetWorkGroup operation: WorkGroup is not found.
+AthenaErrorCode: INVALID_INPUT
+
+# All three resource classes confirmed ABSENT. No orphans, no manual cleanup needed.

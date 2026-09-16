@@ -1,0 +1,37 @@
+# Step 10 — course verifier, run before the destroy.
+# 65/65 on the automatic criteria (0, 1, 2, 3, 4). Criterion 5 needs the
+# post-destroy run; criterion 6 is graded by reading DECISOES.md.
+# captured: 2026-09-16T02:38:31Z · Terraform v1.16.1 · backend: s3 (remote)
+# Pasted from the author's terminal scrollback; ANSI color codes not preserved.
+
+$ cd ../verification && ./verifica.sh
+Exercício 03 — verificação da refatoração (região us-east-1)
+----------------------------------------------------------------
+Critério 0 — módulo + backend remoto + workspace (ELIMINATÓRIO)
+OK     [0]  módulo, backend s3 e pasta modules/ presentes
+----------------------------------------------------------------
+Critério 1 — plan LIMPO (o coração do exercício)
+PASSA  [1]  (30%)  No changes — a refatoração não recriou nada.
+----------------------------------------------------------------
+Critério 2 — o estado está no backend remoto
+PASSA  [2]  (15%)  backend s3 configurado e sem estado local.
+----------------------------------------------------------------
+Critério 3 — um workspace nomeado foi usado
+PASSA  [3]  (10%)  workspace(s) além do default: ╷ │Warning:DeprecatedParameter │ │Theparameter"dynamodb_table"isdeprecated.Useparameter"use_lockfile" │instead. ╵ dev
+----------------------------------------------------------------
+Critério 4 — os cinco outputs de contrato preservados
+PASSA  [4]  (10%)  os cinco outputs continuam lá.
+----------------------------------------------------------------
+Critério 6 — DECISOES.md (avaliação manual)
+       encontrei 6 decisões em ../DECISOES.md — o conteúdo é avaliado à mão (20%).
+----------------------------------------------------------------
+Critérios automáticos: 65 / 65 pontos-percentuais
+       faltam o critério 5 (./verifica.sh --pos-destroy) e o 6 (manual).
+
+Cole no seu PR:
+  plan_limpo=sim  criterios_auto=65/65  data=2026-09-16T02:38:31Z
+
+# Note on criterion 3: the verifier reads `terraform workspace list` with stderr
+# merged into stdout, so the dynamodb_table deprecation warning is printed as if
+# it were part of the workspace name. It passed only because `dev` comes last in
+# the string. Third verifier bug documented in this course (see DECISOES.md).

@@ -1,0 +1,41 @@
+# DECISAO 01 — the module boundary, read from the code and from the state.
+# Everything that IS the data lake moved in; everything that configures the
+# run (provider, variable validation, the output contract) stayed in the root.
+# derived from the working directory on 2026-09-16T02:41:00Z · Terraform v1.16.1
+
+$ grep -c "^resource" terraform/*.tf        # resources left in the root: none
+outputs.tf:0
+backend.tf:0
+main.tf:0
+providers.tf:0
+variables.tf:0
+versions.tf:0
+
+$ grep "^resource" terraform/modules/lake/main.tf   # the six, unrenamed
+resource "aws_s3_bucket" "lake" {
+resource "aws_s3_bucket_public_access_block" "lake" {
+resource "aws_s3_bucket" "results" {
+resource "aws_glue_catalog_database" "db" {
+resource "aws_glue_catalog_table" "corridas" {
+resource "aws_athena_workgroup" "wg" {
+
+# Root keeps: module call, provider + default_tags, variables with validation,
+# the backend block, and the five contract outputs re-exported from the module.
+$ ls terraform/*.tf terraform/modules/lake/*.tf
+terraform/backend.tf
+terraform/main.tf
+terraform/modules/lake/main.tf
+terraform/modules/lake/outputs.tf
+terraform/modules/lake/variables.tf
+terraform/modules/lake/versions.tf
+terraform/outputs.tf
+terraform/providers.tf
+terraform/variables.tf
+terraform/versions.tf
+
+$ terraform output  (names read by verifica.sh — unchanged by the refactor)
+  bucket_name
+  database_name
+  table_name
+  workgroup_name
+  teto_bytes

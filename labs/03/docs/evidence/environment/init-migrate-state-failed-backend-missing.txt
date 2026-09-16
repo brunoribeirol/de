@@ -1,0 +1,32 @@
+# Step 7 — FAILED migration attempt: the course shared backend bucket does not exist in this account.
+# Terraform aborts before touching either state ("source and destination remain unmodified").
+# captured: 2026-09-15T14:18:21Z · Terraform v1.16.1
+$ terraform init -migrate-state -force-copy -backend-config=backend.hcl
+Initializing the backend...
+
+Initializing modules...
+
+
+Warning: Deprecated Parameter
+
+  on backend.tf line 8, in terraform:
+   8:   backend "s3" {
+
+The parameter "dynamodb_table" is deprecated. Use parameter "use_lockfile"
+instead.
+
+Error: Error inspecting states in the "local" backend:
+    S3 bucket "eda-tfstate-brlla" does not exist.
+
+The referenced S3 bucket must have been previously created. If the S3 bucket
+was created within the last minute, please wait for a minute or two and try
+again.
+
+Error: operation error S3: ListObjectsV2, https response error StatusCode: 404, RequestID: AA6A4QC981VN7K5X, HostID: BmFakaFDZ04Z8kIuRZnxmen0RTGecsLtYtIBynyH2kthMuF5D6ZiPKUdCc5Our2tP7yMMedWssNpBONPVz947AePh8v8PEUD, NoSuchBucket: The specified bucket does not exist
+
+
+Prior to changing backends, Terraform inspects the source and destination
+states to determine what kind of migration steps need to be taken, if any.
+Terraform failed to load the states. The data in both the source and the
+destination remain unmodified. Please resolve the above error and try again.
+

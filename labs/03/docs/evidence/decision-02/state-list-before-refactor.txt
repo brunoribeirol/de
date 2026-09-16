@@ -1,0 +1,9 @@
+# terraform state list — flat stack, before the module refactor
+# captured: 2026-09-15T02:56:29Z · Terraform v1.16.1 · backend: local
+$ terraform state list
+aws_athena_workgroup.wg
+aws_glue_catalog_database.db
+aws_glue_catalog_table.corridas
+aws_s3_bucket.lake
+aws_s3_bucket.results
+aws_s3_bucket_public_access_block.lake

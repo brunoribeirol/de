@@ -1,0 +1,245 @@
+# Step 2 — flat starting stack applied (six resources at root, local state)
+# run: 2026-09-15 ~02:41Z (shell history)
+# ORIGINAL terminal output, pasted from the author's terminal scrollback.
+# Terraform v1.16.1 · hashicorp/aws v5.100.0 · AWS_PROFILE=de · AWS_REGION=us-east-1
+# Redacted: AWS account ID -> <account>, S3 canonical user ID -> <s3-canonical-user-id>.
+$ terraform init
+terraform apply -var="sufixo=$SUFIXO"
+Initializing the backend...
+
+Initializing provider plugins...
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Using previously-installed hashicorp/aws v5.100.0
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # aws_athena_workgroup.wg will be created
+  + resource "aws_athena_workgroup" "wg" {
+      + arn           = (known after apply)
+      + force_destroy = true
+      + id            = (known after apply)
+      + name          = "eda-a12-brlla-wg"
+      + state         = "ENABLED"
+      + tags_all      = {
+          + "Aula"       = "12"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "brlla"
+        }
+
+      + configuration {
+          + bytes_scanned_cutoff_per_query     = 20971520
+          + enforce_workgroup_configuration    = true
+          + publish_cloudwatch_metrics_enabled = true
+          + requester_pays_enabled             = false
+
+          + result_configuration {
+              + output_location = "s3://eda-a12-brlla-results/athena-results/"
+            }
+        }
+    }
+
+  # aws_glue_catalog_database.db will be created
+  + resource "aws_glue_catalog_database" "db" {
+      + arn          = (known after apply)
+      + catalog_id   = (known after apply)
+      + id           = (known after apply)
+      + location_uri = (known after apply)
+      + name         = "eda_a12_brlla"
+      + tags_all     = {
+          + "Aula"       = "12"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "brlla"
+        }
+
+      + create_table_default_permission (known after apply)
+    }
+
+  # aws_glue_catalog_table.corridas will be created
+  + resource "aws_glue_catalog_table" "corridas" {
+      + arn           = (known after apply)
+      + catalog_id    = (known after apply)
+      + database_name = "eda_a12_brlla"
+      + id            = (known after apply)
+      + name          = "corridas"
+      + parameters    = {
+          + "classification" = "json"
+        }
+      + table_type    = "EXTERNAL_TABLE"
+
+      + partition_index (known after apply)
+
+      + partition_keys {
+          + name = "dt"
+          + type = "string"
+        }
+
+      + storage_descriptor {
+          + input_format  = "org.apache.hadoop.mapred.TextInputFormat"
+          + location      = "s3://eda-a12-brlla-lake/raw/corridas/"
+          + output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
+
+          + columns {
+              + name = "corrida_id"
+              + type = "string"
+            }
+          + columns {
+              + name = "bairro"
+              + type = "string"
+            }
+          + columns {
+              + name = "valor"
+              + type = "double"
+            }
+
+          + ser_de_info {
+              + serialization_library = "org.openx.data.jsonserde.JsonSerDe"
+            }
+        }
+    }
+
+  # aws_s3_bucket.lake will be created
+  + resource "aws_s3_bucket" "lake" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "eda-a12-brlla-lake"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = true
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags_all                    = {
+          + "Aula"       = "12"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "brlla"
+        }
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # aws_s3_bucket.results will be created
+  + resource "aws_s3_bucket" "results" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "eda-a12-brlla-results"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = true
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags_all                    = {
+          + "Aula"       = "12"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "brlla"
+        }
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # aws_s3_bucket_public_access_block.lake will be created
+  + resource "aws_s3_bucket_public_access_block" "lake" {
+      + block_public_acls       = true
+      + block_public_policy     = true
+      + bucket                  = (known after apply)
+      + id                      = (known after apply)
+      + ignore_public_acls      = true
+      + restrict_public_buckets = true
+    }
+
+Plan: 6 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + bucket_name    = "eda-a12-brlla-lake"
+  + database_name  = "eda_a12_brlla"
+  + table_name     = "corridas"
+  + teto_bytes     = 20971520
+  + workgroup_name = "eda-a12-brlla-wg"
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+aws_s3_bucket.results: Creating...
+aws_glue_catalog_database.db: Creating...
+aws_s3_bucket.lake: Creating...
+aws_glue_catalog_database.db: Creation complete after 2s [id=<account>:eda_a12_brlla]
+aws_s3_bucket.results: Creation complete after 5s [id=eda-a12-brlla-results]
+aws_athena_workgroup.wg: Creating...
+aws_s3_bucket.lake: Creation complete after 5s [id=eda-a12-brlla-lake]
+aws_s3_bucket_public_access_block.lake: Creating...
+aws_glue_catalog_table.corridas: Creating...
+aws_athena_workgroup.wg: Creation complete after 1s [id=eda-a12-brlla-wg]
+aws_s3_bucket_public_access_block.lake: Creation complete after 1s [id=eda-a12-brlla-lake]
+aws_glue_catalog_table.corridas: Creation complete after 1s [id=<account>:eda_a12_brlla:corridas]
+
+Apply complete! Resources: 6 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+bucket_name = "eda-a12-brlla-lake"
+database_name = "eda_a12_brlla"
+table_name = "corridas"
+teto_bytes = 20971520
+workgroup_name = "eda-a12-brlla-wg"

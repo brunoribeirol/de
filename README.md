@@ -11,6 +11,11 @@ infer it — with a different piece of the stack per cycle.
 |---|---|---|---|
 | [`labs/01`](labs/01) | Declared Glue schema, no Crawler, Athena scan-limit guardrail | CloudFormation | [PR #1](https://github.com/brunoribeirol/de/pull/1) — merged |
 | [`labs/02`](labs/02) | Same data lake, provisioned from scratch, local Terraform state | Terraform | [PR #2](https://github.com/brunoribeirol/de/pull/2) — merged |
+| [`labs/03`](labs/03) | The same stack refactored into module + remote backend + workspace, with a clean `plan` | Terraform | in review |
+
+Shared infrastructure that outlives any single lab lives outside `labs/`:
+[`infra/tfstate-backend/`](infra/tfstate-backend) provisions the S3 bucket
+holding the remote Terraform state, so a lab's `destroy` can never take it down.
 
 Each lab's own `README.md` has the exact deploy/verify/destroy commands.
 Each lab's `DECISOES.md` documents the required engineering decisions —
@@ -25,7 +30,8 @@ for synthetic data generation.
 ## Conventions
 
 - One exercise per `labs/NN/` directory, self-contained (its own
-  `terraform/` or `infra/`, `docs/`, `verification/`).
+  `terraform/` or `infra/`, `docs/`, `verification/`). Infrastructure whose
+  lifecycle crosses labs lives in the root-level `infra/` instead.
 - `DECISOES.md` per lab: one justified paragraph per required decision,
   backed by a measurement or a query result, not a guess.
 - `docs/evidence/` per lab: the raw command output or screenshot behind

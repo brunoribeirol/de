@@ -1,0 +1,14 @@
+# Você cria o backend.hcl durante o exercício (Passo do backend).
+# O backend.hcl real é gitignored — nunca comite o nome da conta.
+#
+# bucket: o backend pertence ao GRUPO e leva o login IAM (eda-grupo07), não o
+#   sufixo pessoal. Se ele não existir na conta, provisione-o antes com a stack
+#   infra/tfstate-backend/ (na raiz do repositório).
+# key: leva o sufixo INDIVIDUAL. O bucket é compartilhado pelo grupo e, no
+#   workspace default, o estado é gravado direto nessa chave — dois colegas com
+#   a mesma key sobrescrevem o estado um do outro em silêncio.
+bucket         = "eda-tfstate-GRUPO"
+key            = "aula12/SEULOGIN/terraform.tfstate"
+region         = "us-east-1"
+dynamodb_table = "eda-tflock"
+encrypt        = true
