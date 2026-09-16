@@ -1,0 +1,4 @@
+# Copy to terraform.tfvars and fill in. terraform.tfvars is gitignored.
+grupo  = "grupo07" # IAM login / backend owner -- names the bucket
+owner  = "brlla"   # individual suffix -- tagging only
+regiao = "us-east-1"
