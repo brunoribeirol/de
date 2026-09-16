@@ -11,7 +11,7 @@ infer it — with a different piece of the stack per cycle.
 |---|---|---|---|
 | [`labs/01`](labs/01) | Declared Glue schema, no Crawler, Athena scan-limit guardrail | CloudFormation | [PR #1](https://github.com/brunoribeirol/de/pull/1) — merged |
 | [`labs/02`](labs/02) | Same data lake, provisioned from scratch, local Terraform state | Terraform | [PR #2](https://github.com/brunoribeirol/de/pull/2) — merged |
-| [`labs/03`](labs/03) | The same stack refactored into module + remote backend + workspace, with a clean `plan` | Terraform | in review |
+| [`labs/03`](labs/03) | The same stack refactored into module + remote backend + workspace, with a clean `plan` | Terraform | [PR #4](https://github.com/brunoribeirol/de/pull/4) — merged |
 
 Shared infrastructure that outlives any single lab lives outside `labs/`:
 [`infra/tfstate-backend/`](infra/tfstate-backend) provisions the S3 bucket
