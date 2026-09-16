@@ -1,0 +1,16 @@
+# Step 9 (DECISAO 03) — a named workspace exists, and the migrated stack stays
+# on default. Selecting dev would point the stack at an empty state; an apply
+# there would build a second copy of every resource in AWS.
+# captured: 2026-09-16T02:37Z · Terraform v1.16.1 · backend: s3 (remote)
+# The deprecation warning is stderr from the backend config, not part of the
+# workspace list: the verifier reads both streams together (see DECISOES.md).
+$ terraform workspace list
+╷
+│ Warning: Deprecated Parameter
+│ 
+│ The parameter "dynamodb_table" is deprecated. Use parameter "use_lockfile"
+│ instead.
+╵
+* default
+  dev
+

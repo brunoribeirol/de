@@ -5,6 +5,7 @@ output/
 terraform/.terraform/
 terraform/.terraform.tfstate.lock.info
 terraform/backend.hcl
+terraform/*.tfplan
 **/*.tfstate
 **/*.tfstate.backup
 **/*.tfstate.*.backup

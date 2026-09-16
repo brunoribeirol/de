@@ -1,0 +1,21 @@
+# The state backend provisioned by infra/tfstate-backend is applied and stable.
+# Run from infra/tfstate-backend, NOT from the lab: separate stack, separate
+# lifecycle -- the lab destroy must never be able to take the bucket down.
+# captured: 2026-09-16T02:36Z · Terraform v1.16.1 · state: local (bootstrap)
+# ANSI color codes stripped.
+$ terraform plan
+data.aws_dynamodb_table.lock: Reading...
+aws_s3_bucket.tfstate: Refreshing state... [id=eda-tfstate-grupo07]
+data.aws_dynamodb_table.lock: Read complete after 2s [id=eda-tflock]
+aws_s3_bucket_public_access_block.tfstate: Refreshing state... [id=eda-tfstate-grupo07]
+aws_s3_bucket_versioning.tfstate: Refreshing state... [id=eda-tfstate-grupo07]
+aws_s3_bucket_server_side_encryption_configuration.tfstate: Refreshing state... [id=eda-tfstate-grupo07]
+data.aws_iam_policy_document.tfstate: Reading...
+data.aws_iam_policy_document.tfstate: Read complete after 0s [id=2131887661]
+aws_s3_bucket_policy.tfstate: Refreshing state... [id=eda-tfstate-grupo07]
+aws_s3_bucket_lifecycle_configuration.tfstate: Refreshing state... [id=eda-tfstate-grupo07]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.

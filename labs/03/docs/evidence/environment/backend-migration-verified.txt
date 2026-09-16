@@ -1,0 +1,29 @@
+# Step 7/8 — remote backend migration, verified from local files.
+# Derived from the working directory on 2026-09-16T02:34:13Z (not a terminal transcript).
+# terraform: Terraform v1.16.1
+
+$ python3 -c "print backend block of .terraform/terraform.tfstate"
+backend type: s3
+  bucket = eda-tfstate-grupo07
+  key = aula12/brlla/terraform.tfstate
+  region = us-east-1
+  dynamodb_table = eda-tflock
+  workspace_key_prefix = eda-a12
+  encrypt = True
+
+$ ls -l terraform/terraform.tfstate terraform/terraform.tfstate.backup
+0 Sep 15 23:31 terraform/terraform.tfstate
+12629 Sep 15 23:31 terraform/terraform.tfstate.backup
+
+# The local state file is empty (0 bytes): its content moved to S3.
+# The .backup holds the pre-migration state — the rollback path if the migration had gone wrong.
+
+$ python3 -c "summarize terraform.tfstate.backup"
+serial: 13 | lineage: 736e9225-e970-1b70-1062-c926a1bf7089
+resources: 6
+  module.lake.aws_athena_workgroup.wg
+  module.lake.aws_glue_catalog_database.db
+  module.lake.aws_glue_catalog_table.corridas
+  module.lake.aws_s3_bucket_public_access_block.lake
+  module.lake.aws_s3_bucket.lake
+  module.lake.aws_s3_bucket.results

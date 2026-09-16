@@ -1,0 +1,23 @@
+# Step 5 — the six `terraform state mv` commands (state-only; no AWS API calls)
+# run: 2026-09-15 13:01:11Z–13:01:50Z (shell history); see state-mv-serial-trail.txt for the state snapshots
+# ORIGINAL terminal output, pasted from the author's terminal scrollback.
+# Terraform v1.16.1 · hashicorp/aws v5.100.0 · AWS_PROFILE=de · AWS_REGION=us-east-1
+# Redacted: AWS account ID -> <account>, S3 canonical user ID -> <s3-canonical-user-id>.
+$ terraform state mv aws_s3_bucket.lake                     module.lake.aws_s3_bucket.lake
+Move "aws_s3_bucket.lake" to "module.lake.aws_s3_bucket.lake"
+Successfully moved 1 object(s).
+$ terraform state mv aws_s3_bucket_public_access_block.lake module.lake.aws_s3_bucket_public_access_block.lake
+Move "aws_s3_bucket_public_access_block.lake" to "module.lake.aws_s3_bucket_public_access_block.lake"
+Successfully moved 1 object(s).
+$ terraform state mv aws_s3_bucket.results                  module.lake.aws_s3_bucket.results
+Move "aws_s3_bucket.results" to "module.lake.aws_s3_bucket.results"
+Successfully moved 1 object(s).
+$ terraform state mv aws_glue_catalog_database.db           module.lake.aws_glue_catalog_database.db
+Move "aws_glue_catalog_database.db" to "module.lake.aws_glue_catalog_database.db"
+Successfully moved 1 object(s).
+$ terraform state mv aws_glue_catalog_table.corridas        module.lake.aws_glue_catalog_table.corridas
+Move "aws_glue_catalog_table.corridas" to "module.lake.aws_glue_catalog_table.corridas"
+Successfully moved 1 object(s).
+$ terraform state mv aws_athena_workgroup.wg                module.lake.aws_athena_workgroup.wg
+Move "aws_athena_workgroup.wg" to "module.lake.aws_athena_workgroup.wg"
+Successfully moved 1 object(s).

@@ -1,0 +1,42 @@
+# State-address trail of the six `terraform state mv` commands
+# Source: Terraform's automatic state backups (terraform.tfstate.<unix-ts>.backup),
+# written before each `state mv`, plus the current terraform.tfstate.
+# Each row = resource addresses in that state snapshot. Backups are NOT committed
+# (they hold full state); only addresses are extracted here.
+# generated: 2026-09-15T13:05:23Z
+
+## serial 7 · 2026-09-15T13:01:12Z · BEFORE state mv #1 · terraform.tfstate.1789477272.backup
+   in root (6): aws_athena_workgroup.wg, aws_glue_catalog_database.db, aws_glue_catalog_table.corridas, aws_s3_bucket.lake, aws_s3_bucket.results, aws_s3_bucket_public_access_block.lake
+   in module.lake (0): -
+   lineage unchanged: True · total resources: 6
+
+## serial 8 · 2026-09-15T13:01:24Z · BEFORE state mv #2 · terraform.tfstate.1789477284.backup
+   in root (5): aws_athena_workgroup.wg, aws_glue_catalog_database.db, aws_glue_catalog_table.corridas, aws_s3_bucket.results, aws_s3_bucket_public_access_block.lake
+   in module.lake (1): aws_s3_bucket.lake
+   lineage unchanged: True · total resources: 6
+
+## serial 9 · 2026-09-15T13:01:32Z · BEFORE state mv #3 · terraform.tfstate.1789477292.backup
+   in root (4): aws_athena_workgroup.wg, aws_glue_catalog_database.db, aws_glue_catalog_table.corridas, aws_s3_bucket.results
+   in module.lake (2): aws_s3_bucket.lake, aws_s3_bucket_public_access_block.lake
+   lineage unchanged: True · total resources: 6
+
+## serial 10 · 2026-09-15T13:01:40Z · BEFORE state mv #4 · terraform.tfstate.1789477300.backup
+   in root (3): aws_athena_workgroup.wg, aws_glue_catalog_database.db, aws_glue_catalog_table.corridas
+   in module.lake (3): aws_s3_bucket.lake, aws_s3_bucket.results, aws_s3_bucket_public_access_block.lake
+   lineage unchanged: True · total resources: 6
+
+## serial 11 · 2026-09-15T13:01:46Z · BEFORE state mv #5 · terraform.tfstate.1789477306.backup
+   in root (2): aws_athena_workgroup.wg, aws_glue_catalog_table.corridas
+   in module.lake (4): aws_glue_catalog_database.db, aws_s3_bucket.lake, aws_s3_bucket.results, aws_s3_bucket_public_access_block.lake
+   lineage unchanged: True · total resources: 6
+
+## serial 12 · 2026-09-15T13:01:51Z · BEFORE state mv #6 · terraform.tfstate.1789477311.backup
+   in root (1): aws_athena_workgroup.wg
+   in module.lake (5): aws_glue_catalog_database.db, aws_glue_catalog_table.corridas, aws_s3_bucket.lake, aws_s3_bucket.results, aws_s3_bucket_public_access_block.lake
+   lineage unchanged: True · total resources: 6
+
+## serial 13 · 2026-09-15T13:01:52Z (mtime) · AFTER all six moves · terraform.tfstate
+   in root (0): -
+   in module.lake (6): aws_athena_workgroup.wg, aws_glue_catalog_database.db, aws_glue_catalog_table.corridas, aws_s3_bucket.lake, aws_s3_bucket.results, aws_s3_bucket_public_access_block.lake
+   lineage unchanged: True · total resources: 6
+

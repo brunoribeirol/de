@@ -1,0 +1,60 @@
+# Step 7, first attempt — `init -migrate-state` with backend.hcl but NO `backend "s3"` block in code.
+# Finding: Terraform only warns ("Missing backend configuration") and stays on the LOCAL backend;
+# nothing is migrated, and the following plan still reads local state. Fixed by adding backend.tf.
+# run: 2026-09-15 ~13:02Z (shell history)
+# ORIGINAL terminal output, pasted from the author's terminal scrollback.
+# Terraform v1.16.1 · hashicorp/aws v5.100.0 · AWS_PROFILE=de · AWS_REGION=us-east-1
+# Redacted: AWS account ID -> <account>, S3 canonical user ID -> <s3-canonical-user-id>.
+$ cat > backend.hcl <<EOF
+bucket         = "eda-tfstate-$SUFIXO"
+key            = "aula12/terraform.tfstate"
+region         = "us-east-1"
+dynamodb_table = "eda-tflock"
+encrypt        = true
+EOF
+$ terraform init -migrate-state -backend-config=backend.hcl
+Initializing the backend...
+
+Initializing modules...
+
+Initializing provider plugins...
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Using previously-installed hashicorp/aws v5.100.0
+
+╷
+│ Warning: Missing backend configuration
+│
+│ -backend-config was used without a "backend" block in the configuration.
+│
+│ If you intended to override the default local backend configuration,
+│ no action is required, but you may add an explicit backend block to your
+│ configuration to clear this warning:
+│
+│ terraform {
+│   backend "local" {}
+│ }
+│
+│ However, if you intended to override a defined backend, please verify that
+│ the backend configuration is present and valid.
+│
+╵
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+$ terraform plan -var="sufixo=$SUFIXO"
+module.lake.aws_glue_catalog_database.db: Refreshing state... [id=<account>:eda_a12_brlla]
+module.lake.aws_s3_bucket.lake: Refreshing state... [id=eda-a12-brlla-lake]
+module.lake.aws_s3_bucket.results: Refreshing state... [id=eda-a12-brlla-results]
+module.lake.aws_s3_bucket_public_access_block.lake: Refreshing state... [id=eda-a12-brlla-lake]
+module.lake.aws_glue_catalog_table.corridas: Refreshing state... [id=<account>:eda_a12_brlla:corridas]
+module.lake.aws_athena_workgroup.wg: Refreshing state... [id=eda-a12-brlla-wg]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.

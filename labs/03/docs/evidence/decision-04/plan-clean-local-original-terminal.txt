@@ -1,0 +1,14 @@
+# Step 6 — ORIGINAL terminal output (pasted from the author's terminal scrollback)
+# run: 2026-09-15 ~13:02Z (shell history), right after the six `terraform state mv`
+# state: local · Terraform v1.16.1 · AWS account ID redacted
+$ terraform plan -var="sufixo=$SUFIXO"
+module.lake.aws_glue_catalog_database.db: Refreshing state... [id=<account>:eda_a12_brlla]
+module.lake.aws_s3_bucket.lake: Refreshing state... [id=eda-a12-brlla-lake]
+module.lake.aws_s3_bucket.results: Refreshing state... [id=eda-a12-brlla-results]
+module.lake.aws_s3_bucket_public_access_block.lake: Refreshing state... [id=eda-a12-brlla-lake]
+module.lake.aws_glue_catalog_table.corridas: Refreshing state... [id=<account>:eda_a12_brlla:corridas]
+module.lake.aws_athena_workgroup.wg: Refreshing state... [id=eda-a12-brlla-wg]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.

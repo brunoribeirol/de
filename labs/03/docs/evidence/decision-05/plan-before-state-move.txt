@@ -1,0 +1,432 @@
+# Step 4 — plan right after moving the CODE into module.lake, BEFORE any state move.
+# Terraform sees the old addresses as removed and the new ones as added: 6 destroy + 6 create.
+# NOT applied. run: 2026-09-15 ~13:00Z (shell history)
+# ORIGINAL terminal output, pasted from the author's terminal scrollback.
+# Terraform v1.16.1 · hashicorp/aws v5.100.0 · AWS_PROFILE=de · AWS_REGION=us-east-1
+# Redacted: AWS account ID -> <account>, S3 canonical user ID -> <s3-canonical-user-id>.
+$ terraform plan -var="sufixo=$SUFIXO"
+aws_s3_bucket_public_access_block.lake: Refreshing state... [id=eda-a12-brlla-lake]
+aws_athena_workgroup.wg: Refreshing state... [id=eda-a12-brlla-wg]
+aws_glue_catalog_table.corridas: Refreshing state... [id=<account>:eda_a12_brlla:corridas]
+aws_glue_catalog_database.db: Refreshing state... [id=<account>:eda_a12_brlla]
+aws_s3_bucket.results: Refreshing state... [id=eda-a12-brlla-results]
+aws_s3_bucket.lake: Refreshing state... [id=eda-a12-brlla-lake]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_athena_workgroup.wg will be destroyed
+  # (because aws_athena_workgroup.wg is not in configuration)
+  - resource "aws_athena_workgroup" "wg" {
+      - arn           = "arn:aws:athena:us-east-1:<account>:workgroup/eda-a12-brlla-wg" -> null
+      - force_destroy = true -> null
+      - id            = "eda-a12-brlla-wg" -> null
+      - name          = "eda-a12-brlla-wg" -> null
+      - state         = "ENABLED" -> null
+      - tags          = {} -> null
+      - tags_all      = {
+          - "Aula"       = "12"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "brlla"
+        } -> null
+        # (1 unchanged attribute hidden)
+
+      - configuration {
+          - bytes_scanned_cutoff_per_query     = 20971520 -> null
+          - enforce_workgroup_configuration    = true -> null
+          - publish_cloudwatch_metrics_enabled = true -> null
+          - requester_pays_enabled             = false -> null
+            # (1 unchanged attribute hidden)
+
+          - engine_version {
+              - effective_engine_version = "Athena engine version 3" -> null
+              - selected_engine_version  = "AUTO" -> null
+            }
+
+          - result_configuration {
+              - output_location       = "s3://eda-a12-brlla-results/athena-results/" -> null
+                # (1 unchanged attribute hidden)
+            }
+        }
+    }
+
+  # aws_glue_catalog_database.db will be destroyed
+  # (because aws_glue_catalog_database.db is not in configuration)
+  - resource "aws_glue_catalog_database" "db" {
+      - arn          = "arn:aws:glue:us-east-1:<account>:database/eda_a12_brlla" -> null
+      - catalog_id   = "<account>" -> null
+      - id           = "<account>:eda_a12_brlla" -> null
+      - name         = "eda_a12_brlla" -> null
+      - parameters   = {} -> null
+      - tags         = {} -> null
+      - tags_all     = {
+          - "Aula"       = "12"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "brlla"
+        } -> null
+        # (2 unchanged attributes hidden)
+
+      - create_table_default_permission {
+          - permissions = [
+              - "ALL",
+            ] -> null
+
+          - principal {
+              - data_lake_principal_identifier = "IAM_ALLOWED_PRINCIPALS" -> null
+            }
+        }
+    }
+
+  # aws_glue_catalog_table.corridas will be destroyed
+  # (because aws_glue_catalog_table.corridas is not in configuration)
+  - resource "aws_glue_catalog_table" "corridas" {
+      - arn                = "arn:aws:glue:us-east-1:<account>:table/eda_a12_brlla/corridas" -> null
+      - catalog_id         = "<account>" -> null
+      - database_name      = "eda_a12_brlla" -> null
+      - id                 = "<account>:eda_a12_brlla:corridas" -> null
+      - name               = "corridas" -> null
+      - parameters         = {
+          - "classification" = "json"
+        } -> null
+      - retention          = 0 -> null
+      - table_type         = "EXTERNAL_TABLE" -> null
+        # (4 unchanged attributes hidden)
+
+      - partition_keys {
+          - name    = "dt" -> null
+          - type    = "string" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - storage_descriptor {
+          - additional_locations      = [] -> null
+          - bucket_columns            = [] -> null
+          - compressed                = false -> null
+          - input_format              = "org.apache.hadoop.mapred.TextInputFormat" -> null
+          - location                  = "s3://eda-a12-brlla-lake/raw/corridas/" -> null
+          - number_of_buckets         = 0 -> null
+          - output_format             = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat" -> null
+          - parameters                = {} -> null
+          - stored_as_sub_directories = false -> null
+
+          - columns {
+              - name       = "corrida_id" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "bairro" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "valor" -> null
+              - parameters = {} -> null
+              - type       = "double" -> null
+                # (1 unchanged attribute hidden)
+            }
+
+          - ser_de_info {
+                name                  = null
+              - parameters            = {} -> null
+              - serialization_library = "org.openx.data.jsonserde.JsonSerDe" -> null
+            }
+        }
+    }
+
+  # aws_s3_bucket.lake will be destroyed
+  # (because aws_s3_bucket.lake is not in configuration)
+  - resource "aws_s3_bucket" "lake" {
+      - arn                         = "arn:aws:s3:::eda-a12-brlla-lake" -> null
+      - bucket                      = "eda-a12-brlla-lake" -> null
+      - bucket_domain_name          = "eda-a12-brlla-lake.s3.amazonaws.com" -> null
+      - bucket_regional_domain_name = "eda-a12-brlla-lake.s3.us-east-1.amazonaws.com" -> null
+      - force_destroy               = true -> null
+      - hosted_zone_id              = "Z3AQBSTGFYJSTF" -> null
+      - id                          = "eda-a12-brlla-lake" -> null
+      - object_lock_enabled         = false -> null
+      - region                      = "us-east-1" -> null
+      - request_payer               = "BucketOwner" -> null
+      - tags                        = {} -> null
+      - tags_all                    = {
+          - "Aula"       = "12"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "brlla"
+        } -> null
+        # (3 unchanged attributes hidden)
+
+      - grant {
+          - id          = "<s3-canonical-user-id>" -> null
+          - permissions = [
+              - "FULL_CONTROL",
+            ] -> null
+          - type        = "CanonicalUser" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - server_side_encryption_configuration {
+          - rule {
+              - bucket_key_enabled = false -> null
+
+              - apply_server_side_encryption_by_default {
+                  - sse_algorithm     = "AES256" -> null
+                    # (1 unchanged attribute hidden)
+                }
+            }
+        }
+
+      - versioning {
+          - enabled    = false -> null
+          - mfa_delete = false -> null
+        }
+    }
+
+  # aws_s3_bucket.results will be destroyed
+  # (because aws_s3_bucket.results is not in configuration)
+  - resource "aws_s3_bucket" "results" {
+      - arn                         = "arn:aws:s3:::eda-a12-brlla-results" -> null
+      - bucket                      = "eda-a12-brlla-results" -> null
+      - bucket_domain_name          = "eda-a12-brlla-results.s3.amazonaws.com" -> null
+      - bucket_regional_domain_name = "eda-a12-brlla-results.s3.us-east-1.amazonaws.com" -> null
+      - force_destroy               = true -> null
+      - hosted_zone_id              = "Z3AQBSTGFYJSTF" -> null
+      - id                          = "eda-a12-brlla-results" -> null
+      - object_lock_enabled         = false -> null
+      - region                      = "us-east-1" -> null
+      - request_payer               = "BucketOwner" -> null
+      - tags                        = {} -> null
+      - tags_all                    = {
+          - "Aula"       = "12"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "brlla"
+        } -> null
+        # (3 unchanged attributes hidden)
+
+      - grant {
+          - id          = "<s3-canonical-user-id>" -> null
+          - permissions = [
+              - "FULL_CONTROL",
+            ] -> null
+          - type        = "CanonicalUser" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - server_side_encryption_configuration {
+          - rule {
+              - bucket_key_enabled = false -> null
+
+              - apply_server_side_encryption_by_default {
+                  - sse_algorithm     = "AES256" -> null
+                    # (1 unchanged attribute hidden)
+                }
+            }
+        }
+
+      - versioning {
+          - enabled    = false -> null
+          - mfa_delete = false -> null
+        }
+    }
+
+  # aws_s3_bucket_public_access_block.lake will be destroyed
+  # (because aws_s3_bucket_public_access_block.lake is not in configuration)
+  - resource "aws_s3_bucket_public_access_block" "lake" {
+      - block_public_acls       = true -> null
+      - block_public_policy     = true -> null
+      - bucket                  = "eda-a12-brlla-lake" -> null
+      - id                      = "eda-a12-brlla-lake" -> null
+      - ignore_public_acls      = true -> null
+      - restrict_public_buckets = true -> null
+    }
+
+  # module.lake.aws_athena_workgroup.wg will be created
+  + resource "aws_athena_workgroup" "wg" {
+      + arn           = (known after apply)
+      + force_destroy = true
+      + id            = (known after apply)
+      + name          = "eda-a12-brlla-wg"
+      + state         = "ENABLED"
+      + tags_all      = {
+          + "Aula"       = "12"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "brlla"
+        }
+
+      + configuration {
+          + bytes_scanned_cutoff_per_query     = 20971520
+          + enforce_workgroup_configuration    = true
+          + publish_cloudwatch_metrics_enabled = true
+          + requester_pays_enabled             = false
+
+          + result_configuration {
+              + output_location = "s3://eda-a12-brlla-results/athena-results/"
+            }
+        }
+    }
+
+  # module.lake.aws_glue_catalog_database.db will be created
+  + resource "aws_glue_catalog_database" "db" {
+      + arn          = (known after apply)
+      + catalog_id   = (known after apply)
+      + id           = (known after apply)
+      + location_uri = (known after apply)
+      + name         = "eda_a12_brlla"
+      + tags_all     = {
+          + "Aula"       = "12"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "brlla"
+        }
+
+      + create_table_default_permission (known after apply)
+    }
+
+  # module.lake.aws_glue_catalog_table.corridas will be created
+  + resource "aws_glue_catalog_table" "corridas" {
+      + arn           = (known after apply)
+      + catalog_id    = (known after apply)
+      + database_name = "eda_a12_brlla"
+      + id            = (known after apply)
+      + name          = "corridas"
+      + parameters    = {
+          + "classification" = "json"
+        }
+      + table_type    = "EXTERNAL_TABLE"
+
+      + partition_index (known after apply)
+
+      + partition_keys {
+          + name = "dt"
+          + type = "string"
+        }
+
+      + storage_descriptor {
+          + input_format  = "org.apache.hadoop.mapred.TextInputFormat"
+          + location      = "s3://eda-a12-brlla-lake/raw/corridas/"
+          + output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
+
+          + columns {
+              + name = "corrida_id"
+              + type = "string"
+            }
+          + columns {
+              + name = "bairro"
+              + type = "string"
+            }
+          + columns {
+              + name = "valor"
+              + type = "double"
+            }
+
+          + ser_de_info {
+              + serialization_library = "org.openx.data.jsonserde.JsonSerDe"
+            }
+        }
+    }
+
+  # module.lake.aws_s3_bucket.lake will be created
+  + resource "aws_s3_bucket" "lake" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "eda-a12-brlla-lake"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = true
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags_all                    = {
+          + "Aula"       = "12"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "brlla"
+        }
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # module.lake.aws_s3_bucket.results will be created
+  + resource "aws_s3_bucket" "results" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "eda-a12-brlla-results"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = true
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags_all                    = {
+          + "Aula"       = "12"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "brlla"
+        }
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # module.lake.aws_s3_bucket_public_access_block.lake will be created
+  + resource "aws_s3_bucket_public_access_block" "lake" {
+      + block_public_acls       = true
+      + block_public_policy     = true
+      + bucket                  = (known after apply)
+      + id                      = (known after apply)
+      + ignore_public_acls      = true
+      + restrict_public_buckets = true
+    }
+
+Plan: 6 to add, 0 to change, 6 to destroy.
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply"
+now.
