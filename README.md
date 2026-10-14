@@ -13,6 +13,10 @@ infer it — with a different piece of the stack per cycle.
 | [`labs/02`](labs/02) | Same data lake, provisioned from scratch, local Terraform state | Terraform | [PR #2](https://github.com/brunoribeirol/de/pull/2) — merged |
 | [`labs/03`](labs/03) | The same stack refactored into module + remote backend + workspace, with a clean `plan` | Terraform | [PR #4](https://github.com/brunoribeirol/de/pull/4) — merged |
 
+Cycle 4 (analytics modeling and ELT with AWS Glue) has no lab here: the course
+replaced that cycle's individual exercise with Part 1 of the group project
+(AV1), which is kept in the group's own repository.
+
 Shared infrastructure that outlives any single lab lives outside `labs/`:
 [`infra/tfstate-backend/`](infra/tfstate-backend) provisions the S3 bucket
 holding the remote Terraform state, so a lab's `destroy` can never take it down.
