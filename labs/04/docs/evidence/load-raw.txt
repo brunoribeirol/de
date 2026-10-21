@@ -1,0 +1,11 @@
+>> [1/2] gerando 30 dias de corridas em /tmp/eda-a21 (seed 42, ~10 s)
+
+destino ............. /tmp/eda-a21/raw/corridas
+objetos ............. 30  (um por partição dt=)
+eventos ............. 518.400
+bytes ............... 117.655.606
+maior partição ...... dt=2026-10-18  3.922.560 bytes
+>> [2/2] copiando para s3://eda-a21-lake-grupo07/raw/ (~112 MB; depende da rede)
+delete: s3://eda-a21-lake-grupo07/raw/corridas/dt=2026-09-30/parte-0001.json
+Total Objects: 30
+   Total Size: 13945588

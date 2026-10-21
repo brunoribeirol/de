@@ -1,0 +1,11 @@
+output/
+
+# Terraform: local state/cache and account-specific backend config.
+# (Course material, tfvars, and tfstate are also covered by the root .gitignore.)
+terraform/.terraform/
+terraform/.terraform.tfstate.lock.info
+terraform/backend.hcl
+terraform/*.tfplan
+**/*.tfstate
+**/*.tfstate.backup
+**/*.tfstate.*.backup
