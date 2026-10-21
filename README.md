@@ -12,7 +12,7 @@ infer it — with a different piece of the stack per cycle.
 | [`labs/01`](labs/01) | Declared Glue schema, no Crawler, Athena scan-limit guardrail | CloudFormation | [PR #1](https://github.com/brunoribeirol/de/pull/1) — merged |
 | [`labs/02`](labs/02) | Same data lake, provisioned from scratch, local Terraform state | Terraform | [PR #2](https://github.com/brunoribeirol/de/pull/2) — merged |
 | [`labs/03`](labs/03) | The same stack refactored into module + remote backend + workspace, with a clean `plan` | Terraform | [PR #4](https://github.com/brunoribeirol/de/pull/4) — merged |
-| [`labs/04`](labs/04) | The `trusted` table as partitioned Parquet, with a declared per-query cost target proven in Athena | Terraform | in review |
+| [`labs/04`](labs/04) | The `trusted` table as partitioned Parquet, with a declared per-query cost target proven in Athena | Terraform | [PR #9](https://github.com/brunoribeirol/de/pull/9) — merged |
 
 Cycle 4 (analytics modeling and ELT with AWS Glue) has no lab here: the course
 replaced that cycle's individual exercise with Part 1 of the group project
