@@ -1,0 +1,30 @@
+Exercício 04 — verificação (região us-east-1)
+----------------------------------------------------------------
+Critério 0 — Terraform com backend remoto, trusted em Parquet (ELIMINATÓRIO)
+OK     [0]  backend s3 e trusted em Parquet
+----------------------------------------------------------------
+Critério 1 — a trusted está declarada e particionada por data
+PASSA  [1]  (15%)  partição: dt · 10 colunas + 1 chave(s) = as 10 colunas e o dt.
+----------------------------------------------------------------
+Critério 2 — a trusted tem os 30 dias, sem perder corrida
+PASSA  [2]  (10%)  518400 corridas em 30 dias.
+----------------------------------------------------------------
+Critério 3 — no máximo 4 arquivos por pasta de partição
+PASSA  [3]  (10%)  30 arquivos, no máximo 1 por pasta, 18143089 bytes no total.
+----------------------------------------------------------------
+Critério 4 — a pergunta da madrugada (7 dias) cabe na META declarada
+       meta declarada: 524288 bytes · Data scanned: 355803 bytes · corridas: 11137
+PASSA  [4]  (25%)  leu 355803 bytes, dentro da meta de 524288. Resposta certa: 11137 corridas.
+----------------------------------------------------------------
+Critério 5 — o teto do workgroup existe e barra a consulta larga
+PASSA  [5]  (10%)  teto de 10485760 bytes: a consulta de todas as colunas foi barrada (CANCELLED).
+       Bytes scanned limit was exceeded
+----------------------------------------------------------------
+Critério 7 — DECISOES.md (avaliação manual)
+       encontrei 5 decisões em /Users/brunoribeiro/Documents/Projects/academic/de/labs/04/DECISOES.md — o conteúdo é avaliado à mão (20%).
+----------------------------------------------------------------
+Critérios automáticos: 70 / 70 pontos-percentuais
+       faltam o critério 6 (./verificacao/verifica.sh --pos-destroy) e o 7 (manual).
+
+Cole no seu PR:
+  particao=dt  arquivos=30  meta=524288  lido_madrugada_7d=355803  teto=10485760  criterios_auto=70/70  data=2026-10-21T13:56:34Z

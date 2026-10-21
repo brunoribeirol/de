@@ -1,0 +1,18 @@
+== layout: dt · window: dt >= 2026-10-15 · cutoff: 10485760 · target: 524288
+trusted: 30 files in 30 folders, max 1 per folder, 18143089 bytes, avg 604769 bytes/file
+7-day window: 7 files
+  dt=2026-10-15/part-00002-5c7bcc5e-b368-4cd8-97bd-2e3270d3904a.c000.snappy.parquet    603892 bytes  footer   2078 bytes
+  dt=2026-10-16/part-00002-5c7bcc5e-b368-4cd8-97bd-2e3270d3904a.c000.snappy.parquet    604474 bytes  footer   2078 bytes
+  dt=2026-10-17/part-00002-5c7bcc5e-b368-4cd8-97bd-2e3270d3904a.c000.snappy.parquet    604745 bytes  footer   2078 bytes
+  dt=2026-10-18/part-00002-5c7bcc5e-b368-4cd8-97bd-2e3270d3904a.c000.snappy.parquet    604485 bytes  footer   2078 bytes
+  dt=2026-10-19/part-00003-5c7bcc5e-b368-4cd8-97bd-2e3270d3904a.c000.snappy.parquet    604256 bytes  footer   2078 bytes
+  dt=2026-10-20/part-00002-5c7bcc5e-b368-4cd8-97bd-2e3270d3904a.c000.snappy.parquet    604029 bytes  footer   2078 bytes
+  dt=2026-10-21/part-00000-5c7bcc5e-b368-4cd8-97bd-2e3270d3904a.c000.snappy.parquet    605928 bytes  footer   2078 bytes
+footers in the window: 14546 bytes
+night question (7 days): SUCCEEDED · scanned 355803 bytes · 11137 rides · target 524288 (67% of it)
+all columns, 7 days:  SUCCEEDED · scanned 4134853 bytes
+all columns, 30 days: CANCELLED · scanned 10485760 bytes before stopping
+  reason: Bytes scanned limit was exceeded
+partitions in the Glue catalog: 0
+projection.dt.range: 2026-01-01,NOW
+measured at: 2026-10-21T14:16:42Z

@@ -1,0 +1,11 @@
+# cp terraform.tfvars.example terraform.tfvars  e troque turma, owner e sufixo.
+# As quatro DECISÕES abaixo são as do grupo; a justificativa, com número, está
+# em ../DECISOES.md.
+turma  = "TURMA-A"
+owner  = "seu-email@cesar.school"
+sufixo = "grupoXX" # só minúsculas e números
+
+chaves_particao      = ["dt"]   # DECISÃO 01 — a pergunta filtra por data, não por bairro
+arquivos_por_pasta   = 1        # DECISÃO 02 — um dia inteiro tem ~600 KB em Parquet
+meta_bytes_madrugada = 524288   # DECISÃO 03 — 512 KiB
+teto_bytes           = 10485760 # DECISÃO 04 — 10 MiB, o mínimo do Athena

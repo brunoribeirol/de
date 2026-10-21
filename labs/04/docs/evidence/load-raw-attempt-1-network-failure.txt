@@ -1,0 +1,9 @@
+>> [1/2] gerando 30 dias de corridas em /tmp/eda-a21 (seed 42, ~10 s)
+
+destino ............. /tmp/eda-a21/raw/corridas
+objetos ............. 30  (um por partição dt=)
+eventos ............. 518.400
+bytes ............... 117.655.606
+maior partição ...... dt=2026-10-18  3.922.560 bytes
+>> [2/2] copiando para s3://eda-a21-lake-grupo07/raw/ (~112 MB; depende da rede)
+fatal error: Could not connect to the endpoint URL: "https://eda-a21-lake-grupo07.s3.us-east-1.amazonaws.com/?list-type=2&prefix=raw%2F&encoding-type=url"

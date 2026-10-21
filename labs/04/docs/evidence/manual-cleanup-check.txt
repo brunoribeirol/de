@@ -1,0 +1,5 @@
+ABSENT   aws s3api head-bucket --bucket eda-a21-lake-grupo07 -> aws: [ERROR]: An error occurred (404) when calling the HeadBucket operation: Not Found
+ABSENT   aws glue get-database --name eda_a21_grupo07 -> aws: [ERROR]: An error occurred (EntityNotFoundException) when calling the GetDatabase operation: Database eda_a21_grupo07 not found.
+ABSENT   aws glue get-job --job-name eda-a21-trusted-grupo07 -> aws: [ERROR]: An error occurred (EntityNotFoundException) when calling the GetJob operation: Job not found.
+ABSENT   aws athena get-work-group --work-group eda-a21-wg-grupo07 -> AthenaErrorCode: INVALID_INPUT
+ABSENT   aws iam get-role --role-name eda-a21-glue-grupo07 -> aws: [ERROR]: An error occurred (NoSuchEntity) when calling the GetRole operation: The role with name eda-a21-glue-grupo07 cannot be found.

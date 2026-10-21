@@ -1,0 +1,393 @@
+
+Warning: Deprecated Parameter
+
+The parameter "dynamodb_table" is deprecated. Use parameter "use_lockfile" instead.
+Acquiring state lock. This may take a few moments...
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # aws_athena_workgroup.wg will be created
+  + resource "aws_athena_workgroup" "wg" {
+      + arn           = (known after apply)
+      + force_destroy = true
+      + id            = (known after apply)
+      + name          = "eda-a21-wg-grupo07"
+      + state         = "ENABLED"
+      + tags_all      = {
+          + "Aula"       = "21"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "<owner-email>"
+          + "Turma"      = "TURMA-A"
+        }
+
+      + configuration {
+          + bytes_scanned_cutoff_per_query     = 10485760
+          + enforce_workgroup_configuration    = true
+          + publish_cloudwatch_metrics_enabled = false
+          + requester_pays_enabled             = false
+
+          + result_configuration {
+              + output_location = "s3://eda-a21-lake-grupo07/athena-results/"
+            }
+        }
+    }
+
+  # aws_glue_catalog_database.lake will be created
+  + resource "aws_glue_catalog_database" "lake" {
+      + arn          = (known after apply)
+      + catalog_id   = (known after apply)
+      + id           = (known after apply)
+      + location_uri = (known after apply)
+      + name         = "eda_a21_grupo07"
+      + tags_all     = {
+          + "Aula"       = "21"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "<owner-email>"
+          + "Turma"      = "TURMA-A"
+        }
+
+      + create_table_default_permission (known after apply)
+    }
+
+  # aws_glue_catalog_table.raw will be created
+  + resource "aws_glue_catalog_table" "raw" {
+      + arn           = (known after apply)
+      + catalog_id    = (known after apply)
+      + database_name = "eda_a21_grupo07"
+      + id            = (known after apply)
+      + name          = "raw_corridas"
+      + parameters    = {
+          + "classification" = "json"
+        }
+      + table_type    = "EXTERNAL_TABLE"
+
+      + partition_index (known after apply)
+
+      + partition_keys {
+          + name = "dt"
+          + type = "string"
+        }
+
+      + storage_descriptor {
+          + input_format  = "org.apache.hadoop.mapred.TextInputFormat"
+          + location      = "s3://eda-a21-lake-grupo07/raw/corridas/"
+          + output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
+
+          + columns {
+              + name = "corrida_id"
+              + type = "string"
+            }
+          + columns {
+              + name = "motorista_id"
+              + type = "string"
+            }
+          + columns {
+              + name = "passageiro_id"
+              + type = "string"
+            }
+          + columns {
+              + name = "bairro"
+              + type = "string"
+            }
+          + columns {
+              + name = "data_corrida"
+              + type = "string"
+            }
+          + columns {
+              + name = "fim"
+              + type = "string"
+            }
+          + columns {
+              + name = "distancia_km"
+              + type = "double"
+            }
+          + columns {
+              + name = "duracao_min"
+              + type = "double"
+            }
+          + columns {
+              + name = "valor"
+              + type = "string"
+            }
+
+          + ser_de_info {
+              + serialization_library = "org.openx.data.jsonserde.JsonSerDe"
+            }
+        }
+    }
+
+  # aws_glue_catalog_table.trusted will be created
+  + resource "aws_glue_catalog_table" "trusted" {
+      + arn           = (known after apply)
+      + catalog_id    = (known after apply)
+      + database_name = "eda_a21_grupo07"
+      + id            = (known after apply)
+      + name          = "trusted_corridas"
+      + parameters    = {
+          + "classification"              = "parquet"
+          + "parquet.compression"         = "SNAPPY"
+          + "projection.dt.format"        = "yyyy-MM-dd"
+          + "projection.dt.interval"      = "1"
+          + "projection.dt.interval.unit" = "DAYS"
+          + "projection.dt.range"         = "2026-01-01,NOW"
+          + "projection.dt.type"          = "date"
+          + "projection.enabled"          = "true"
+          + "storage.location.template"   = "s3://eda-a21-lake-grupo07/trusted/corridas/dt=${dt}"
+        }
+      + table_type    = "EXTERNAL_TABLE"
+
+      + partition_index (known after apply)
+
+      + partition_keys {
+          + name = "dt"
+          + type = "string"
+        }
+
+      + storage_descriptor {
+          + input_format  = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat"
+          + location      = "s3://eda-a21-lake-grupo07/trusted/corridas/"
+          + output_format = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat"
+
+          + columns {
+              + name = "corrida_id"
+              + type = "string"
+            }
+          + columns {
+              + name = "motorista_id"
+              + type = "string"
+            }
+          + columns {
+              + name = "passageiro_id"
+              + type = "string"
+            }
+          + columns {
+              + name = "bairro"
+              + type = "string"
+            }
+          + columns {
+              + name = "inicio"
+              + type = "timestamp"
+            }
+          + columns {
+              + name = "fim"
+              + type = "timestamp"
+            }
+          + columns {
+              + name = "distancia_km"
+              + type = "double"
+            }
+          + columns {
+              + name = "duracao_min"
+              + type = "double"
+            }
+          + columns {
+              + name = "valor"
+              + type = "double"
+            }
+          + columns {
+              + name = "faixa_hora"
+              + type = "int"
+            }
+
+          + ser_de_info {
+              + serialization_library = "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe"
+            }
+        }
+    }
+
+  # aws_glue_job.trusted will be created
+  + resource "aws_glue_job" "trusted" {
+      + arn               = (known after apply)
+      + default_arguments = {
+          + "--ARQUIVOS_POR_PASTA"  = "1"
+          + "--BUCKET"              = "eda-a21-lake-grupo07"
+          + "--CHAVES"              = "dt"
+          + "--job-bookmark-option" = "job-bookmark-disable"
+          + "--job-language"        = "python"
+        }
+      + glue_version      = "4.0"
+      + id                = (known after apply)
+      + max_capacity      = (known after apply)
+      + max_retries       = 0
+      + name              = "eda-a21-trusted-grupo07"
+      + number_of_workers = 2
+      + role_arn          = (known after apply)
+      + tags_all          = {
+          + "Aula"       = "21"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "<owner-email>"
+          + "Turma"      = "TURMA-A"
+        }
+      + timeout           = 20
+      + worker_type       = "G.1X"
+
+      + command {
+          + name            = "glueetl"
+          + python_version  = "3"
+          + runtime         = (known after apply)
+          + script_location = "s3://eda-a21-lake-grupo07/scripts/trusted-parquet.py"
+        }
+
+      + execution_property (known after apply)
+
+      + notification_property (known after apply)
+    }
+
+  # aws_iam_role.glue will be created
+  + resource "aws_iam_role" "glue" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "glue.amazonaws.com"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "eda-a21-glue-grupo07"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags_all              = {
+          + "Aula"       = "21"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "<owner-email>"
+          + "Turma"      = "TURMA-A"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # aws_iam_role_policy.glue_bucket will be created
+  + resource "aws_iam_role_policy" "glue_bucket" {
+      + id          = (known after apply)
+      + name        = "eda-a21-bucket-rw"
+      + name_prefix = (known after apply)
+      + policy      = (known after apply)
+      + role        = (known after apply)
+    }
+
+  # aws_iam_role_policy_attachment.glue_service will be created
+  + resource "aws_iam_role_policy_attachment" "glue_service" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
+      + role       = "eda-a21-glue-grupo07"
+    }
+
+  # aws_s3_bucket.lake will be created
+  + resource "aws_s3_bucket" "lake" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "eda-a21-lake-grupo07"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = true
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags_all                    = {
+          + "Aula"       = "21"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "<owner-email>"
+          + "Turma"      = "TURMA-A"
+        }
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # aws_s3_bucket_public_access_block.lake will be created
+  + resource "aws_s3_bucket_public_access_block" "lake" {
+      + block_public_acls       = true
+      + block_public_policy     = true
+      + bucket                  = (known after apply)
+      + id                      = (known after apply)
+      + ignore_public_acls      = true
+      + restrict_public_buckets = true
+    }
+
+  # aws_s3_object.script will be created
+  + resource "aws_s3_object" "script" {
+      + acl                    = (known after apply)
+      + arn                    = (known after apply)
+      + bucket                 = (known after apply)
+      + bucket_key_enabled     = (known after apply)
+      + checksum_crc32         = (known after apply)
+      + checksum_crc32c        = (known after apply)
+      + checksum_crc64nvme     = (known after apply)
+      + checksum_sha1          = (known after apply)
+      + checksum_sha256        = (known after apply)
+      + content_type           = (known after apply)
+      + etag                   = "9ac5617cb8d842f10e63b06486d56331"
+      + force_destroy          = false
+      + id                     = (known after apply)
+      + key                    = "scripts/trusted-parquet.py"
+      + kms_key_id             = (known after apply)
+      + server_side_encryption = (known after apply)
+      + source                 = "./scripts/trusted-parquet.py"
+      + storage_class          = (known after apply)
+      + tags_all               = {
+          + "Aula"       = "21"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "<owner-email>"
+          + "Turma"      = "TURMA-A"
+        }
+      + version_id             = (known after apply)
+    }
+
+Plan: 11 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + bucket_name          = "eda-a21-lake-grupo07"
+  + chaves_particao      = "dt"
+  + database_name        = "eda_a21_grupo07"
+  + job_name             = "eda-a21-trusted-grupo07"
+  + meta_bytes_madrugada = 524288
+  + teto_bytes           = 10485760
+  + trusted_table_name   = "trusted_corridas"
+  + workgroup_name       = "eda-a21-wg-grupo07"
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: lab04.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "lab04.tfplan"
+Releasing state lock. This may take a few moments...
