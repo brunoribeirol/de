@@ -1,0 +1,50 @@
+hoje (última pasta) .... dt=2026-11-04
+dado atrasado .......... 1.591 corridas da madrugada de 2026-11-01
+                         saíram de dt=2026-11-01/ e chegaram em dt=2026-11-04/parte-0002-atrasadas.json
+reentrega .............. 17.280 corridas de 2026-10-30 chegaram de novo em dt=2026-10-31/parte-0002-reenvio.json
+
+as linhas para o Athena, prontas para copiar:
+    WHERE dt >= '2026-10-29'          -- os últimos 7 dias
+    WHERE dt = '2026-11-01'      -- o dia da madrugada atrasada
+
+raw: 32 files, 535,680 lines, 518,400 distinct corrida_id
+lines per arrival lag (arrival day - event day): 0 d = 516,809, 1 d = 17,280, 3 d = 1,591
+
+DAILY LOAD (DIAS=todos), run 1 and run 2 on the same raw. Verifier: night 11137, rows = distinct = 518400
+modo         chave       janela    fora    dups |  night 1   rows 1   dist 1 |  night 2    rows 2  passes 1/2/3
+append       nenhuma          0  18,871       0 |    9,546  516,809  516,809 |   19,092 1,033,618  fail/fail/fail
+append       nenhuma          1   1,591       0 |   11,137  534,089  516,809 |   22,274 1,068,178  PASS/fail/fail
+append       nenhuma          2   1,591       0 |   11,137  534,089  516,809 |   22,274 1,068,178  PASS/fail/fail
+append       nenhuma          3       0       0 |   12,728  535,680  518,400 |   25,456 1,071,360  fail/fail/fail
+append       nenhuma          4       0       0 |   12,728  535,680  518,400 |   25,456 1,071,360  fail/fail/fail
+append       nenhuma          5       0       0 |   12,728  535,680  518,400 |   25,456 1,071,360  fail/fail/fail
+append       nenhuma          6       0       0 |   12,728  535,680  518,400 |   25,456 1,071,360  fail/fail/fail
+append       nenhuma          7       0       0 |   12,728  535,680  518,400 |   25,456 1,071,360  fail/fail/fail
+append       corrida_id       0  18,871       0 |    9,546  516,809  516,809 |   19,092 1,033,618  fail/fail/fail
+append       corrida_id       1   1,591  17,280 |    9,546  516,809  516,809 |   19,092 1,033,618  fail/fail/fail
+append       corrida_id       2   1,591  17,280 |    9,546  516,809  516,809 |   19,092 1,033,618  fail/fail/fail
+append       corrida_id       3       0  17,280 |   11,137  518,400  518,400 |   22,274 1,036,800  PASS/fail/fail
+append       corrida_id       4       0  17,280 |   11,137  518,400  518,400 |   22,274 1,036,800  PASS/fail/fail
+append       corrida_id       5       0  17,280 |   11,137  518,400  518,400 |   22,274 1,036,800  PASS/fail/fail
+append       corrida_id       6       0  17,280 |   11,137  518,400  518,400 |   22,274 1,036,800  PASS/fail/fail
+append       corrida_id       7       0  17,280 |   11,137  518,400  518,400 |   22,274 1,036,800  PASS/fail/fail
+sobrescrever nenhuma          0  18,871       0 |    9,546  516,809  516,809 |    9,546   516,809  fail/PASS/fail
+sobrescrever nenhuma          1   1,591       0 |   11,137  534,089  516,809 |   11,137   534,089  PASS/PASS/fail
+sobrescrever nenhuma          2   1,591       0 |   11,137  534,089  516,809 |   11,137   534,089  PASS/PASS/fail
+sobrescrever nenhuma          3       0       0 |   12,728  535,680  518,400 |   12,728   535,680  fail/PASS/fail
+sobrescrever nenhuma          4       0       0 |   12,728  535,680  518,400 |   12,728   535,680  fail/PASS/fail
+sobrescrever nenhuma          5       0       0 |   12,728  535,680  518,400 |   12,728   535,680  fail/PASS/fail
+sobrescrever nenhuma          6       0       0 |   12,728  535,680  518,400 |   12,728   535,680  fail/PASS/fail
+sobrescrever nenhuma          7       0       0 |   12,728  535,680  518,400 |   12,728   535,680  fail/PASS/fail
+sobrescrever corrida_id       0  18,871       0 |    9,546  516,809  516,809 |    9,546   516,809  fail/PASS/fail
+sobrescrever corrida_id       1   1,591  17,280 |    9,546  516,809  516,809 |    9,546   516,809  fail/PASS/fail
+sobrescrever corrida_id       2   1,591  17,280 |    9,546  516,809  516,809 |    9,546   516,809  fail/PASS/fail
+sobrescrever corrida_id       3       0  17,280 |   11,137  518,400  518,400 |   11,137   518,400  PASS/PASS/PASS
+sobrescrever corrida_id       4       0  17,280 |   11,137  518,400  518,400 |   11,137   518,400  PASS/PASS/PASS
+sobrescrever corrida_id       5       0  17,280 |   11,137  518,400  518,400 |   11,137   518,400  PASS/PASS/PASS
+sobrescrever corrida_id       6       0  17,280 |   11,137  518,400  518,400 |   11,137   518,400  PASS/PASS/PASS
+sobrescrever corrida_id       7       0  17,280 |   11,137  518,400  518,400 |   11,137   518,400  PASS/PASS/PASS
+
+BACKFILL of D-3 = 2026-11-01 (DIAS=2026-11-01) after a daily load whose window is too short (sobrescrever, corrida_id)
+  janela 2: before night 9,546 rows 516,809 -> backfill writes 1 folder, 17,280 rows (dups 0) -> night 11,137 rows 518,400 distinct 518,400; backfill re-run -> night 11,137 rows 518,400
+  janela 3: before night 11,137 rows 518,400 -> backfill writes 1 folder, 17,280 rows (dups 0) -> night 11,137 rows 518,400 distinct 518,400; backfill re-run -> night 11,137 rows 518,400

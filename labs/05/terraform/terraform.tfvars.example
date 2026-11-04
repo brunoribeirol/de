@@ -1,0 +1,9 @@
+# cp terraform.tfvars.example terraform.tfvars  e troque turma e sufixo.
+# As três DECISÕES abaixo são as do grupo; a justificativa, com número, está em
+# ../DECISOES.md (a DECISÃO 04, o backfill, não é variável: é um comando).
+turma  = "TURMA-A"
+sufixo = "grupoXX" # só minúsculas e números
+
+modo_escrita       = "sobrescrever" # DECISÃO 01 — rodar de novo troca as pastas, não acrescenta
+chave_dedup        = "corrida_id"   # DECISÃO 02 — o reenvio de D-5 vira uma linha por corrida
+janela_atraso_dias = 3              # DECISÃO 03 — o menor valor com fora_da_janela = 0

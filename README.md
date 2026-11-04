@@ -13,6 +13,7 @@ infer it — with a different piece of the stack per cycle.
 | [`labs/02`](labs/02) | Same data lake, provisioned from scratch, local Terraform state | Terraform | [PR #2](https://github.com/brunoribeirol/de/pull/2) — merged |
 | [`labs/03`](labs/03) | The same stack refactored into module + remote backend + workspace, with a clean `plan` | Terraform | [PR #4](https://github.com/brunoribeirol/de/pull/4) — merged |
 | [`labs/04`](labs/04) | The `trusted` table as partitioned Parquet, with a declared per-query cost target proven in Athena | Terraform | [PR #9](https://github.com/brunoribeirol/de/pull/9) — merged |
+| [`labs/05`](labs/05) | An idempotent Glue pipeline: re-run, late data and a re-sent file, same answer before and after | Terraform | [PR #10](https://github.com/brunoribeirol/de/pull/10) — merged |
 
 Cycle 4 (analytics modeling and ELT with AWS Glue) has no lab here: the course
 replaced that cycle's individual exercise with Part 1 of the group project
@@ -30,8 +31,8 @@ assumption.
 
 ## Stack
 
-AWS (S3, Glue Data Catalog, Athena), Terraform and CloudFormation, Python
-for synthetic data generation.
+AWS (S3, Glue Data Catalog, Glue jobs in PySpark, Athena), Terraform and
+CloudFormation, Python for synthetic data generation.
 
 ## Conventions
 

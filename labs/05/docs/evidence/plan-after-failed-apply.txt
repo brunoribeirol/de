@@ -1,0 +1,140 @@
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mDeprecated Parameter[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe parameter "dynamodb_table" is deprecated. Use parameter "use_lockfile"
+[33m│[0m [0minstead.
+[33m╵[0m[0m
+Acquiring state lock. This may take a few moments...
+[0m[1maws_glue_catalog_database.lake: Refreshing state... [id=<account>:eda_a25_grupo07][0m
+[0m[1maws_s3_bucket.lake: Refreshing state... [id=eda-a25-lake-grupo07][0m
+[0m[1maws_glue_catalog_table.raw: Refreshing state... [id=<account>:eda_a25_grupo07:raw_corridas][0m
+[0m[1maws_glue_catalog_table.corridas: Refreshing state... [id=<account>:eda_a25_grupo07:corridas][0m
+[0m[1maws_athena_workgroup.wg: Refreshing state... [id=eda-a25-grupo07-wg][0m
+[0m[1maws_s3_object.script: Refreshing state... [id=scripts/pipeline-corridas.py][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [32m+[0m create[0m
+
+Terraform will perform the following actions:
+
+[1m  # aws_glue_job.pipeline[0m will be created
+[0m  [32m+[0m[0m resource "aws_glue_job" "pipeline" {
+      [32m+[0m[0m arn               = (known after apply)
+      [32m+[0m[0m default_arguments = {
+          [32m+[0m[0m "--BUCKET"              = "eda-a25-lake-grupo07"
+          [32m+[0m[0m "--CHAVE"               = "corrida_id"
+          [32m+[0m[0m "--DIAS"                = "todos"
+          [32m+[0m[0m "--JANELA"              = "3"
+          [32m+[0m[0m "--MODO"                = "sobrescrever"
+          [32m+[0m[0m "--TABELA"              = "corridas"
+          [32m+[0m[0m "--job-bookmark-option" = "job-bookmark-disable"
+          [32m+[0m[0m "--job-language"        = "python"
+        }
+      [32m+[0m[0m glue_version      = "4.0"
+      [32m+[0m[0m id                = (known after apply)
+      [32m+[0m[0m max_capacity      = (known after apply)
+      [32m+[0m[0m max_retries       = 0
+      [32m+[0m[0m name              = "eda-a25-grupo07-pipeline"
+      [32m+[0m[0m number_of_workers = 2
+      [32m+[0m[0m role_arn          = (known after apply)
+      [32m+[0m[0m tags_all          = {
+          [32m+[0m[0m "Aula"       = "25"
+          [32m+[0m[0m "Disciplina" = "EDA"
+          [32m+[0m[0m "Owner"      = "grupo07"
+          [32m+[0m[0m "Turma"      = "TURMA-A"
+        }
+      [32m+[0m[0m timeout           = 15
+      [32m+[0m[0m worker_type       = "G.1X"
+
+      [32m+[0m[0m command {
+          [32m+[0m[0m name            = "glueetl"
+          [32m+[0m[0m python_version  = "3"
+          [32m+[0m[0m runtime         = (known after apply)
+          [32m+[0m[0m script_location = "s3://eda-a25-lake-grupo07/scripts/pipeline-corridas.py"
+        }
+
+      [32m+[0m[0m execution_property (known after apply)
+
+      [32m+[0m[0m notification_property (known after apply)
+    }
+
+[1m  # aws_iam_role.job[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role" "job" {
+      [32m+[0m[0m arn                   = (known after apply)
+      [32m+[0m[0m assume_role_policy    = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "sts:AssumeRole"
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Principal = {
+                          [32m+[0m[0m Service = "glue.amazonaws.com"
+                        }
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m create_date           = (known after apply)
+      [32m+[0m[0m force_detach_policies = false
+      [32m+[0m[0m id                    = (known after apply)
+      [32m+[0m[0m managed_policy_arns   = (known after apply)
+      [32m+[0m[0m max_session_duration  = 3600
+      [32m+[0m[0m name                  = "eda-a25-grupo07-glue"
+      [32m+[0m[0m name_prefix           = (known after apply)
+      [32m+[0m[0m path                  = "/"
+      [32m+[0m[0m tags_all              = {
+          [32m+[0m[0m "Aula"       = "25"
+          [32m+[0m[0m "Disciplina" = "EDA"
+          [32m+[0m[0m "Owner"      = "grupo07"
+          [32m+[0m[0m "Turma"      = "TURMA-A"
+        }
+      [32m+[0m[0m unique_id             = (known after apply)
+
+      [32m+[0m[0m inline_policy (known after apply)
+    }
+
+[1m  # aws_iam_role_policy.bucket[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy" "bucket" {
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m name        = "bucket-rw"
+      [32m+[0m[0m name_prefix = (known after apply)
+      [32m+[0m[0m policy      = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "s3:GetObject",
+                          [32m+[0m[0m "s3:PutObject",
+                          [32m+[0m[0m "s3:DeleteObject",
+                          [32m+[0m[0m "s3:ListBucket",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = [
+                          [32m+[0m[0m "arn:aws:s3:::eda-a25-lake-grupo07",
+                          [32m+[0m[0m "arn:aws:s3:::eda-a25-lake-grupo07/*",
+                        ]
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m role        = (known after apply)
+    }
+
+[1m  # aws_iam_role_policy_attachment.glue[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "glue" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
+      [32m+[0m[0m role       = "eda-a25-grupo07-glue"
+    }
+
+[1mPlan:[0m [0m4 to add, 0 to change, 0 to destroy.
+[90m
+─────────────────────────────────────────────────────────────────────────────[0m
+
+Saved the plan to: lab05.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "lab05.tfplan"

@@ -1,0 +1,8 @@
+iam.amazonaws.com -> 44.216.202.179
+
+sts.amazonaws.com -> 54.239.29.25
+
+glue.us-east-1.amazonaws.com -> 34.203.146.238
+
+
+aws: [ERROR]: An error occurred (NoSuchEntity) when calling the GetRole operation: The role with name eda-a25-grupo07-glue cannot be found.

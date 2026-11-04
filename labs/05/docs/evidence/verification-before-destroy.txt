@@ -1,0 +1,11 @@
+OK     [0]  (elimina)  backend remoto s3 e trusted em Parquet
+PASSA  [1]  (20%)  a madrugada de 7 dias tem 11137 corridas, incluindo as atrasadas
+       rodando o job mais uma vez (~3 min) para o critério 2…
+PASSA  [2]  (25%)  rodar de novo não mudou nada: 518400 linhas e 11137 na madrugada, antes e depois
+PASSA  [3]  (15%)  uma linha por corrida: 518400 linhas, 518400 corridas distintas
+PASSA  [4]  (10%)  terraform plan limpo: o segundo apply não mudaria nada
+
+Critérios automáticos: 70 / 70 pontos-percentuais
+Falta o que o script não mede: o critério 5 (rode com --pos-destroy depois do destroy) e o DECISOES.md (20%).
+
+evidência: sufixo=grupo07 hoje=2026-11-04 madrugada_7d=11137->11137 linhas=518400->518400 distintas=518400 {"chave_dedup":"corrida_id","janela_atraso_dias":3,"modo_escrita":"sobrescrever"}

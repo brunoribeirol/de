@@ -1,0 +1,391 @@
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mDeprecated Parameter[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe parameter "dynamodb_table" is deprecated. Use parameter "use_lockfile"
+[33m│[0m [0minstead.
+[33m╵[0m[0m
+Acquiring state lock. This may take a few moments...
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [32m+[0m create[0m
+
+Terraform will perform the following actions:
+
+[1m  # aws_athena_workgroup.wg[0m will be created
+[0m  [32m+[0m[0m resource "aws_athena_workgroup" "wg" {
+      [32m+[0m[0m arn           = (known after apply)
+      [32m+[0m[0m force_destroy = true
+      [32m+[0m[0m id            = (known after apply)
+      [32m+[0m[0m name          = "eda-a25-grupo07-wg"
+      [32m+[0m[0m state         = "ENABLED"
+      [32m+[0m[0m tags_all      = {
+          [32m+[0m[0m "Aula"       = "25"
+          [32m+[0m[0m "Disciplina" = "EDA"
+          [32m+[0m[0m "Owner"      = "grupo07"
+          [32m+[0m[0m "Turma"      = "TURMA-A"
+        }
+
+      [32m+[0m[0m configuration {
+          [32m+[0m[0m bytes_scanned_cutoff_per_query     = 209715200
+          [32m+[0m[0m enforce_workgroup_configuration    = true
+          [32m+[0m[0m publish_cloudwatch_metrics_enabled = false
+          [32m+[0m[0m requester_pays_enabled             = false
+
+          [32m+[0m[0m result_configuration {
+              [32m+[0m[0m output_location = (known after apply)
+            }
+        }
+    }
+
+[1m  # aws_glue_catalog_database.lake[0m will be created
+[0m  [32m+[0m[0m resource "aws_glue_catalog_database" "lake" {
+      [32m+[0m[0m arn          = (known after apply)
+      [32m+[0m[0m catalog_id   = (known after apply)
+      [32m+[0m[0m id           = (known after apply)
+      [32m+[0m[0m location_uri = (known after apply)
+      [32m+[0m[0m name         = "eda_a25_grupo07"
+      [32m+[0m[0m tags_all     = {
+          [32m+[0m[0m "Aula"       = "25"
+          [32m+[0m[0m "Disciplina" = "EDA"
+          [32m+[0m[0m "Owner"      = "grupo07"
+          [32m+[0m[0m "Turma"      = "TURMA-A"
+        }
+
+      [32m+[0m[0m create_table_default_permission (known after apply)
+    }
+
+[1m  # aws_glue_catalog_table.corridas[0m will be created
+[0m  [32m+[0m[0m resource "aws_glue_catalog_table" "corridas" {
+      [32m+[0m[0m arn           = (known after apply)
+      [32m+[0m[0m catalog_id    = (known after apply)
+      [32m+[0m[0m database_name = "eda_a25_grupo07"
+      [32m+[0m[0m id            = (known after apply)
+      [32m+[0m[0m name          = "corridas"
+      [32m+[0m[0m parameters    = {
+          [32m+[0m[0m "classification"              = "parquet"
+          [32m+[0m[0m "projection.dt.format"        = "yyyy-MM-dd"
+          [32m+[0m[0m "projection.dt.interval"      = "1"
+          [32m+[0m[0m "projection.dt.interval.unit" = "DAYS"
+          [32m+[0m[0m "projection.dt.range"         = "NOW-60DAYS,NOW+1DAYS"
+          [32m+[0m[0m "projection.dt.type"          = "date"
+          [32m+[0m[0m "projection.enabled"          = "true"
+          [32m+[0m[0m "storage.location.template"   = "s3://eda-a25-lake-grupo07/trusted/corridas/dt=${dt}/"
+        }
+      [32m+[0m[0m table_type    = "EXTERNAL_TABLE"
+
+      [32m+[0m[0m partition_index (known after apply)
+
+      [32m+[0m[0m partition_keys {
+          [32m+[0m[0m name = "dt"
+          [32m+[0m[0m type = "string"
+        }
+
+      [32m+[0m[0m storage_descriptor {
+          [32m+[0m[0m input_format  = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat"
+          [32m+[0m[0m location      = "s3://eda-a25-lake-grupo07/trusted/corridas/"
+          [32m+[0m[0m output_format = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat"
+
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "corrida_id"
+              [32m+[0m[0m type = "string"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "motorista_id"
+              [32m+[0m[0m type = "string"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "passageiro_id"
+              [32m+[0m[0m type = "string"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "bairro"
+              [32m+[0m[0m type = "string"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "inicio"
+              [32m+[0m[0m type = "timestamp"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "fim"
+              [32m+[0m[0m type = "timestamp"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "distancia_km"
+              [32m+[0m[0m type = "double"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "duracao_min"
+              [32m+[0m[0m type = "double"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "valor"
+              [32m+[0m[0m type = "double"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "faixa_hora"
+              [32m+[0m[0m type = "int"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "chegada"
+              [32m+[0m[0m type = "string"
+            }
+
+          [32m+[0m[0m ser_de_info {
+              [32m+[0m[0m serialization_library = "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe"
+            }
+        }
+    }
+
+[1m  # aws_glue_catalog_table.raw[0m will be created
+[0m  [32m+[0m[0m resource "aws_glue_catalog_table" "raw" {
+      [32m+[0m[0m arn           = (known after apply)
+      [32m+[0m[0m catalog_id    = (known after apply)
+      [32m+[0m[0m database_name = "eda_a25_grupo07"
+      [32m+[0m[0m id            = (known after apply)
+      [32m+[0m[0m name          = "raw_corridas"
+      [32m+[0m[0m parameters    = {
+          [32m+[0m[0m "classification"              = "json"
+          [32m+[0m[0m "projection.dt.format"        = "yyyy-MM-dd"
+          [32m+[0m[0m "projection.dt.interval"      = "1"
+          [32m+[0m[0m "projection.dt.interval.unit" = "DAYS"
+          [32m+[0m[0m "projection.dt.range"         = "NOW-60DAYS,NOW+1DAYS"
+          [32m+[0m[0m "projection.dt.type"          = "date"
+          [32m+[0m[0m "projection.enabled"          = "true"
+          [32m+[0m[0m "storage.location.template"   = "s3://eda-a25-lake-grupo07/raw/corridas/dt=${dt}/"
+        }
+      [32m+[0m[0m table_type    = "EXTERNAL_TABLE"
+
+      [32m+[0m[0m partition_index (known after apply)
+
+      [32m+[0m[0m partition_keys {
+          [32m+[0m[0m name = "dt"
+          [32m+[0m[0m type = "string"
+        }
+
+      [32m+[0m[0m storage_descriptor {
+          [32m+[0m[0m input_format  = "org.apache.hadoop.mapred.TextInputFormat"
+          [32m+[0m[0m location      = "s3://eda-a25-lake-grupo07/raw/corridas/"
+          [32m+[0m[0m output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
+
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "corrida_id"
+              [32m+[0m[0m type = "string"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "motorista_id"
+              [32m+[0m[0m type = "string"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "passageiro_id"
+              [32m+[0m[0m type = "string"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "bairro"
+              [32m+[0m[0m type = "string"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "data_corrida"
+              [32m+[0m[0m type = "string"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "fim"
+              [32m+[0m[0m type = "string"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "distancia_km"
+              [32m+[0m[0m type = "double"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "duracao_min"
+              [32m+[0m[0m type = "double"
+            }
+          [32m+[0m[0m columns {
+              [32m+[0m[0m name = "valor"
+              [32m+[0m[0m type = "string"
+            }
+
+          [32m+[0m[0m ser_de_info {
+              [32m+[0m[0m serialization_library = "org.openx.data.jsonserde.JsonSerDe"
+            }
+        }
+    }
+
+[1m  # aws_glue_job.pipeline[0m will be created
+[0m  [32m+[0m[0m resource "aws_glue_job" "pipeline" {
+      [32m+[0m[0m arn               = (known after apply)
+      [32m+[0m[0m default_arguments = (known after apply)
+      [32m+[0m[0m glue_version      = "4.0"
+      [32m+[0m[0m id                = (known after apply)
+      [32m+[0m[0m max_capacity      = (known after apply)
+      [32m+[0m[0m max_retries       = 0
+      [32m+[0m[0m name              = "eda-a25-grupo07-pipeline"
+      [32m+[0m[0m number_of_workers = 2
+      [32m+[0m[0m role_arn          = (known after apply)
+      [32m+[0m[0m tags_all          = {
+          [32m+[0m[0m "Aula"       = "25"
+          [32m+[0m[0m "Disciplina" = "EDA"
+          [32m+[0m[0m "Owner"      = "grupo07"
+          [32m+[0m[0m "Turma"      = "TURMA-A"
+        }
+      [32m+[0m[0m timeout           = 15
+      [32m+[0m[0m worker_type       = "G.1X"
+
+      [32m+[0m[0m command {
+          [32m+[0m[0m name            = "glueetl"
+          [32m+[0m[0m python_version  = "3"
+          [32m+[0m[0m runtime         = (known after apply)
+          [32m+[0m[0m script_location = (known after apply)
+        }
+
+      [32m+[0m[0m execution_property (known after apply)
+
+      [32m+[0m[0m notification_property (known after apply)
+    }
+
+[1m  # aws_iam_role.job[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role" "job" {
+      [32m+[0m[0m arn                   = (known after apply)
+      [32m+[0m[0m assume_role_policy    = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "sts:AssumeRole"
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Principal = {
+                          [32m+[0m[0m Service = "glue.amazonaws.com"
+                        }
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m create_date           = (known after apply)
+      [32m+[0m[0m force_detach_policies = false
+      [32m+[0m[0m id                    = (known after apply)
+      [32m+[0m[0m managed_policy_arns   = (known after apply)
+      [32m+[0m[0m max_session_duration  = 3600
+      [32m+[0m[0m name                  = "eda-a25-grupo07-glue"
+      [32m+[0m[0m name_prefix           = (known after apply)
+      [32m+[0m[0m path                  = "/"
+      [32m+[0m[0m tags_all              = {
+          [32m+[0m[0m "Aula"       = "25"
+          [32m+[0m[0m "Disciplina" = "EDA"
+          [32m+[0m[0m "Owner"      = "grupo07"
+          [32m+[0m[0m "Turma"      = "TURMA-A"
+        }
+      [32m+[0m[0m unique_id             = (known after apply)
+
+      [32m+[0m[0m inline_policy (known after apply)
+    }
+
+[1m  # aws_iam_role_policy.bucket[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy" "bucket" {
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m name        = "bucket-rw"
+      [32m+[0m[0m name_prefix = (known after apply)
+      [32m+[0m[0m policy      = (known after apply)
+      [32m+[0m[0m role        = (known after apply)
+    }
+
+[1m  # aws_iam_role_policy_attachment.glue[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "glue" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
+      [32m+[0m[0m role       = "eda-a25-grupo07-glue"
+    }
+
+[1m  # aws_s3_bucket.lake[0m will be created
+[0m  [32m+[0m[0m resource "aws_s3_bucket" "lake" {
+      [32m+[0m[0m acceleration_status         = (known after apply)
+      [32m+[0m[0m acl                         = (known after apply)
+      [32m+[0m[0m arn                         = (known after apply)
+      [32m+[0m[0m bucket                      = "eda-a25-lake-grupo07"
+      [32m+[0m[0m bucket_domain_name          = (known after apply)
+      [32m+[0m[0m bucket_prefix               = (known after apply)
+      [32m+[0m[0m bucket_regional_domain_name = (known after apply)
+      [32m+[0m[0m force_destroy               = true
+      [32m+[0m[0m hosted_zone_id              = (known after apply)
+      [32m+[0m[0m id                          = (known after apply)
+      [32m+[0m[0m object_lock_enabled         = (known after apply)
+      [32m+[0m[0m policy                      = (known after apply)
+      [32m+[0m[0m region                      = (known after apply)
+      [32m+[0m[0m request_payer               = (known after apply)
+      [32m+[0m[0m tags_all                    = {
+          [32m+[0m[0m "Aula"       = "25"
+          [32m+[0m[0m "Disciplina" = "EDA"
+          [32m+[0m[0m "Owner"      = "grupo07"
+          [32m+[0m[0m "Turma"      = "TURMA-A"
+        }
+      [32m+[0m[0m website_domain              = (known after apply)
+      [32m+[0m[0m website_endpoint            = (known after apply)
+
+      [32m+[0m[0m cors_rule (known after apply)
+
+      [32m+[0m[0m grant (known after apply)
+
+      [32m+[0m[0m lifecycle_rule (known after apply)
+
+      [32m+[0m[0m logging (known after apply)
+
+      [32m+[0m[0m object_lock_configuration (known after apply)
+
+      [32m+[0m[0m replication_configuration (known after apply)
+
+      [32m+[0m[0m server_side_encryption_configuration (known after apply)
+
+      [32m+[0m[0m versioning (known after apply)
+
+      [32m+[0m[0m website (known after apply)
+    }
+
+[1m  # aws_s3_object.script[0m will be created
+[0m  [32m+[0m[0m resource "aws_s3_object" "script" {
+      [32m+[0m[0m acl                    = (known after apply)
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m bucket                 = (known after apply)
+      [32m+[0m[0m bucket_key_enabled     = (known after apply)
+      [32m+[0m[0m checksum_crc32         = (known after apply)
+      [32m+[0m[0m checksum_crc32c        = (known after apply)
+      [32m+[0m[0m checksum_crc64nvme     = (known after apply)
+      [32m+[0m[0m checksum_sha1          = (known after apply)
+      [32m+[0m[0m checksum_sha256        = (known after apply)
+      [32m+[0m[0m content_type           = (known after apply)
+      [32m+[0m[0m etag                   = "7f112f6db60258e0195142ec5438d322"
+      [32m+[0m[0m force_destroy          = false
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m key                    = "scripts/pipeline-corridas.py"
+      [32m+[0m[0m kms_key_id             = (known after apply)
+      [32m+[0m[0m server_side_encryption = (known after apply)
+      [32m+[0m[0m source                 = "./scripts/pipeline-corridas.py"
+      [32m+[0m[0m storage_class          = (known after apply)
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Aula"       = "25"
+          [32m+[0m[0m "Disciplina" = "EDA"
+          [32m+[0m[0m "Owner"      = "grupo07"
+          [32m+[0m[0m "Turma"      = "TURMA-A"
+        }
+      [32m+[0m[0m version_id             = (known after apply)
+    }
+
+[1mPlan:[0m [0m10 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  [32m+[0m[0m bucket    = (known after apply)
+  [32m+[0m[0m database  = "eda_a25_grupo07"
+  [32m+[0m[0m decisoes  = {
+      [32m+[0m[0m chave_dedup        = "corrida_id"
+      [32m+[0m[0m janela_atraso_dias = 3
+      [32m+[0m[0m modo_escrita       = "sobrescrever"
+    }
+  [32m+[0m[0m job       = "eda-a25-grupo07-pipeline"
+  [32m+[0m[0m tabela    = "corridas"
+  [32m+[0m[0m workgroup = "eda-a25-grupo07-wg"
+[90m
+─────────────────────────────────────────────────────────────────────────────[0m
+
+Saved the plan to: lab05.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "lab05.tfplan"
+Releasing state lock. This may take a few moments...
