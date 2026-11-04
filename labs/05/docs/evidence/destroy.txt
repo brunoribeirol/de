@@ -1,0 +1,555 @@
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mDeprecated Parameter[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe parameter "dynamodb_table" is deprecated. Use parameter "use_lockfile"
+[33m│[0m [0minstead.
+[33m╵[0m[0m
+Acquiring state lock. This may take a few moments...
+[0m[1maws_iam_role.job: Refreshing state... [id=eda-a25-grupo07-glue][0m
+[0m[1maws_glue_catalog_database.lake: Refreshing state... [id=<account>:eda_a25_grupo07][0m
+[0m[1maws_s3_bucket.lake: Refreshing state... [id=eda-a25-lake-grupo07][0m
+[0m[1maws_glue_catalog_table.raw: Refreshing state... [id=<account>:eda_a25_grupo07:raw_corridas][0m
+[0m[1maws_glue_catalog_table.corridas: Refreshing state... [id=<account>:eda_a25_grupo07:corridas][0m
+[0m[1maws_iam_role_policy_attachment.glue: Refreshing state... [id=eda-a25-grupo07-glue-20261104133920030900000001][0m
+[0m[1maws_iam_role_policy.bucket: Refreshing state... [id=eda-a25-grupo07-glue:bucket-rw][0m
+[0m[1maws_athena_workgroup.wg: Refreshing state... [id=eda-a25-grupo07-wg][0m
+[0m[1maws_s3_object.script: Refreshing state... [id=scripts/pipeline-corridas.py][0m
+[0m[1maws_glue_job.pipeline: Refreshing state... [id=eda-a25-grupo07-pipeline][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [31m-[0m destroy[0m
+
+Terraform will perform the following actions:
+
+[1m  # aws_athena_workgroup.wg[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_athena_workgroup" "wg" {
+      [31m-[0m[0m arn           = "arn:aws:athena:us-east-1:<account>:workgroup/eda-a25-grupo07-wg" [90m-> null[0m[0m
+      [31m-[0m[0m force_destroy = true [90m-> null[0m[0m
+      [31m-[0m[0m id            = "eda-a25-grupo07-wg" [90m-> null[0m[0m
+      [31m-[0m[0m name          = "eda-a25-grupo07-wg" [90m-> null[0m[0m
+      [31m-[0m[0m state         = "ENABLED" [90m-> null[0m[0m
+      [31m-[0m[0m tags          = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all      = {
+          [31m-[0m[0m "Aula"       = "25"
+          [31m-[0m[0m "Disciplina" = "EDA"
+          [31m-[0m[0m "Owner"      = "grupo07"
+          [31m-[0m[0m "Turma"      = "TURMA-A"
+        } [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+
+      [31m-[0m[0m configuration {
+          [31m-[0m[0m bytes_scanned_cutoff_per_query     = 209715200 [90m-> null[0m[0m
+          [31m-[0m[0m enforce_workgroup_configuration    = true [90m-> null[0m[0m
+          [31m-[0m[0m publish_cloudwatch_metrics_enabled = false [90m-> null[0m[0m
+          [31m-[0m[0m requester_pays_enabled             = false [90m-> null[0m[0m
+            [90m# (1 unchanged attribute hidden)[0m[0m
+
+          [31m-[0m[0m engine_version {
+              [31m-[0m[0m effective_engine_version = "Athena engine version 3" [90m-> null[0m[0m
+              [31m-[0m[0m selected_engine_version  = "AUTO" [90m-> null[0m[0m
+            }
+
+          [31m-[0m[0m result_configuration {
+              [31m-[0m[0m output_location       = "s3://eda-a25-lake-grupo07/athena-results/" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+        }
+    }
+
+[1m  # aws_glue_catalog_database.lake[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_glue_catalog_database" "lake" {
+      [31m-[0m[0m arn          = "arn:aws:glue:us-east-1:<account>:database/eda_a25_grupo07" [90m-> null[0m[0m
+      [31m-[0m[0m catalog_id   = "<account>" [90m-> null[0m[0m
+      [31m-[0m[0m id           = "<account>:eda_a25_grupo07" [90m-> null[0m[0m
+      [31m-[0m[0m name         = "eda_a25_grupo07" [90m-> null[0m[0m
+      [31m-[0m[0m parameters   = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags         = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all     = {
+          [31m-[0m[0m "Aula"       = "25"
+          [31m-[0m[0m "Disciplina" = "EDA"
+          [31m-[0m[0m "Owner"      = "grupo07"
+          [31m-[0m[0m "Turma"      = "TURMA-A"
+        } [90m-> null[0m[0m
+        [90m# (2 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m create_table_default_permission {
+          [31m-[0m[0m permissions = [
+              [31m-[0m[0m "ALL",
+            ] [90m-> null[0m[0m
+
+          [31m-[0m[0m principal {
+              [31m-[0m[0m data_lake_principal_identifier = "IAM_ALLOWED_PRINCIPALS" [90m-> null[0m[0m
+            }
+        }
+    }
+
+[1m  # aws_glue_catalog_table.corridas[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_glue_catalog_table" "corridas" {
+      [31m-[0m[0m arn                = "arn:aws:glue:us-east-1:<account>:table/eda_a25_grupo07/corridas" [90m-> null[0m[0m
+      [31m-[0m[0m catalog_id         = "<account>" [90m-> null[0m[0m
+      [31m-[0m[0m database_name      = "eda_a25_grupo07" [90m-> null[0m[0m
+      [31m-[0m[0m id                 = "<account>:eda_a25_grupo07:corridas" [90m-> null[0m[0m
+      [31m-[0m[0m name               = "corridas" [90m-> null[0m[0m
+      [31m-[0m[0m parameters         = {
+          [31m-[0m[0m "classification"              = "parquet"
+          [31m-[0m[0m "projection.dt.format"        = "yyyy-MM-dd"
+          [31m-[0m[0m "projection.dt.interval"      = "1"
+          [31m-[0m[0m "projection.dt.interval.unit" = "DAYS"
+          [31m-[0m[0m "projection.dt.range"         = "NOW-60DAYS,NOW+1DAYS"
+          [31m-[0m[0m "projection.dt.type"          = "date"
+          [31m-[0m[0m "projection.enabled"          = "true"
+          [31m-[0m[0m "storage.location.template"   = "s3://eda-a25-lake-grupo07/trusted/corridas/dt=${dt}/"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m retention          = 0 [90m-> null[0m[0m
+      [31m-[0m[0m table_type         = "EXTERNAL_TABLE" [90m-> null[0m[0m
+        [90m# (4 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m partition_keys {
+          [31m-[0m[0m name    = "dt" [90m-> null[0m[0m
+          [31m-[0m[0m type    = "string" [90m-> null[0m[0m
+            [90m# (1 unchanged attribute hidden)[0m[0m
+        }
+
+      [31m-[0m[0m storage_descriptor {
+          [31m-[0m[0m additional_locations      = [] [90m-> null[0m[0m
+          [31m-[0m[0m bucket_columns            = [] [90m-> null[0m[0m
+          [31m-[0m[0m compressed                = false [90m-> null[0m[0m
+          [31m-[0m[0m input_format              = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat" [90m-> null[0m[0m
+          [31m-[0m[0m location                  = "s3://eda-a25-lake-grupo07/trusted/corridas/" [90m-> null[0m[0m
+          [31m-[0m[0m number_of_buckets         = 0 [90m-> null[0m[0m
+          [31m-[0m[0m output_format             = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat" [90m-> null[0m[0m
+          [31m-[0m[0m parameters                = {} [90m-> null[0m[0m
+          [31m-[0m[0m stored_as_sub_directories = false [90m-> null[0m[0m
+
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "corrida_id" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "string" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "motorista_id" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "string" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "passageiro_id" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "string" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "bairro" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "string" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "inicio" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "timestamp" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "fim" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "timestamp" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "distancia_km" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "double" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "duracao_min" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "double" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "valor" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "double" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "faixa_hora" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "int" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "chegada" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "string" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+
+          [31m-[0m[0m ser_de_info {
+                name                  = [90mnull[0m[0m
+              [31m-[0m[0m parameters            = {} [90m-> null[0m[0m
+              [31m-[0m[0m serialization_library = "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe" [90m-> null[0m[0m
+            }
+        }
+    }
+
+[1m  # aws_glue_catalog_table.raw[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_glue_catalog_table" "raw" {
+      [31m-[0m[0m arn                = "arn:aws:glue:us-east-1:<account>:table/eda_a25_grupo07/raw_corridas" [90m-> null[0m[0m
+      [31m-[0m[0m catalog_id         = "<account>" [90m-> null[0m[0m
+      [31m-[0m[0m database_name      = "eda_a25_grupo07" [90m-> null[0m[0m
+      [31m-[0m[0m id                 = "<account>:eda_a25_grupo07:raw_corridas" [90m-> null[0m[0m
+      [31m-[0m[0m name               = "raw_corridas" [90m-> null[0m[0m
+      [31m-[0m[0m parameters         = {
+          [31m-[0m[0m "classification"              = "json"
+          [31m-[0m[0m "projection.dt.format"        = "yyyy-MM-dd"
+          [31m-[0m[0m "projection.dt.interval"      = "1"
+          [31m-[0m[0m "projection.dt.interval.unit" = "DAYS"
+          [31m-[0m[0m "projection.dt.range"         = "NOW-60DAYS,NOW+1DAYS"
+          [31m-[0m[0m "projection.dt.type"          = "date"
+          [31m-[0m[0m "projection.enabled"          = "true"
+          [31m-[0m[0m "storage.location.template"   = "s3://eda-a25-lake-grupo07/raw/corridas/dt=${dt}/"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m retention          = 0 [90m-> null[0m[0m
+      [31m-[0m[0m table_type         = "EXTERNAL_TABLE" [90m-> null[0m[0m
+        [90m# (4 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m partition_keys {
+          [31m-[0m[0m name    = "dt" [90m-> null[0m[0m
+          [31m-[0m[0m type    = "string" [90m-> null[0m[0m
+            [90m# (1 unchanged attribute hidden)[0m[0m
+        }
+
+      [31m-[0m[0m storage_descriptor {
+          [31m-[0m[0m additional_locations      = [] [90m-> null[0m[0m
+          [31m-[0m[0m bucket_columns            = [] [90m-> null[0m[0m
+          [31m-[0m[0m compressed                = false [90m-> null[0m[0m
+          [31m-[0m[0m input_format              = "org.apache.hadoop.mapred.TextInputFormat" [90m-> null[0m[0m
+          [31m-[0m[0m location                  = "s3://eda-a25-lake-grupo07/raw/corridas/" [90m-> null[0m[0m
+          [31m-[0m[0m number_of_buckets         = 0 [90m-> null[0m[0m
+          [31m-[0m[0m output_format             = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat" [90m-> null[0m[0m
+          [31m-[0m[0m parameters                = {} [90m-> null[0m[0m
+          [31m-[0m[0m stored_as_sub_directories = false [90m-> null[0m[0m
+
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "corrida_id" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "string" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "motorista_id" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "string" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "passageiro_id" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "string" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "bairro" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "string" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "data_corrida" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "string" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "fim" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "string" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "distancia_km" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "double" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "duracao_min" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "double" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+          [31m-[0m[0m columns {
+              [31m-[0m[0m name       = "valor" [90m-> null[0m[0m
+              [31m-[0m[0m parameters = {} [90m-> null[0m[0m
+              [31m-[0m[0m type       = "string" [90m-> null[0m[0m
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+
+          [31m-[0m[0m ser_de_info {
+                name                  = [90mnull[0m[0m
+              [31m-[0m[0m parameters            = {} [90m-> null[0m[0m
+              [31m-[0m[0m serialization_library = "org.openx.data.jsonserde.JsonSerDe" [90m-> null[0m[0m
+            }
+        }
+    }
+
+[1m  # aws_glue_job.pipeline[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_glue_job" "pipeline" {
+      [31m-[0m[0m arn                       = "arn:aws:glue:us-east-1:<account>:job/eda-a25-grupo07-pipeline" [90m-> null[0m[0m
+      [31m-[0m[0m connections               = [] [90m-> null[0m[0m
+      [31m-[0m[0m default_arguments         = {
+          [31m-[0m[0m "--BUCKET"              = "eda-a25-lake-grupo07"
+          [31m-[0m[0m "--CHAVE"               = "corrida_id"
+          [31m-[0m[0m "--DIAS"                = "todos"
+          [31m-[0m[0m "--JANELA"              = "3"
+          [31m-[0m[0m "--MODO"                = "sobrescrever"
+          [31m-[0m[0m "--TABELA"              = "corridas"
+          [31m-[0m[0m "--job-bookmark-option" = "job-bookmark-disable"
+          [31m-[0m[0m "--job-language"        = "python"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m glue_version              = "4.0" [90m-> null[0m[0m
+      [31m-[0m[0m id                        = "eda-a25-grupo07-pipeline" [90m-> null[0m[0m
+      [31m-[0m[0m job_run_queuing_enabled   = false [90m-> null[0m[0m
+      [31m-[0m[0m max_capacity              = 2 [90m-> null[0m[0m
+      [31m-[0m[0m max_retries               = 0 [90m-> null[0m[0m
+      [31m-[0m[0m name                      = "eda-a25-grupo07-pipeline" [90m-> null[0m[0m
+      [31m-[0m[0m non_overridable_arguments = {} [90m-> null[0m[0m
+      [31m-[0m[0m number_of_workers         = 2 [90m-> null[0m[0m
+      [31m-[0m[0m role_arn                  = "arn:aws:iam::<account>:role/eda-a25-grupo07-glue" [90m-> null[0m[0m
+      [31m-[0m[0m tags                      = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                  = {
+          [31m-[0m[0m "Aula"       = "25"
+          [31m-[0m[0m "Disciplina" = "EDA"
+          [31m-[0m[0m "Owner"      = "grupo07"
+          [31m-[0m[0m "Turma"      = "TURMA-A"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m timeout                   = 15 [90m-> null[0m[0m
+      [31m-[0m[0m worker_type               = "G.1X" [90m-> null[0m[0m
+        [90m# (4 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m command {
+          [31m-[0m[0m name            = "glueetl" [90m-> null[0m[0m
+          [31m-[0m[0m python_version  = "3" [90m-> null[0m[0m
+          [31m-[0m[0m script_location = "s3://eda-a25-lake-grupo07/scripts/pipeline-corridas.py" [90m-> null[0m[0m
+            [90m# (1 unchanged attribute hidden)[0m[0m
+        }
+
+      [31m-[0m[0m execution_property {
+          [31m-[0m[0m max_concurrent_runs = 1 [90m-> null[0m[0m
+        }
+    }
+
+[1m  # aws_iam_role.job[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_iam_role" "job" {
+      [31m-[0m[0m arn                   = "arn:aws:iam::<account>:role/eda-a25-grupo07-glue" [90m-> null[0m[0m
+      [31m-[0m[0m assume_role_policy    = jsonencode(
+            {
+              [31m-[0m[0m Statement = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "sts:AssumeRole"
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Principal = {
+                          [31m-[0m[0m Service = "glue.amazonaws.com"
+                        }
+                    },
+                ]
+              [31m-[0m[0m Version   = "2012-10-17"
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m create_date           = "2026-11-04T13:39:19Z" [90m-> null[0m[0m
+      [31m-[0m[0m force_detach_policies = false [90m-> null[0m[0m
+      [31m-[0m[0m id                    = "eda-a25-grupo07-glue" [90m-> null[0m[0m
+      [31m-[0m[0m managed_policy_arns   = [
+          [31m-[0m[0m "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m max_session_duration  = 3600 [90m-> null[0m[0m
+      [31m-[0m[0m name                  = "eda-a25-grupo07-glue" [90m-> null[0m[0m
+      [31m-[0m[0m path                  = "/" [90m-> null[0m[0m
+      [31m-[0m[0m tags                  = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all              = {
+          [31m-[0m[0m "Aula"       = "25"
+          [31m-[0m[0m "Disciplina" = "EDA"
+          [31m-[0m[0m "Owner"      = "grupo07"
+          [31m-[0m[0m "Turma"      = "TURMA-A"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m unique_id             = "AROAUXTSPSNU4PEVRH37P" [90m-> null[0m[0m
+        [90m# (3 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m inline_policy {
+          [31m-[0m[0m name   = "bucket-rw" [90m-> null[0m[0m
+          [31m-[0m[0m policy = jsonencode(
+                {
+                  [31m-[0m[0m Statement = [
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Action   = [
+                              [31m-[0m[0m "s3:GetObject",
+                              [31m-[0m[0m "s3:PutObject",
+                              [31m-[0m[0m "s3:DeleteObject",
+                              [31m-[0m[0m "s3:ListBucket",
+                            ]
+                          [31m-[0m[0m Effect   = "Allow"
+                          [31m-[0m[0m Resource = [
+                              [31m-[0m[0m "arn:aws:s3:::eda-a25-lake-grupo07",
+                              [31m-[0m[0m "arn:aws:s3:::eda-a25-lake-grupo07/*",
+                            ]
+                        },
+                    ]
+                  [31m-[0m[0m Version   = "2012-10-17"
+                }
+            ) [90m-> null[0m[0m
+        }
+    }
+
+[1m  # aws_iam_role_policy.bucket[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_iam_role_policy" "bucket" {
+      [31m-[0m[0m id          = "eda-a25-grupo07-glue:bucket-rw" [90m-> null[0m[0m
+      [31m-[0m[0m name        = "bucket-rw" [90m-> null[0m[0m
+      [31m-[0m[0m policy      = jsonencode(
+            {
+              [31m-[0m[0m Statement = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "s3:GetObject",
+                          [31m-[0m[0m "s3:PutObject",
+                          [31m-[0m[0m "s3:DeleteObject",
+                          [31m-[0m[0m "s3:ListBucket",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = [
+                          [31m-[0m[0m "arn:aws:s3:::eda-a25-lake-grupo07",
+                          [31m-[0m[0m "arn:aws:s3:::eda-a25-lake-grupo07/*",
+                        ]
+                    },
+                ]
+              [31m-[0m[0m Version   = "2012-10-17"
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m role        = "eda-a25-grupo07-glue" [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+    }
+
+[1m  # aws_iam_role_policy_attachment.glue[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_iam_role_policy_attachment" "glue" {
+      [31m-[0m[0m id         = "eda-a25-grupo07-glue-20261104133920030900000001" [90m-> null[0m[0m
+      [31m-[0m[0m policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole" [90m-> null[0m[0m
+      [31m-[0m[0m role       = "eda-a25-grupo07-glue" [90m-> null[0m[0m
+    }
+
+[1m  # aws_s3_bucket.lake[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_s3_bucket" "lake" {
+      [31m-[0m[0m arn                         = "arn:aws:s3:::eda-a25-lake-grupo07" [90m-> null[0m[0m
+      [31m-[0m[0m bucket                      = "eda-a25-lake-grupo07" [90m-> null[0m[0m
+      [31m-[0m[0m bucket_domain_name          = "eda-a25-lake-grupo07.s3.amazonaws.com" [90m-> null[0m[0m
+      [31m-[0m[0m bucket_regional_domain_name = "eda-a25-lake-grupo07.s3.us-east-1.amazonaws.com" [90m-> null[0m[0m
+      [31m-[0m[0m force_destroy               = true [90m-> null[0m[0m
+      [31m-[0m[0m hosted_zone_id              = "Z3AQBSTGFYJSTF" [90m-> null[0m[0m
+      [31m-[0m[0m id                          = "eda-a25-lake-grupo07" [90m-> null[0m[0m
+      [31m-[0m[0m object_lock_enabled         = false [90m-> null[0m[0m
+      [31m-[0m[0m region                      = "us-east-1" [90m-> null[0m[0m
+      [31m-[0m[0m request_payer               = "BucketOwner" [90m-> null[0m[0m
+      [31m-[0m[0m tags                        = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                    = {
+          [31m-[0m[0m "Aula"       = "25"
+          [31m-[0m[0m "Disciplina" = "EDA"
+          [31m-[0m[0m "Owner"      = "grupo07"
+          [31m-[0m[0m "Turma"      = "TURMA-A"
+        } [90m-> null[0m[0m
+        [90m# (3 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m grant {
+          [31m-[0m[0m id          = "8022b3bfe1e45d090335847dc77b594076fc7367a05e12aaab58998de2bef47e" [90m-> null[0m[0m
+          [31m-[0m[0m permissions = [
+              [31m-[0m[0m "FULL_CONTROL",
+            ] [90m-> null[0m[0m
+          [31m-[0m[0m type        = "CanonicalUser" [90m-> null[0m[0m
+            [90m# (1 unchanged attribute hidden)[0m[0m
+        }
+
+      [31m-[0m[0m server_side_encryption_configuration {
+          [31m-[0m[0m rule {
+              [31m-[0m[0m bucket_key_enabled = false [90m-> null[0m[0m
+
+              [31m-[0m[0m apply_server_side_encryption_by_default {
+                  [31m-[0m[0m sse_algorithm     = "AES256" [90m-> null[0m[0m
+                    [90m# (1 unchanged attribute hidden)[0m[0m
+                }
+            }
+        }
+
+      [31m-[0m[0m versioning {
+          [31m-[0m[0m enabled    = false [90m-> null[0m[0m
+          [31m-[0m[0m mfa_delete = false [90m-> null[0m[0m
+        }
+    }
+
+[1m  # aws_s3_object.script[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_s3_object" "script" {
+      [31m-[0m[0m arn                           = "arn:aws:s3:::eda-a25-lake-grupo07/scripts/pipeline-corridas.py" [90m-> null[0m[0m
+      [31m-[0m[0m bucket                        = "eda-a25-lake-grupo07" [90m-> null[0m[0m
+      [31m-[0m[0m bucket_key_enabled            = false [90m-> null[0m[0m
+      [31m-[0m[0m content_type                  = "application/octet-stream" [90m-> null[0m[0m
+      [31m-[0m[0m etag                          = "7f112f6db60258e0195142ec5438d322" [90m-> null[0m[0m
+      [31m-[0m[0m force_destroy                 = false [90m-> null[0m[0m
+      [31m-[0m[0m id                            = "scripts/pipeline-corridas.py" [90m-> null[0m[0m
+      [31m-[0m[0m key                           = "scripts/pipeline-corridas.py" [90m-> null[0m[0m
+      [31m-[0m[0m metadata                      = {} [90m-> null[0m[0m
+      [31m-[0m[0m server_side_encryption        = "AES256" [90m-> null[0m[0m
+      [31m-[0m[0m source                        = "./scripts/pipeline-corridas.py" [90m-> null[0m[0m
+      [31m-[0m[0m storage_class                 = "STANDARD" [90m-> null[0m[0m
+      [31m-[0m[0m tags                          = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                      = {
+          [31m-[0m[0m "Aula"       = "25"
+          [31m-[0m[0m "Disciplina" = "EDA"
+          [31m-[0m[0m "Owner"      = "grupo07"
+          [31m-[0m[0m "Turma"      = "TURMA-A"
+        } [90m-> null[0m[0m
+        [90m# (14 unchanged attributes hidden)[0m[0m
+    }
+
+[1mPlan:[0m [0m0 to add, 0 to change, 10 to destroy.
+
+Changes to Outputs:
+  [31m-[0m[0m bucket    = "eda-a25-lake-grupo07" [90m-> null[0m[0m
+  [31m-[0m[0m database  = "eda_a25_grupo07" [90m-> null[0m[0m
+  [31m-[0m[0m decisoes  = {
+      [31m-[0m[0m chave_dedup        = "corrida_id"
+      [31m-[0m[0m janela_atraso_dias = 3
+      [31m-[0m[0m modo_escrita       = "sobrescrever"
+    } [90m-> null[0m[0m
+  [31m-[0m[0m job       = "eda-a25-grupo07-pipeline" [90m-> null[0m[0m
+  [31m-[0m[0m tabela    = "corridas" [90m-> null[0m[0m
+  [31m-[0m[0m workgroup = "eda-a25-grupo07-wg" [90m-> null[0m[0m
+[0m[1m
+Do you really want to destroy all resources?[0m
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  [1mEnter a value:[0m [0m
+[0m[1maws_iam_role_policy.bucket: Destroying... [id=eda-a25-grupo07-glue:bucket-rw][0m[0m
+[0m[1maws_iam_role_policy_attachment.glue: Destroying... [id=eda-a25-grupo07-glue-20261104133920030900000001][0m[0m
+[0m[1maws_athena_workgroup.wg: Destroying... [id=eda-a25-grupo07-wg][0m[0m
+[0m[1maws_glue_job.pipeline: Destroying... [id=eda-a25-grupo07-pipeline][0m[0m
+[0m[1maws_glue_catalog_table.raw: Destroying... [id=<account>:eda_a25_grupo07:raw_corridas][0m[0m
+[0m[1maws_glue_catalog_table.corridas: Destroying... [id=<account>:eda_a25_grupo07:corridas][0m[0m
+[0m[1maws_iam_role_policy.bucket: Destruction complete after 0s[0m
+[0m[1maws_glue_job.pipeline: Destruction complete after 0s[0m
+[0m[1maws_s3_object.script: Destroying... [id=scripts/pipeline-corridas.py][0m[0m
+[0m[1maws_iam_role_policy_attachment.glue: Destruction complete after 0s[0m
+[0m[1maws_iam_role.job: Destroying... [id=eda-a25-grupo07-glue][0m[0m
+[0m[1maws_athena_workgroup.wg: Destruction complete after 0s[0m
+[0m[1maws_glue_catalog_table.corridas: Destruction complete after 0s[0m
+[0m[1maws_glue_catalog_table.raw: Destruction complete after 0s[0m
+[0m[1maws_glue_catalog_database.lake: Destroying... [id=<account>:eda_a25_grupo07][0m[0m
+[0m[1maws_glue_catalog_database.lake: Destruction complete after 1s[0m
+[0m[1maws_iam_role.job: Destruction complete after 1s[0m
+[0m[1maws_s3_object.script: Still destroying... [id=scripts/pipeline-corridas.py, 00m10s elapsed][0m[0m
+[0m[1maws_s3_object.script: Destruction complete after 16s[0m
+[0m[1maws_s3_bucket.lake: Destroying... [id=eda-a25-lake-grupo07][0m[0m
+[0m[1maws_s3_bucket.lake: Destruction complete after 3s[0m
+[0m[1m[32m
+Destroy complete! Resources: 10 destroyed.[0m

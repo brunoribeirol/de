@@ -1,0 +1,37 @@
+== 2026-11-04 10:53:04 -03 · table eda_a25_grupo07.corridas · decisions {"chave_dedup":"corrida_id","janela_atraso_dias":3,"modo_escrita":"sobrescrever"}
+== dates from the raw: hoje=2026-11-04  d-3=2026-11-01  d-5=2026-10-30  desde=2026-10-29
+
+night, last 7 days (dt >= '2026-10-29' AND faixa_hora BETWEEN 0 AND 5): 11137
+table: 518400 rows, 518400 distinct corrida_id
+
+rows per event day, last 7 days (dt · rows · night rows):
+  2026-10-29	17280	1591
+  2026-10-30	17280	1591
+  2026-10-31	17280	1591
+  2026-11-01	17280	1591
+  2026-11-02	17280	1591
+  2026-11-03	17280	1591
+  2026-11-04	17280	1591
+
+Parquet files (one per run under append; replaced under sobrescrever):
+  dt=2026-10-30  2026-11-04 10:51:42     607814 part-00003-ef62d58d-1d90-4cac-8e12-8bc0ec252a79.c000.snappy.parquet
+  dt=2026-11-01  2026-11-04 10:51:41     607433 part-00000-ef62d58d-1d90-4cac-8e12-8bc0ec252a79.c000.snappy.parquet
+  dt=2026-11-04  2026-11-04 10:51:42     608260 part-00001-ef62d58d-1d90-4cac-8e12-8bc0ec252a79.c000.snappy.parquet
+  Total Objects: 30
+  Total Size: 18228296
+
+last job report (s3://eda-a25-lake-grupo07/relatorios/corridas.json):
+  {
+    "tabela": "corridas",
+    "modo": "sobrescrever",
+    "janela": 3,
+    "dias": "todos",
+    "chave": "corrida_id",
+    "linhas_lidas_da_raw": 535680,
+    "fora_da_janela": 0,
+    "duplicatas_removidas": 17280,
+    "linhas_gravadas_neste_run": 518400,
+    "dias_gravados_neste_run": 30,
+    "linhas_na_tabela": 518400,
+    "corridas_distintas_na_tabela": 518400
+  }

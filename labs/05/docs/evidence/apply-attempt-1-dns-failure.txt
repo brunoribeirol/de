@@ -1,0 +1,28 @@
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mDeprecated Parameter[0m
+[33m│[0m [0m
+[33m│[0m [0m[0mThe parameter "dynamodb_table" is deprecated. Use parameter "use_lockfile"
+[33m│[0m [0minstead.
+[33m╵[0m[0m
+Acquiring state lock. This may take a few moments...
+[0m[1maws_iam_role.job: Creating...[0m[0m
+[0m[1maws_glue_catalog_database.lake: Creating...[0m[0m
+[0m[1maws_s3_bucket.lake: Creating...[0m[0m
+[0m[1maws_glue_catalog_database.lake: Creation complete after 2s [id=<account>:eda_a25_grupo07][0m
+[0m[1maws_glue_catalog_table.raw: Creating...[0m[0m
+[0m[1maws_glue_catalog_table.corridas: Creating...[0m[0m
+[0m[1maws_glue_catalog_table.raw: Creation complete after 2s [id=<account>:eda_a25_grupo07:raw_corridas][0m
+[0m[1maws_glue_catalog_table.corridas: Creation complete after 2s [id=<account>:eda_a25_grupo07:corridas][0m
+[0m[1maws_s3_bucket.lake: Creation complete after 7s [id=eda-a25-lake-grupo07][0m
+[0m[1maws_athena_workgroup.wg: Creating...[0m[0m
+[0m[1maws_s3_object.script: Creating...[0m[0m
+[0m[1maws_s3_object.script: Creation complete after 1s [id=scripts/pipeline-corridas.py][0m
+[0m[1maws_athena_workgroup.wg: Creation complete after 2s [id=eda-a25-grupo07-wg][0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mcreating IAM Role (eda-a25-grupo07-glue): operation error IAM: CreateRole, https response error StatusCode: 0, RequestID: , request send failed, Post "https://iam.amazonaws.com/": dial tcp: lookup iam.amazonaws.com: no such host[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  with aws_iam_role.job,
+[31m│[0m [0m  on main.tf line 97, in resource "aws_iam_role" "job":
+[31m│[0m [0m  97: resource "aws_iam_role" "job" [4m{[0m[0m
+[31m│[0m [0m
+[31m╵[0m[0m

@@ -1,0 +1,14 @@
+# cp backend.hcl.example backend.hcl  e troque GRUPO. Depois:
+#   terraform init -backend-config=backend.hcl
+# O backend.hcl real é gitignored — nunca comite o nome da conta.
+#
+# bucket e lock: os mesmos do Exercício 04. O bucket pertence ao GRUPO e é
+#   provisionado pela stack infra/tfstate-backend/, na raiz do repositório; ele
+#   sobrevive ao destroy deste exercício.
+# key: só ela muda. Mesmo formato do Exercício 04 (aula21/GRUPO/...), para que
+#   cada exercício tenha o seu estado e um nunca sobrescreva o outro.
+bucket         = "eda-tfstate-GRUPO"
+key            = "aula25/GRUPO/terraform.tfstate"
+region         = "us-east-1"
+dynamodb_table = "eda-tflock"
+encrypt        = true
