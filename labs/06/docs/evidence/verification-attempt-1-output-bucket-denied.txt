@@ -1,0 +1,10 @@
+OK     [0]  (elimina)  backend remoto s3, três databases (um por camada) e a refined em Parquet
+FALHA  [1]  (20%)  a Prefeitura leu 'RECUSADO' na refined; o certo é 11137 (RECUSADO = faltou a permissão da DECISÃO 01)
+PASSA  [2]  (25%)  a Prefeitura não lê a trusted, nem a raw, nem o S3 direto
+FALHA  [3]  (15%)  a analista: count(bairro)='RECUSADO' (o certo: 518400); passageiro_id: 'RECUSADO' (o certo: RECUSADO)
+PASSA  [4]  (10%)  o contrato da refined está no catálogo: descrição (241 caracteres), dono 'Engenharia de Dados (grupo 07)', comentário em toda coluna
+
+Critérios automáticos: 35 / 70 pontos-percentuais
+Falta o que o script não mede: o critério 5 (rode com --pos-destroy depois do destroy) e o DECISOES.md (20%).
+
+evidência: sufixo=grupo07 hoje=2026-11-25 prefeitura_refined=RECUSADO prefeitura_trusted=RECUSADO prefeitura_raw=RECUSADO prefeitura_s3=RECUSADO analista_trusted=RECUSADO analista_passageiro=RECUSADO {"colunas_ocultas_analista":["motorista_id","passageiro_id"],"escopo_prefeitura":"tabela"}

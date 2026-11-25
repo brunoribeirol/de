@@ -1,0 +1,2 @@
+terraform state list (empty = nothing left):
+(end)

@@ -1,0 +1,42 @@
+
+Warning: Deprecated Parameter
+
+The parameter "dynamodb_table" is deprecated. Use parameter "use_lockfile"
+instead.
+Acquiring state lock. This may take a few moments...
+aws_iam_policy.consumo: Modifying... [id=arn:aws:iam::<account>:policy/eda-a29-grupo07-consumo]
+aws_iam_policy.consumo: Modifications complete after 2s [id=arn:aws:iam::<account>:policy/eda-a29-grupo07-consumo]
+
+Warning: Applied changes may be incomplete
+
+The plan was created with the -target option in effect, so some changes
+requested in the configuration may have been ignored and the output values
+may not be fully updated. Run the following command to verify that no other
+changes are pending:
+    terraform plan
+
+Note that the -target option is not suitable for routine use, and is provided
+only for exceptional situations such as recovering from errors or mistakes,
+or when Terraform specifically suggests to use it as part of an error
+message.
+
+Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+
+Outputs:
+
+bucket = "eda-a29-lake-grupo07"
+database_raw = "eda_a29_grupo07_raw"
+database_refined = "eda_a29_grupo07_refined"
+database_trusted = "eda_a29_grupo07_trusted"
+decisoes = {
+  "colunas_ocultas_analista" = tolist([
+    "motorista_id",
+    "passageiro_id",
+  ])
+  "escopo_prefeitura" = "tabela"
+}
+job_refined = "eda-a29-grupo07-refined"
+job_trusted = "eda-a29-grupo07-trusted"
+papel_analista = "arn:aws:iam::<account>:role/eda-a29-grupo07-analista"
+papel_prefeitura = "arn:aws:iam::<account>:role/eda-a29-grupo07-prefeitura"
+workgroup = "eda-a29-grupo07-wg"

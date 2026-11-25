@@ -1,0 +1,81 @@
+today=2026-11-25 since=2026-11-19
+
+--- as prefeitura: SELECT sum(corridas) FROM eda_a29_grupo07_refined.madrugada_bairro WHERE dt >= '2026-11-19'
+
+aws: [ERROR]: An error occurred (InvalidRequestException) when calling the StartQueryExecution operation: Unable to verify/create output bucket eda-a29-lake-grupo07
+
+Additional error details:
+AthenaErrorCode: INSUFFICIENT_PERMISSIONS
+RECUSADO antes de começar
+
+--- as prefeitura: SELECT count(*) AS linhas, count(DISTINCT bairro) AS bairros, count(DISTINCT dt) AS dias FROM eda_a29_grupo07_refined.madrugada_bairro
+
+aws: [ERROR]: An error occurred (InvalidRequestException) when calling the StartQueryExecution operation: Unable to verify/create output bucket eda-a29-lake-grupo07
+
+Additional error details:
+AthenaErrorCode: INSUFFICIENT_PERMISSIONS
+RECUSADO antes de começar
+
+--- as prefeitura: SELECT count(*) FROM eda_a29_grupo07_trusted.corridas WHERE dt = '2026-11-25'
+
+aws: [ERROR]: An error occurred (InvalidRequestException) when calling the StartQueryExecution operation: Unable to verify/create output bucket eda-a29-lake-grupo07
+
+Additional error details:
+AthenaErrorCode: INSUFFICIENT_PERMISSIONS
+RECUSADO antes de começar
+
+--- as prefeitura: SELECT count(*) FROM eda_a29_grupo07_raw.corridas WHERE dt = '2026-11-25'
+
+aws: [ERROR]: An error occurred (InvalidRequestException) when calling the StartQueryExecution operation: Unable to verify/create output bucket eda-a29-lake-grupo07
+
+Additional error details:
+AthenaErrorCode: INSUFFICIENT_PERMISSIONS
+RECUSADO antes de começar
+
+--- as analista: SELECT count(bairro) FROM eda_a29_grupo07_trusted.corridas
+
+aws: [ERROR]: An error occurred (InvalidRequestException) when calling the StartQueryExecution operation: Unable to verify/create output bucket eda-a29-lake-grupo07
+
+Additional error details:
+AthenaErrorCode: INSUFFICIENT_PERMISSIONS
+RECUSADO antes de começar
+
+--- as analista: SELECT count(DISTINCT corrida_id) FROM eda_a29_grupo07_trusted.corridas
+
+aws: [ERROR]: An error occurred (InvalidRequestException) when calling the StartQueryExecution operation: Unable to verify/create output bucket eda-a29-lake-grupo07
+
+Additional error details:
+AthenaErrorCode: INSUFFICIENT_PERMISSIONS
+RECUSADO antes de começar
+
+--- as analista: SELECT * FROM eda_a29_grupo07_trusted.corridas WHERE dt = '2026-11-25' LIMIT 1
+
+aws: [ERROR]: An error occurred (InvalidRequestException) when calling the StartQueryExecution operation: Unable to verify/create output bucket eda-a29-lake-grupo07
+
+Additional error details:
+AthenaErrorCode: INSUFFICIENT_PERMISSIONS
+RECUSADO antes de começar
+
+--- as analista: SELECT passageiro_id FROM eda_a29_grupo07_trusted.corridas WHERE dt = '2026-11-25' LIMIT 1
+
+aws: [ERROR]: An error occurred (InvalidRequestException) when calling the StartQueryExecution operation: Unable to verify/create output bucket eda-a29-lake-grupo07
+
+Additional error details:
+AthenaErrorCode: INSUFFICIENT_PERMISSIONS
+RECUSADO antes de começar
+
+--- as analista: SELECT motorista_id FROM eda_a29_grupo07_trusted.corridas WHERE dt = '2026-11-25' LIMIT 1
+
+aws: [ERROR]: An error occurred (InvalidRequestException) when calling the StartQueryExecution operation: Unable to verify/create output bucket eda-a29-lake-grupo07
+
+Additional error details:
+AthenaErrorCode: INSUFFICIENT_PERMISSIONS
+RECUSADO antes de começar
+
+--- as analista: SELECT sum(corridas) FROM eda_a29_grupo07_refined.madrugada_bairro WHERE dt >= '2026-11-19'
+
+aws: [ERROR]: An error occurred (InvalidRequestException) when calling the StartQueryExecution operation: Unable to verify/create output bucket eda-a29-lake-grupo07
+
+Additional error details:
+AthenaErrorCode: INSUFFICIENT_PERMISSIONS
+RECUSADO antes de começar

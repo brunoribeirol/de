@@ -1,0 +1,38 @@
+>> disparando eda-a29-grupo07-trusted
+12:19:55  RUNNING
+12:20:16  RUNNING
+12:20:38  RUNNING
+12:20:59  RUNNING
+12:21:20  RUNNING
+12:21:41  RUNNING
+12:22:03  SUCCEEDED
+{
+  "tabela": "corridas",
+  "modo": "sobrescrever",
+  "janela": 3,
+  "dias": "todos",
+  "chave": "corrida_id",
+  "linhas_lidas_da_raw": 535680,
+  "fora_da_janela": 0,
+  "duplicatas_removidas": 17280,
+  "linhas_gravadas_neste_run": 518400,
+  "dias_gravados_neste_run": 30,
+  "linhas_na_tabela": 518400,
+  "corridas_distintas_na_tabela": 518400
+}>> disparando eda-a29-grupo07-refined
+12:22:10  RUNNING
+12:22:31  RUNNING
+12:22:53  RUNNING
+12:23:14  RUNNING
+12:23:35  SUCCEEDED
+{
+  "tabela": "madrugada_bairro",
+  "dias": "todos",
+  "corridas_lidas_da_trusted": 518400,
+  "corridas_da_madrugada": 47730,
+  "linhas_gravadas_neste_run": 660,
+  "dias_gravados_neste_run": 30,
+  "linhas_na_tabela": 660,
+  "bairros_na_tabela": 22,
+  "corridas_somadas_na_tabela": 47730
+}

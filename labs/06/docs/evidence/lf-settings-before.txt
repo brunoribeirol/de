@@ -1,0 +1,4 @@
+Lake Formation settings BEFORE the apply (account id omitted)
+  admins: 3 ['user/eda-grupo09', 'user/gportela', 'user/eda-grupo04']
+  default permissions on new databases: ['IAM_ALLOWED_PRINCIPALS']
+  default permissions on new tables:    ['IAM_ALLOWED_PRINCIPALS']

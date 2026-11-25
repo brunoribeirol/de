@@ -1,0 +1,18 @@
+sonda_tabela_nova: created in eda_a29_grupo07_refined after terraform apply, same files as madrugada_bairro
+
+--- as prefeitura: SELECT sum(corridas) FROM eda_a29_grupo07_refined.sonda_tabela_nova WHERE dt >= '2026-11-19'
+
+aws: [ERROR]: An error occurred (InvalidRequestException) when calling the StartQueryExecution operation: Unable to verify/create output bucket eda-a29-lake-grupo07
+
+Additional error details:
+AthenaErrorCode: INSUFFICIENT_PERMISSIONS
+RECUSADO antes de começar
+
+--- as analista: SELECT sum(corridas) FROM eda_a29_grupo07_refined.sonda_tabela_nova WHERE dt >= '2026-11-19'
+
+aws: [ERROR]: An error occurred (InvalidRequestException) when calling the StartQueryExecution operation: Unable to verify/create output bucket eda-a29-lake-grupo07
+
+Additional error details:
+AthenaErrorCode: INSUFFICIENT_PERMISSIONS
+RECUSADO antes de começar
+sonda_tabela_nova deleted

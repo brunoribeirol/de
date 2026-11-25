@@ -1,0 +1,1188 @@
+
+Warning: Deprecated Parameter
+
+The parameter "dynamodb_table" is deprecated. Use parameter "use_lockfile"
+instead.
+Acquiring state lock. This may take a few moments...
+data.aws_caller_identity.eu: Reading...
+aws_iam_role.job: Refreshing state... [id=eda-a29-grupo07-glue]
+aws_iam_role.lf: Refreshing state... [id=eda-a29-grupo07-lf]
+aws_s3_bucket.lake: Refreshing state... [id=eda-a29-lake-grupo07]
+data.aws_caller_identity.eu: Read complete after 1s [id=<account>]
+aws_iam_role.perfil["analista"]: Refreshing state... [id=eda-a29-grupo07-analista]
+aws_iam_role.perfil["prefeitura"]: Refreshing state... [id=eda-a29-grupo07-prefeitura]
+data.aws_iam_session_context.eu: Reading...
+data.aws_iam_session_context.eu: Read complete after 0s [id=arn:aws:iam::<account>:user/eda-grupo07]
+aws_glue_catalog_database.camada["trusted"]: Refreshing state... [id=<account>:eda_a29_grupo07_trusted]
+aws_glue_catalog_database.camada["raw"]: Refreshing state... [id=<account>:eda_a29_grupo07_raw]
+aws_glue_catalog_database.camada["refined"]: Refreshing state... [id=<account>:eda_a29_grupo07_refined]
+aws_glue_catalog_table.raw: Refreshing state... [id=<account>:eda_a29_grupo07_raw:corridas]
+aws_glue_catalog_table.trusted: Refreshing state... [id=<account>:eda_a29_grupo07_trusted:corridas]
+aws_glue_catalog_table.refined: Refreshing state... [id=<account>:eda_a29_grupo07_refined:madrugada_bairro]
+aws_lakeformation_permissions.analista_refined: Refreshing state... [id=2139506456]
+aws_lakeformation_permissions.ver_banco["analista-refined"]: Refreshing state... [id=1874714624]
+aws_lakeformation_permissions.ver_banco["prefeitura-refined"]: Refreshing state... [id=705666921]
+aws_lakeformation_permissions.ver_banco["analista-trusted"]: Refreshing state... [id=1093570168]
+aws_iam_role_policy_attachment.glue: Refreshing state... [id=eda-a29-grupo07-glue-20261125151854029100000001]
+aws_lakeformation_permissions.analista_trusted: Refreshing state... [id=3957459460]
+aws_lakeformation_permissions.prefeitura_refined: Refreshing state... [id=2917851010]
+aws_iam_role_policy.bucket: Refreshing state... [id=eda-a29-grupo07-glue:bucket-rw]
+aws_iam_role_policy.lf: Refreshing state... [id=eda-a29-grupo07-lf:camadas-rw]
+aws_athena_workgroup.wg: Refreshing state... [id=eda-a29-grupo07-wg]
+aws_s3_object.script["refinar-madrugada.py"]: Refreshing state... [id=scripts/refinar-madrugada.py]
+aws_s3_object.script["pipeline-corridas.py"]: Refreshing state... [id=scripts/pipeline-corridas.py]
+aws_lakeformation_resource.camada["raw"]: Refreshing state... [id=arn:aws:s3:::eda-a29-lake-grupo07/raw]
+aws_lakeformation_resource.camada["trusted"]: Refreshing state... [id=arn:aws:s3:::eda-a29-lake-grupo07/trusted]
+aws_lakeformation_resource.camada["refined"]: Refreshing state... [id=arn:aws:s3:::eda-a29-lake-grupo07/refined]
+aws_glue_job.refined: Refreshing state... [id=eda-a29-grupo07-refined]
+aws_glue_job.trusted: Refreshing state... [id=eda-a29-grupo07-trusted]
+aws_iam_policy.consumo: Refreshing state... [id=arn:aws:iam::<account>:policy/eda-a29-grupo07-consumo]
+aws_iam_role_policy_attachment.perfil["analista"]: Refreshing state... [id=eda-a29-grupo07-analista-20261125151859967300000002]
+aws_iam_role_policy_attachment.perfil["prefeitura"]: Refreshing state... [id=eda-a29-grupo07-prefeitura-20261125151859982200000003]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_athena_workgroup.wg will be destroyed
+  - resource "aws_athena_workgroup" "wg" {
+      - arn           = "arn:aws:athena:us-east-1:<account>:workgroup/eda-a29-grupo07-wg" -> null
+      - force_destroy = true -> null
+      - id            = "eda-a29-grupo07-wg" -> null
+      - name          = "eda-a29-grupo07-wg" -> null
+      - state         = "ENABLED" -> null
+      - tags          = {} -> null
+      - tags_all      = {
+          - "Aula"       = "29"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "grupo07"
+          - "Turma"      = "TURMA-A"
+        } -> null
+        # (1 unchanged attribute hidden)
+
+      - configuration {
+          - bytes_scanned_cutoff_per_query     = 209715200 -> null
+          - enforce_workgroup_configuration    = true -> null
+          - publish_cloudwatch_metrics_enabled = false -> null
+          - requester_pays_enabled             = false -> null
+            # (1 unchanged attribute hidden)
+
+          - engine_version {
+              - effective_engine_version = "Athena engine version 3" -> null
+              - selected_engine_version  = "AUTO" -> null
+            }
+
+          - result_configuration {
+              - output_location       = "s3://eda-a29-lake-grupo07/athena-results/" -> null
+                # (1 unchanged attribute hidden)
+            }
+        }
+    }
+
+  # aws_glue_catalog_database.camada["raw"] will be destroyed
+  - resource "aws_glue_catalog_database" "camada" {
+      - arn          = "arn:aws:glue:us-east-1:<account>:database/eda_a29_grupo07_raw" -> null
+      - catalog_id   = "<account>" -> null
+      - id           = "<account>:eda_a29_grupo07_raw" -> null
+      - name         = "eda_a29_grupo07_raw" -> null
+      - parameters   = {} -> null
+      - tags         = {} -> null
+      - tags_all     = {
+          - "Aula"       = "29"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "grupo07"
+          - "Turma"      = "TURMA-A"
+        } -> null
+        # (2 unchanged attributes hidden)
+    }
+
+  # aws_glue_catalog_database.camada["refined"] will be destroyed
+  - resource "aws_glue_catalog_database" "camada" {
+      - arn          = "arn:aws:glue:us-east-1:<account>:database/eda_a29_grupo07_refined" -> null
+      - catalog_id   = "<account>" -> null
+      - id           = "<account>:eda_a29_grupo07_refined" -> null
+      - name         = "eda_a29_grupo07_refined" -> null
+      - parameters   = {} -> null
+      - tags         = {} -> null
+      - tags_all     = {
+          - "Aula"       = "29"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "grupo07"
+          - "Turma"      = "TURMA-A"
+        } -> null
+        # (2 unchanged attributes hidden)
+    }
+
+  # aws_glue_catalog_database.camada["trusted"] will be destroyed
+  - resource "aws_glue_catalog_database" "camada" {
+      - arn          = "arn:aws:glue:us-east-1:<account>:database/eda_a29_grupo07_trusted" -> null
+      - catalog_id   = "<account>" -> null
+      - id           = "<account>:eda_a29_grupo07_trusted" -> null
+      - name         = "eda_a29_grupo07_trusted" -> null
+      - parameters   = {} -> null
+      - tags         = {} -> null
+      - tags_all     = {
+          - "Aula"       = "29"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "grupo07"
+          - "Turma"      = "TURMA-A"
+        } -> null
+        # (2 unchanged attributes hidden)
+    }
+
+  # aws_glue_catalog_table.raw will be destroyed
+  - resource "aws_glue_catalog_table" "raw" {
+      - arn                = "arn:aws:glue:us-east-1:<account>:table/eda_a29_grupo07_raw/corridas" -> null
+      - catalog_id         = "<account>" -> null
+      - database_name      = "eda_a29_grupo07_raw" -> null
+      - description        = "Corridas como o export mandou. dt = dia em que o arquivo chegou." -> null
+      - id                 = "<account>:eda_a29_grupo07_raw:corridas" -> null
+      - name               = "corridas" -> null
+      - parameters         = {
+          - "classification"              = "json"
+          - "projection.dt.format"        = "yyyy-MM-dd"
+          - "projection.dt.interval"      = "1"
+          - "projection.dt.interval.unit" = "DAYS"
+          - "projection.dt.range"         = "NOW-60DAYS,NOW+1DAYS"
+          - "projection.dt.type"          = "date"
+          - "projection.enabled"          = "true"
+          - "storage.location.template"   = "s3://eda-a29-lake-grupo07/raw/corridas/dt=${dt}/"
+        } -> null
+      - retention          = 0 -> null
+      - table_type         = "EXTERNAL_TABLE" -> null
+        # (3 unchanged attributes hidden)
+
+      - partition_keys {
+          - name    = "dt" -> null
+          - type    = "string" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - storage_descriptor {
+          - additional_locations      = [] -> null
+          - bucket_columns            = [] -> null
+          - compressed                = false -> null
+          - input_format              = "org.apache.hadoop.mapred.TextInputFormat" -> null
+          - location                  = "s3://eda-a29-lake-grupo07/raw/corridas/" -> null
+          - number_of_buckets         = 0 -> null
+          - output_format             = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat" -> null
+          - parameters                = {} -> null
+          - stored_as_sub_directories = false -> null
+
+          - columns {
+              - name       = "corrida_id" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "motorista_id" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "passageiro_id" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "bairro" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "data_corrida" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "fim" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "distancia_km" -> null
+              - parameters = {} -> null
+              - type       = "double" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "duracao_min" -> null
+              - parameters = {} -> null
+              - type       = "double" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "valor" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+
+          - ser_de_info {
+                name                  = null
+              - parameters            = {} -> null
+              - serialization_library = "org.openx.data.jsonserde.JsonSerDe" -> null
+            }
+        }
+    }
+
+  # aws_glue_catalog_table.refined will be destroyed
+  - resource "aws_glue_catalog_table" "refined" {
+      - arn                = "arn:aws:glue:us-east-1:<account>:table/eda_a29_grupo07_refined/madrugada_bairro" -> null
+      - catalog_id         = "<account>" -> null
+      - database_name      = "eda_a29_grupo07_refined" -> null
+      - description        = "Corridas e receita da madrugada (início entre 00h e 05h59) por bairro e dia, para o painel da Secretaria de Mobilidade. Não tem nenhum id: nem de corrida, nem de motorista, nem de passageiro; para investigar uma corrida, a fonte é a trusted." -> null
+      - id                 = "<account>:eda_a29_grupo07_refined:madrugada_bairro" -> null
+      - name               = "madrugada_bairro" -> null
+      - parameters         = {
+          - "atualizacao"                 = "Diária, pelo job refined (trusted para refined), depois do job trusted; cada execução reescreve só os dias que calcula, e dt é o dia da corrida."
+          - "classification"              = "parquet"
+          - "dono"                        = "Engenharia de Dados (grupo 07)"
+          - "grao"                        = "uma linha por bairro e dia"
+          - "projection.dt.format"        = "yyyy-MM-dd"
+          - "projection.dt.interval"      = "1"
+          - "projection.dt.interval.unit" = "DAYS"
+          - "projection.dt.range"         = "NOW-60DAYS,NOW+1DAYS"
+          - "projection.dt.type"          = "date"
+          - "projection.enabled"          = "true"
+          - "storage.location.template"   = "s3://eda-a29-lake-grupo07/refined/madrugada_bairro/dt=${dt}/"
+        } -> null
+      - retention          = 0 -> null
+      - table_type         = "EXTERNAL_TABLE" -> null
+        # (3 unchanged attributes hidden)
+
+      - partition_keys {
+          - comment = "dia em que as corridas aconteceram (AAAA-MM-DD)" -> null
+          - name    = "dt" -> null
+          - type    = "string" -> null
+        }
+
+      - storage_descriptor {
+          - additional_locations      = [] -> null
+          - bucket_columns            = [] -> null
+          - compressed                = false -> null
+          - input_format              = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat" -> null
+          - location                  = "s3://eda-a29-lake-grupo07/refined/madrugada_bairro/" -> null
+          - number_of_buckets         = 0 -> null
+          - output_format             = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat" -> null
+          - parameters                = {} -> null
+          - stored_as_sub_directories = false -> null
+
+          - columns {
+              - comment    = "Bairro do Recife ou da Região Metropolitana onde a corrida começou, como na trusted." -> null
+              - name       = "bairro" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+            }
+          - columns {
+              - comment    = "Número de corridas que começaram entre 00h e 05h59 (faixa_hora de 0 a 5) nesse bairro e dia; uma por corrida_id, sem duplicatas." -> null
+              - name       = "corridas" -> null
+              - parameters = {} -> null
+              - type       = "bigint" -> null
+            }
+          - columns {
+              - comment    = "Soma do valor das corridas contadas em corridas, em reais, arredondada a 2 casas." -> null
+              - name       = "receita" -> null
+              - parameters = {} -> null
+              - type       = "double" -> null
+            }
+
+          - ser_de_info {
+                name                  = null
+              - parameters            = {} -> null
+              - serialization_library = "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe" -> null
+            }
+        }
+    }
+
+  # aws_glue_catalog_table.trusted will be destroyed
+  - resource "aws_glue_catalog_table" "trusted" {
+      - arn                = "arn:aws:glue:us-east-1:<account>:table/eda_a29_grupo07_trusted/corridas" -> null
+      - catalog_id         = "<account>" -> null
+      - database_name      = "eda_a29_grupo07_trusted" -> null
+      - description        = "Uma linha por corrida, limpa e tipada. dt = dia em que a corrida aconteceu." -> null
+      - id                 = "<account>:eda_a29_grupo07_trusted:corridas" -> null
+      - name               = "corridas" -> null
+      - parameters         = {
+          - "classification"              = "parquet"
+          - "projection.dt.format"        = "yyyy-MM-dd"
+          - "projection.dt.interval"      = "1"
+          - "projection.dt.interval.unit" = "DAYS"
+          - "projection.dt.range"         = "NOW-60DAYS,NOW+1DAYS"
+          - "projection.dt.type"          = "date"
+          - "projection.enabled"          = "true"
+          - "storage.location.template"   = "s3://eda-a29-lake-grupo07/trusted/corridas/dt=${dt}/"
+        } -> null
+      - retention          = 0 -> null
+      - table_type         = "EXTERNAL_TABLE" -> null
+        # (3 unchanged attributes hidden)
+
+      - partition_keys {
+          - name    = "dt" -> null
+          - type    = "string" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - storage_descriptor {
+          - additional_locations      = [] -> null
+          - bucket_columns            = [] -> null
+          - compressed                = false -> null
+          - input_format              = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat" -> null
+          - location                  = "s3://eda-a29-lake-grupo07/trusted/corridas/" -> null
+          - number_of_buckets         = 0 -> null
+          - output_format             = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat" -> null
+          - parameters                = {} -> null
+          - stored_as_sub_directories = false -> null
+
+          - columns {
+              - name       = "corrida_id" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "motorista_id" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "passageiro_id" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "bairro" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "inicio" -> null
+              - parameters = {} -> null
+              - type       = "timestamp" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "fim" -> null
+              - parameters = {} -> null
+              - type       = "timestamp" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "distancia_km" -> null
+              - parameters = {} -> null
+              - type       = "double" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "duracao_min" -> null
+              - parameters = {} -> null
+              - type       = "double" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "valor" -> null
+              - parameters = {} -> null
+              - type       = "double" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "faixa_hora" -> null
+              - parameters = {} -> null
+              - type       = "int" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "chegada" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+
+          - ser_de_info {
+                name                  = null
+              - parameters            = {} -> null
+              - serialization_library = "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe" -> null
+            }
+        }
+    }
+
+  # aws_glue_job.refined will be destroyed
+  - resource "aws_glue_job" "refined" {
+      - arn                       = "arn:aws:glue:us-east-1:<account>:job/eda-a29-grupo07-refined" -> null
+      - connections               = [] -> null
+      - default_arguments         = {
+          - "--BUCKET"              = "eda-a29-lake-grupo07"
+          - "--DIAS"                = "todos"
+          - "--job-bookmark-option" = "job-bookmark-disable"
+          - "--job-language"        = "python"
+        } -> null
+      - glue_version              = "4.0" -> null
+      - id                        = "eda-a29-grupo07-refined" -> null
+      - job_run_queuing_enabled   = false -> null
+      - max_capacity              = 2 -> null
+      - max_retries               = 0 -> null
+      - name                      = "eda-a29-grupo07-refined" -> null
+      - non_overridable_arguments = {} -> null
+      - number_of_workers         = 2 -> null
+      - role_arn                  = "arn:aws:iam::<account>:role/eda-a29-grupo07-glue" -> null
+      - tags                      = {} -> null
+      - tags_all                  = {
+          - "Aula"       = "29"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "grupo07"
+          - "Turma"      = "TURMA-A"
+        } -> null
+      - timeout                   = 15 -> null
+      - worker_type               = "G.1X" -> null
+        # (4 unchanged attributes hidden)
+
+      - command {
+          - name            = "glueetl" -> null
+          - python_version  = "3" -> null
+          - script_location = "s3://eda-a29-lake-grupo07/scripts/refinar-madrugada.py" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - execution_property {
+          - max_concurrent_runs = 1 -> null
+        }
+    }
+
+  # aws_glue_job.trusted will be destroyed
+  - resource "aws_glue_job" "trusted" {
+      - arn                       = "arn:aws:glue:us-east-1:<account>:job/eda-a29-grupo07-trusted" -> null
+      - connections               = [] -> null
+      - default_arguments         = {
+          - "--BUCKET"              = "eda-a29-lake-grupo07"
+          - "--CHAVE"               = "corrida_id"
+          - "--DIAS"                = "todos"
+          - "--JANELA"              = "3"
+          - "--MODO"                = "sobrescrever"
+          - "--TABELA"              = "corridas"
+          - "--job-bookmark-option" = "job-bookmark-disable"
+          - "--job-language"        = "python"
+        } -> null
+      - glue_version              = "4.0" -> null
+      - id                        = "eda-a29-grupo07-trusted" -> null
+      - job_run_queuing_enabled   = false -> null
+      - max_capacity              = 2 -> null
+      - max_retries               = 0 -> null
+      - name                      = "eda-a29-grupo07-trusted" -> null
+      - non_overridable_arguments = {} -> null
+      - number_of_workers         = 2 -> null
+      - role_arn                  = "arn:aws:iam::<account>:role/eda-a29-grupo07-glue" -> null
+      - tags                      = {} -> null
+      - tags_all                  = {
+          - "Aula"       = "29"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "grupo07"
+          - "Turma"      = "TURMA-A"
+        } -> null
+      - timeout                   = 15 -> null
+      - worker_type               = "G.1X" -> null
+        # (4 unchanged attributes hidden)
+
+      - command {
+          - name            = "glueetl" -> null
+          - python_version  = "3" -> null
+          - script_location = "s3://eda-a29-lake-grupo07/scripts/pipeline-corridas.py" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - execution_property {
+          - max_concurrent_runs = 1 -> null
+        }
+    }
+
+  # aws_iam_policy.consumo will be destroyed
+  - resource "aws_iam_policy" "consumo" {
+      - arn              = "arn:aws:iam::<account>:policy/eda-a29-grupo07-consumo" -> null
+      - attachment_count = 2 -> null
+      - id               = "arn:aws:iam::<account>:policy/eda-a29-grupo07-consumo" -> null
+      - name             = "eda-a29-grupo07-consumo" -> null
+      - path             = "/" -> null
+      - policy           = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action   = [
+                          - "athena:StartQueryExecution",
+                          - "athena:GetQueryExecution",
+                          - "athena:GetQueryResults",
+                          - "athena:StopQueryExecution",
+                          - "athena:GetWorkGroup",
+                        ]
+                      - Effect   = "Allow"
+                      - Resource = [
+                          - "arn:aws:athena:us-east-1:<account>:workgroup/eda-a29-grupo07-wg",
+                        ]
+                    },
+                  - {
+                      - Action   = [
+                          - "glue:GetDatabase",
+                          - "glue:GetDatabases",
+                          - "glue:GetTable",
+                          - "glue:GetTables",
+                          - "glue:GetPartition",
+                          - "glue:GetPartitions",
+                        ]
+                      - Effect   = "Allow"
+                      - Resource = [
+                          - "*",
+                        ]
+                    },
+                  - {
+                      - Action   = [
+                          - "lakeformation:GetDataAccess",
+                        ]
+                      - Effect   = "Allow"
+                      - Resource = [
+                          - "*",
+                        ]
+                    },
+                  - {
+                      - Action   = [
+                          - "s3:GetObject",
+                          - "s3:PutObject",
+                          - "s3:AbortMultipartUpload",
+                        ]
+                      - Effect   = "Allow"
+                      - Resource = [
+                          - "arn:aws:s3:::eda-a29-lake-grupo07/athena-results/*",
+                        ]
+                    },
+                  - {
+                      - Action   = [
+                          - "s3:GetBucketLocation",
+                        ]
+                      - Effect   = "Allow"
+                      - Resource = [
+                          - "arn:aws:s3:::eda-a29-lake-grupo07",
+                        ]
+                    },
+                  - {
+                      - Action    = [
+                          - "s3:ListBucket",
+                        ]
+                      - Condition = {
+                          - StringLike = {
+                              - "s3:prefix" = [
+                                  - "athena-results/*",
+                                  - "athena-results",
+                                ]
+                            }
+                        }
+                      - Effect    = "Allow"
+                      - Resource  = [
+                          - "arn:aws:s3:::eda-a29-lake-grupo07",
+                        ]
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - policy_id        = "ANPAUXTSPSNU4ZJPGGSSA" -> null
+      - tags             = {} -> null
+      - tags_all         = {
+          - "Aula"       = "29"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "grupo07"
+          - "Turma"      = "TURMA-A"
+        } -> null
+        # (2 unchanged attributes hidden)
+    }
+
+  # aws_iam_role.job will be destroyed
+  - resource "aws_iam_role" "job" {
+      - arn                   = "arn:aws:iam::<account>:role/eda-a29-grupo07-glue" -> null
+      - assume_role_policy    = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action    = "sts:AssumeRole"
+                      - Effect    = "Allow"
+                      - Principal = {
+                          - Service = "glue.amazonaws.com"
+                        }
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - create_date           = "2026-11-25T15:18:53Z" -> null
+      - force_detach_policies = false -> null
+      - id                    = "eda-a29-grupo07-glue" -> null
+      - managed_policy_arns   = [
+          - "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole",
+        ] -> null
+      - max_session_duration  = 3600 -> null
+      - name                  = "eda-a29-grupo07-glue" -> null
+      - path                  = "/" -> null
+      - tags                  = {} -> null
+      - tags_all              = {
+          - "Aula"       = "29"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "grupo07"
+          - "Turma"      = "TURMA-A"
+        } -> null
+      - unique_id             = "AROAUXTSPSNUR6AK5WLGT" -> null
+        # (3 unchanged attributes hidden)
+
+      - inline_policy {
+          - name   = "bucket-rw" -> null
+          - policy = jsonencode(
+                {
+                  - Statement = [
+                      - {
+                          - Action   = [
+                              - "s3:GetObject",
+                              - "s3:PutObject",
+                              - "s3:DeleteObject",
+                              - "s3:ListBucket",
+                            ]
+                          - Effect   = "Allow"
+                          - Resource = [
+                              - "arn:aws:s3:::eda-a29-lake-grupo07",
+                              - "arn:aws:s3:::eda-a29-lake-grupo07/*",
+                            ]
+                        },
+                    ]
+                  - Version   = "2012-10-17"
+                }
+            ) -> null
+        }
+    }
+
+  # aws_iam_role.lf will be destroyed
+  - resource "aws_iam_role" "lf" {
+      - arn                   = "arn:aws:iam::<account>:role/eda-a29-grupo07-lf" -> null
+      - assume_role_policy    = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action    = "sts:AssumeRole"
+                      - Effect    = "Allow"
+                      - Principal = {
+                          - Service = "lakeformation.amazonaws.com"
+                        }
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - create_date           = "2026-11-25T15:18:53Z" -> null
+      - force_detach_policies = false -> null
+      - id                    = "eda-a29-grupo07-lf" -> null
+      - managed_policy_arns   = [] -> null
+      - max_session_duration  = 3600 -> null
+      - name                  = "eda-a29-grupo07-lf" -> null
+      - path                  = "/" -> null
+      - tags                  = {} -> null
+      - tags_all              = {
+          - "Aula"       = "29"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "grupo07"
+          - "Turma"      = "TURMA-A"
+        } -> null
+      - unique_id             = "AROAUXTSPSNUWT6RBTNWD" -> null
+        # (3 unchanged attributes hidden)
+
+      - inline_policy {
+          - name   = "camadas-rw" -> null
+          - policy = jsonencode(
+                {
+                  - Statement = [
+                      - {
+                          - Action   = [
+                              - "s3:GetObject",
+                              - "s3:PutObject",
+                              - "s3:DeleteObject",
+                            ]
+                          - Effect   = "Allow"
+                          - Resource = [
+                              - "arn:aws:s3:::eda-a29-lake-grupo07/raw/*",
+                              - "arn:aws:s3:::eda-a29-lake-grupo07/trusted/*",
+                              - "arn:aws:s3:::eda-a29-lake-grupo07/refined/*",
+                            ]
+                        },
+                      - {
+                          - Action   = [
+                              - "s3:ListBucket",
+                            ]
+                          - Effect   = "Allow"
+                          - Resource = [
+                              - "arn:aws:s3:::eda-a29-lake-grupo07",
+                            ]
+                        },
+                    ]
+                  - Version   = "2012-10-17"
+                }
+            ) -> null
+        }
+    }
+
+  # aws_iam_role.perfil["analista"] will be destroyed
+  - resource "aws_iam_role" "perfil" {
+      - arn                   = "arn:aws:iam::<account>:role/eda-a29-grupo07-analista" -> null
+      - assume_role_policy    = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action    = "sts:AssumeRole"
+                      - Effect    = "Allow"
+                      - Principal = {
+                          - AWS = "arn:aws:iam::<account>:root"
+                        }
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - create_date           = "2026-11-25T15:18:53Z" -> null
+      - force_detach_policies = false -> null
+      - id                    = "eda-a29-grupo07-analista" -> null
+      - managed_policy_arns   = [
+          - "arn:aws:iam::<account>:policy/eda-a29-grupo07-consumo",
+        ] -> null
+      - max_session_duration  = 3600 -> null
+      - name                  = "eda-a29-grupo07-analista" -> null
+      - path                  = "/" -> null
+      - tags                  = {} -> null
+      - tags_all              = {
+          - "Aula"       = "29"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "grupo07"
+          - "Turma"      = "TURMA-A"
+        } -> null
+      - unique_id             = "AROAUXTSPSNU5ZJQYMH6T" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_iam_role.perfil["prefeitura"] will be destroyed
+  - resource "aws_iam_role" "perfil" {
+      - arn                   = "arn:aws:iam::<account>:role/eda-a29-grupo07-prefeitura" -> null
+      - assume_role_policy    = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action    = "sts:AssumeRole"
+                      - Effect    = "Allow"
+                      - Principal = {
+                          - AWS = "arn:aws:iam::<account>:root"
+                        }
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - create_date           = "2026-11-25T15:18:53Z" -> null
+      - force_detach_policies = false -> null
+      - id                    = "eda-a29-grupo07-prefeitura" -> null
+      - managed_policy_arns   = [
+          - "arn:aws:iam::<account>:policy/eda-a29-grupo07-consumo",
+        ] -> null
+      - max_session_duration  = 3600 -> null
+      - name                  = "eda-a29-grupo07-prefeitura" -> null
+      - path                  = "/" -> null
+      - tags                  = {} -> null
+      - tags_all              = {
+          - "Aula"       = "29"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "grupo07"
+          - "Turma"      = "TURMA-A"
+        } -> null
+      - unique_id             = "AROAUXTSPSNUURZ5FFF5C" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_iam_role_policy.bucket will be destroyed
+  - resource "aws_iam_role_policy" "bucket" {
+      - id          = "eda-a29-grupo07-glue:bucket-rw" -> null
+      - name        = "bucket-rw" -> null
+      - policy      = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action   = [
+                          - "s3:GetObject",
+                          - "s3:PutObject",
+                          - "s3:DeleteObject",
+                          - "s3:ListBucket",
+                        ]
+                      - Effect   = "Allow"
+                      - Resource = [
+                          - "arn:aws:s3:::eda-a29-lake-grupo07",
+                          - "arn:aws:s3:::eda-a29-lake-grupo07/*",
+                        ]
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - role        = "eda-a29-grupo07-glue" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_iam_role_policy.lf will be destroyed
+  - resource "aws_iam_role_policy" "lf" {
+      - id          = "eda-a29-grupo07-lf:camadas-rw" -> null
+      - name        = "camadas-rw" -> null
+      - policy      = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action   = [
+                          - "s3:GetObject",
+                          - "s3:PutObject",
+                          - "s3:DeleteObject",
+                        ]
+                      - Effect   = "Allow"
+                      - Resource = [
+                          - "arn:aws:s3:::eda-a29-lake-grupo07/raw/*",
+                          - "arn:aws:s3:::eda-a29-lake-grupo07/trusted/*",
+                          - "arn:aws:s3:::eda-a29-lake-grupo07/refined/*",
+                        ]
+                    },
+                  - {
+                      - Action   = [
+                          - "s3:ListBucket",
+                        ]
+                      - Effect   = "Allow"
+                      - Resource = [
+                          - "arn:aws:s3:::eda-a29-lake-grupo07",
+                        ]
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - role        = "eda-a29-grupo07-lf" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_iam_role_policy_attachment.glue will be destroyed
+  - resource "aws_iam_role_policy_attachment" "glue" {
+      - id         = "eda-a29-grupo07-glue-20261125151854029100000001" -> null
+      - policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole" -> null
+      - role       = "eda-a29-grupo07-glue" -> null
+    }
+
+  # aws_iam_role_policy_attachment.perfil["analista"] will be destroyed
+  - resource "aws_iam_role_policy_attachment" "perfil" {
+      - id         = "eda-a29-grupo07-analista-20261125151859967300000002" -> null
+      - policy_arn = "arn:aws:iam::<account>:policy/eda-a29-grupo07-consumo" -> null
+      - role       = "eda-a29-grupo07-analista" -> null
+    }
+
+  # aws_iam_role_policy_attachment.perfil["prefeitura"] will be destroyed
+  - resource "aws_iam_role_policy_attachment" "perfil" {
+      - id         = "eda-a29-grupo07-prefeitura-20261125151859982200000003" -> null
+      - policy_arn = "arn:aws:iam::<account>:policy/eda-a29-grupo07-consumo" -> null
+      - role       = "eda-a29-grupo07-prefeitura" -> null
+    }
+
+  # aws_lakeformation_permissions.analista_trusted will be destroyed
+  - resource "aws_lakeformation_permissions" "analista_trusted" {
+      - catalog_resource              = false -> null
+      - id                            = "3957459460" -> null
+      - permissions                   = [
+          - "SELECT",
+        ] -> null
+      - permissions_with_grant_option = [] -> null
+      - principal                     = "arn:aws:iam::<account>:role/eda-a29-grupo07-analista" -> null
+
+      - table_with_columns {
+          - catalog_id            = "<account>" -> null
+          - column_names          = [] -> null
+          - database_name         = "eda_a29_grupo07_trusted" -> null
+          - excluded_column_names = [
+              - "motorista_id",
+              - "passageiro_id",
+            ] -> null
+          - name                  = "corridas" -> null
+          - wildcard              = true -> null
+        }
+    }
+
+  # aws_lakeformation_permissions.prefeitura_refined will be destroyed
+  - resource "aws_lakeformation_permissions" "prefeitura_refined" {
+      - catalog_resource              = false -> null
+      - id                            = "2917851010" -> null
+      - permissions                   = [
+          - "DESCRIBE",
+          - "SELECT",
+        ] -> null
+      - permissions_with_grant_option = [] -> null
+      - principal                     = "arn:aws:iam::<account>:role/eda-a29-grupo07-prefeitura" -> null
+
+      - table {
+          - catalog_id    = "<account>" -> null
+          - database_name = "eda_a29_grupo07_refined" -> null
+          - name          = "madrugada_bairro" -> null
+          - wildcard      = false -> null
+        }
+    }
+
+  # aws_lakeformation_permissions.ver_banco["analista-refined"] will be destroyed
+  - resource "aws_lakeformation_permissions" "ver_banco" {
+      - catalog_resource              = false -> null
+      - id                            = "1874714624" -> null
+      - permissions                   = [
+          - "DESCRIBE",
+        ] -> null
+      - permissions_with_grant_option = [] -> null
+      - principal                     = "arn:aws:iam::<account>:role/eda-a29-grupo07-analista" -> null
+
+      - database {
+          - catalog_id = "<account>" -> null
+          - name       = "eda_a29_grupo07_refined" -> null
+        }
+    }
+
+  # aws_lakeformation_permissions.ver_banco["analista-trusted"] will be destroyed
+  - resource "aws_lakeformation_permissions" "ver_banco" {
+      - catalog_resource              = false -> null
+      - id                            = "1093570168" -> null
+      - permissions                   = [
+          - "DESCRIBE",
+        ] -> null
+      - permissions_with_grant_option = [] -> null
+      - principal                     = "arn:aws:iam::<account>:role/eda-a29-grupo07-analista" -> null
+
+      - database {
+          - catalog_id = "<account>" -> null
+          - name       = "eda_a29_grupo07_trusted" -> null
+        }
+    }
+
+  # aws_lakeformation_permissions.ver_banco["prefeitura-refined"] will be destroyed
+  - resource "aws_lakeformation_permissions" "ver_banco" {
+      - catalog_resource              = false -> null
+      - id                            = "705666921" -> null
+      - permissions                   = [
+          - "DESCRIBE",
+        ] -> null
+      - permissions_with_grant_option = [] -> null
+      - principal                     = "arn:aws:iam::<account>:role/eda-a29-grupo07-prefeitura" -> null
+
+      - database {
+          - catalog_id = "<account>" -> null
+          - name       = "eda_a29_grupo07_refined" -> null
+        }
+    }
+
+  # aws_lakeformation_resource.camada["raw"] will be destroyed
+  - resource "aws_lakeformation_resource" "camada" {
+      - arn                   = "arn:aws:s3:::eda-a29-lake-grupo07/raw" -> null
+      - hybrid_access_enabled = false -> null
+      - id                    = "arn:aws:s3:::eda-a29-lake-grupo07/raw" -> null
+      - role_arn              = "arn:aws:iam::<account>:role/eda-a29-grupo07-lf" -> null
+      - with_federation       = false -> null
+    }
+
+  # aws_lakeformation_resource.camada["refined"] will be destroyed
+  - resource "aws_lakeformation_resource" "camada" {
+      - arn                   = "arn:aws:s3:::eda-a29-lake-grupo07/refined" -> null
+      - hybrid_access_enabled = false -> null
+      - id                    = "arn:aws:s3:::eda-a29-lake-grupo07/refined" -> null
+      - role_arn              = "arn:aws:iam::<account>:role/eda-a29-grupo07-lf" -> null
+      - with_federation       = false -> null
+    }
+
+  # aws_lakeformation_resource.camada["trusted"] will be destroyed
+  - resource "aws_lakeformation_resource" "camada" {
+      - arn                   = "arn:aws:s3:::eda-a29-lake-grupo07/trusted" -> null
+      - hybrid_access_enabled = false -> null
+      - id                    = "arn:aws:s3:::eda-a29-lake-grupo07/trusted" -> null
+      - role_arn              = "arn:aws:iam::<account>:role/eda-a29-grupo07-lf" -> null
+      - with_federation       = false -> null
+    }
+
+  # aws_s3_bucket.lake will be destroyed
+  - resource "aws_s3_bucket" "lake" {
+      - arn                         = "arn:aws:s3:::eda-a29-lake-grupo07" -> null
+      - bucket                      = "eda-a29-lake-grupo07" -> null
+      - bucket_domain_name          = "eda-a29-lake-grupo07.s3.amazonaws.com" -> null
+      - bucket_regional_domain_name = "eda-a29-lake-grupo07.s3.us-east-1.amazonaws.com" -> null
+      - force_destroy               = true -> null
+      - hosted_zone_id              = "Z3AQBSTGFYJSTF" -> null
+      - id                          = "eda-a29-lake-grupo07" -> null
+      - object_lock_enabled         = false -> null
+      - region                      = "us-east-1" -> null
+      - request_payer               = "BucketOwner" -> null
+      - tags                        = {} -> null
+      - tags_all                    = {
+          - "Aula"       = "29"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "grupo07"
+          - "Turma"      = "TURMA-A"
+        } -> null
+        # (3 unchanged attributes hidden)
+
+      - grant {
+          - id          = "8022b3bfe1e45d090335847dc77b594076fc7367a05e12aaab58998de2bef47e" -> null
+          - permissions = [
+              - "FULL_CONTROL",
+            ] -> null
+          - type        = "CanonicalUser" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - server_side_encryption_configuration {
+          - rule {
+              - bucket_key_enabled = false -> null
+
+              - apply_server_side_encryption_by_default {
+                  - sse_algorithm     = "AES256" -> null
+                    # (1 unchanged attribute hidden)
+                }
+            }
+        }
+
+      - versioning {
+          - enabled    = false -> null
+          - mfa_delete = false -> null
+        }
+    }
+
+  # aws_s3_object.script["pipeline-corridas.py"] will be destroyed
+  - resource "aws_s3_object" "script" {
+      - arn                           = "arn:aws:s3:::eda-a29-lake-grupo07/scripts/pipeline-corridas.py" -> null
+      - bucket                        = "eda-a29-lake-grupo07" -> null
+      - bucket_key_enabled            = false -> null
+      - content_type                  = "application/octet-stream" -> null
+      - etag                          = "7f112f6db60258e0195142ec5438d322" -> null
+      - force_destroy                 = false -> null
+      - id                            = "scripts/pipeline-corridas.py" -> null
+      - key                           = "scripts/pipeline-corridas.py" -> null
+      - metadata                      = {} -> null
+      - server_side_encryption        = "AES256" -> null
+      - source                        = "./scripts/pipeline-corridas.py" -> null
+      - storage_class                 = "STANDARD" -> null
+      - tags                          = {} -> null
+      - tags_all                      = {
+          - "Aula"       = "29"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "grupo07"
+          - "Turma"      = "TURMA-A"
+        } -> null
+        # (14 unchanged attributes hidden)
+    }
+
+  # aws_s3_object.script["refinar-madrugada.py"] will be destroyed
+  - resource "aws_s3_object" "script" {
+      - arn                           = "arn:aws:s3:::eda-a29-lake-grupo07/scripts/refinar-madrugada.py" -> null
+      - bucket                        = "eda-a29-lake-grupo07" -> null
+      - bucket_key_enabled            = false -> null
+      - content_type                  = "application/octet-stream" -> null
+      - etag                          = "51e040edb032ade52e3b8c3bdb251fcb" -> null
+      - force_destroy                 = false -> null
+      - id                            = "scripts/refinar-madrugada.py" -> null
+      - key                           = "scripts/refinar-madrugada.py" -> null
+      - metadata                      = {} -> null
+      - server_side_encryption        = "AES256" -> null
+      - source                        = "./scripts/refinar-madrugada.py" -> null
+      - storage_class                 = "STANDARD" -> null
+      - tags                          = {} -> null
+      - tags_all                      = {
+          - "Aula"       = "29"
+          - "Disciplina" = "EDA"
+          - "Owner"      = "grupo07"
+          - "Turma"      = "TURMA-A"
+        } -> null
+        # (14 unchanged attributes hidden)
+    }
+
+Plan: 0 to add, 0 to change, 30 to destroy.
+
+Changes to Outputs:
+  - bucket           = "eda-a29-lake-grupo07" -> null
+  - database_raw     = "eda_a29_grupo07_raw" -> null
+  - database_refined = "eda_a29_grupo07_refined" -> null
+  - database_trusted = "eda_a29_grupo07_trusted" -> null
+  - decisoes         = {
+      - colunas_ocultas_analista = [
+          - "motorista_id",
+          - "passageiro_id",
+        ]
+      - escopo_prefeitura        = "tabela"
+    } -> null
+  - job_refined      = "eda-a29-grupo07-refined" -> null
+  - job_trusted      = "eda-a29-grupo07-trusted" -> null
+  - papel_analista   = "arn:aws:iam::<account>:role/eda-a29-grupo07-analista" -> null
+  - papel_prefeitura = "arn:aws:iam::<account>:role/eda-a29-grupo07-prefeitura" -> null
+  - workgroup        = "eda-a29-grupo07-wg" -> null
+aws_lakeformation_resource.camada["refined"]: Destroying... [id=arn:aws:s3:::eda-a29-lake-grupo07/refined]
+aws_iam_role_policy_attachment.perfil["prefeitura"]: Destroying... [id=eda-a29-grupo07-prefeitura-20261125151859982200000003]
+aws_lakeformation_permissions.analista_trusted: Destroying... [id=3957459460]
+aws_lakeformation_resource.camada["raw"]: Destroying... [id=arn:aws:s3:::eda-a29-lake-grupo07/raw]
+aws_lakeformation_resource.camada["trusted"]: Destroying... [id=arn:aws:s3:::eda-a29-lake-grupo07/trusted]
+aws_iam_role_policy.bucket: Destroying... [id=eda-a29-grupo07-glue:bucket-rw]
+aws_glue_job.refined: Destroying... [id=eda-a29-grupo07-refined]
+aws_iam_role_policy_attachment.perfil["analista"]: Destroying... [id=eda-a29-grupo07-analista-20261125151859967300000002]
+aws_lakeformation_permissions.ver_banco["analista-trusted"]: Destroying... [id=1093570168]
+aws_glue_catalog_table.raw: Destroying... [id=<account>:eda_a29_grupo07_raw:corridas]
+aws_glue_job.refined: Destruction complete after 2s
+aws_lakeformation_resource.camada["refined"]: Destruction complete after 2s
+aws_lakeformation_resource.camada["trusted"]: Destruction complete after 2s
+aws_iam_role_policy_attachment.perfil["analista"]: Destruction complete after 2s
+aws_lakeformation_resource.camada["raw"]: Destruction complete after 2s
+aws_glue_job.trusted: Destroying... [id=eda-a29-grupo07-trusted]
+aws_glue_catalog_table.raw: Destruction complete after 2s
+aws_iam_role_policy_attachment.glue: Destroying... [id=eda-a29-grupo07-glue-20261125151854029100000001]
+aws_lakeformation_permissions.ver_banco["prefeitura-refined"]: Destroying... [id=705666921]
+aws_lakeformation_permissions.ver_banco["analista-refined"]: Destroying... [id=1874714624]
+aws_lakeformation_permissions.prefeitura_refined: Destroying... [id=2917851010]
+aws_iam_role_policy.lf: Destroying... [id=eda-a29-grupo07-lf:camadas-rw]
+aws_iam_role_policy_attachment.perfil["prefeitura"]: Destruction complete after 2s
+aws_iam_policy.consumo: Destroying... [id=arn:aws:iam::<account>:policy/eda-a29-grupo07-consumo]
+aws_glue_job.trusted: Destruction complete after 0s
+aws_lakeformation_permissions.analista_trusted: Destruction complete after 2s
+aws_lakeformation_permissions.ver_banco["analista-trusted"]: Destruction complete after 2s
+aws_s3_object.script["pipeline-corridas.py"]: Destroying... [id=scripts/pipeline-corridas.py]
+aws_s3_object.script["refinar-madrugada.py"]: Destroying... [id=scripts/refinar-madrugada.py]
+aws_glue_catalog_table.trusted: Destroying... [id=<account>:eda_a29_grupo07_trusted:corridas]
+aws_iam_role_policy.bucket: Destruction complete after 3s
+aws_lakeformation_permissions.ver_banco["prefeitura-refined"]: Destruction complete after 1s
+aws_lakeformation_permissions.prefeitura_refined: Destruction complete after 1s
+aws_iam_role_policy_attachment.glue: Destruction complete after 1s
+aws_iam_role_policy.lf: Destruction complete after 1s
+aws_lakeformation_permissions.ver_banco["analista-refined"]: Destruction complete after 1s
+aws_iam_role.perfil["prefeitura"]: Destroying... [id=eda-a29-grupo07-prefeitura]
+aws_iam_role.lf: Destroying... [id=eda-a29-grupo07-lf]
+aws_iam_role.job: Destroying... [id=eda-a29-grupo07-glue]
+aws_iam_role.perfil["analista"]: Destroying... [id=eda-a29-grupo07-analista]
+aws_glue_catalog_table.refined: Destroying... [id=<account>:eda_a29_grupo07_refined:madrugada_bairro]
+aws_glue_catalog_table.trusted: Destruction complete after 0s
+aws_glue_catalog_table.refined: Destruction complete after 1s
+aws_glue_catalog_database.camada["refined"]: Destroying... [id=<account>:eda_a29_grupo07_refined]
+aws_glue_catalog_database.camada["raw"]: Destroying... [id=<account>:eda_a29_grupo07_raw]
+aws_glue_catalog_database.camada["trusted"]: Destroying... [id=<account>:eda_a29_grupo07_trusted]
+aws_iam_role.perfil["prefeitura"]: Destruction complete after 1s
+aws_s3_object.script["refinar-madrugada.py"]: Destruction complete after 1s
+aws_glue_catalog_database.camada["raw"]: Destruction complete after 0s
+aws_glue_catalog_database.camada["trusted"]: Destruction complete after 0s
+aws_glue_catalog_database.camada["refined"]: Destruction complete after 0s
+aws_iam_policy.consumo: Destruction complete after 2s
+aws_iam_role.perfil["analista"]: Destruction complete after 1s
+aws_athena_workgroup.wg: Destroying... [id=eda-a29-grupo07-wg]
+aws_s3_object.script["pipeline-corridas.py"]: Destruction complete after 2s
+aws_iam_role.lf: Destruction complete after 1s
+aws_iam_role.job: Destruction complete after 2s
+aws_athena_workgroup.wg: Destruction complete after 2s
+aws_s3_bucket.lake: Destroying... [id=eda-a29-lake-grupo07]
+aws_s3_bucket.lake: Destruction complete after 4s
+Releasing state lock. This may take a few moments...
+
+Destroy complete! Resources: 30 destroyed.

@@ -1,0 +1,25 @@
+# cp terraform.tfvars.example terraform.tfvars  e troque turma e sufixo.
+# As três DECISÕES abaixo são as do grupo 07; a justificativa, com o que medimos como cada
+# perfil, está em ../DECISOES.md.
+turma  = "TURMA-A"
+sufixo = "grupoXX" # só minúsculas e números
+
+# DECISÃO 01 — só a madrugada_bairro: tabela nova na refined fica invisível à Prefeitura
+# até alguém conceder (o lab usou o banco inteiro).
+escopo_prefeitura = "tabela"
+
+# DECISÃO 02 — a analista não investiga pessoa: some o passageiro e o motorista;
+# corrida_id fica, porque a reclamação chega com ele.
+colunas_ocultas_analista = ["motorista_id", "passageiro_id"]
+
+# DECISÃO 03 — o contrato que um consumidor lê no catálogo antes de escrever o SQL.
+contrato_refined = {
+  descricao   = "Corridas e receita da madrugada (início entre 00h e 05h59) por bairro e dia, para o painel da Secretaria de Mobilidade. Não tem nenhum id: nem de corrida, nem de motorista, nem de passageiro; para investigar uma corrida, a fonte é a trusted."
+  dono        = "Engenharia de Dados (grupo 07)"
+  atualizacao = "Diária, pelo job refined (trusted para refined), depois do job trusted; cada execução reescreve só os dias que calcula, e dt é o dia da corrida."
+  comentarios = {
+    bairro   = "Bairro do Recife ou da Região Metropolitana onde a corrida começou, como na trusted."
+    corridas = "Número de corridas que começaram entre 00h e 05h59 (faixa_hora de 0 a 5) nesse bairro e dia; uma por corrida_id, sem duplicatas."
+    receita  = "Soma do valor das corridas contadas em corridas, em reais, arredondada a 2 casas."
+  }
+}

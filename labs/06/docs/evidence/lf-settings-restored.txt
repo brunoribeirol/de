@@ -1,0 +1,5 @@
+admins before: ['user/eda-grupo04', 'user/eda-grupo09', 'user/gportela']
+admins after:  ['user/eda-grupo04', 'user/eda-grupo09', 'user/gportela']
+CreateDatabaseDefaultPermissions: before=['IAM_ALLOWED_PRINCIPALS'] after=['IAM_ALLOWED_PRINCIPALS']
+CreateTableDefaultPermissions: before=['IAM_ALLOWED_PRINCIPALS'] after=['IAM_ALLOWED_PRINCIPALS']
+RESTORED (every admin from before is back; default permissions as before)

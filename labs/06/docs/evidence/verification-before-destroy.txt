@@ -1,0 +1,10 @@
+OK     [0]  (elimina)  backend remoto s3, três databases (um por camada) e a refined em Parquet
+PASSA  [1]  (20%)  a Prefeitura lê a refined: 11137 corridas na madrugada dos últimos 7 dias
+PASSA  [2]  (25%)  a Prefeitura não lê a trusted, nem a raw, nem o S3 direto
+PASSA  [3]  (15%)  a analista lê a trusted (518400 corridas) e não vê passageiro_id
+PASSA  [4]  (10%)  o contrato da refined está no catálogo: descrição (241 caracteres), dono 'Engenharia de Dados (grupo 07)', comentário em toda coluna
+
+Critérios automáticos: 70 / 70 pontos-percentuais
+Falta o que o script não mede: o critério 5 (rode com --pos-destroy depois do destroy) e o DECISOES.md (20%).
+
+evidência: sufixo=grupo07 hoje=2026-11-25 prefeitura_refined=11137 prefeitura_trusted=RECUSADO prefeitura_raw=RECUSADO prefeitura_s3=RECUSADO analista_trusted=518400 analista_passageiro=RECUSADO {"colunas_ocultas_analista":["motorista_id","passageiro_id"],"escopo_prefeitura":"tabela"}

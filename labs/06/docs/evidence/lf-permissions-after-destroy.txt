@@ -1,0 +1,2 @@
+$ AWS_PROFILE=de aws lakeformation list-permissions --region us-east-1 --output json --query "PrincipalResourcePermissions[?contains(Principal.DataLakePrincipalIdentifier, 'eda-a29-grupo07') || contains(to_string(Resource), 'eda_a29_grupo07')]"
+[]
