@@ -1,0 +1,10 @@
+sonda_tabela_nova: created in eda_a29_grupo07_refined after terraform apply, same files as madrugada_bairro
+
+--- as prefeitura: SELECT sum(corridas) FROM eda_a29_grupo07_refined.sonda_tabela_nova WHERE dt >= '2026-11-19'
+RECUSADO: TABLE_NOT_FOUND: line 1:27: Table 'awsdatacatalog.eda_a29_grupo07_refined.sonda_tabela_nova' does not exist
+
+--- as analista: SELECT sum(corridas) FROM eda_a29_grupo07_refined.sonda_tabela_nova WHERE dt >= '2026-11-19'
+_col0
+11137
+Data scanned: 998 bytes
+sonda_tabela_nova deleted

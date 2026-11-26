@@ -1,0 +1,43 @@
+{
+    "Description": "Corridas e receita da madrugada (início entre 00h e 05h59) por bairro e dia, para o painel da Secretaria de Mobilidade. Não tem nenhum id: nem de corrida, nem de motorista, nem de passageiro; para investigar uma corrida, a fonte é a trusted.",
+    "Parameters": {
+        "projection.dt.range": "NOW-60DAYS,NOW+1DAYS",
+        "projection.dt.interval.unit": "DAYS",
+        "dono": "Engenharia de Dados (grupo 07)",
+        "atualizacao": "Diária, pelo job refined (trusted para refined), depois do job trusted; cada execução reescreve só os dias que calcula, e dt é o dia da corrida.",
+        "projection.dt.type": "date",
+        "grao": "uma linha por bairro e dia",
+        "classification": "parquet",
+        "projection.enabled": "true",
+        "projection.dt.interval": "1",
+        "projection.dt.format": "yyyy-MM-dd",
+        "storage.location.template": "s3://eda-a29-lake-grupo07/refined/madrugada_bairro/dt=${dt}/"
+    },
+    "Columns": [
+        {
+            "Name": "bairro",
+            "Type": "string",
+            "Comment": "Bairro do Recife ou da Região Metropolitana onde a corrida começou, como na trusted.",
+            "Parameters": {}
+        },
+        {
+            "Name": "corridas",
+            "Type": "bigint",
+            "Comment": "Número de corridas que começaram entre 00h e 05h59 (faixa_hora de 0 a 5) nesse bairro e dia; uma por corrida_id, sem duplicatas.",
+            "Parameters": {}
+        },
+        {
+            "Name": "receita",
+            "Type": "double",
+            "Comment": "Soma do valor das corridas contadas em corridas, em reais, arredondada a 2 casas.",
+            "Parameters": {}
+        }
+    ],
+    "PartitionKeys": [
+        {
+            "Name": "dt",
+            "Type": "string",
+            "Comment": "dia em que as corridas aconteceram (AAAA-MM-DD)"
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+aws: [ERROR]: An error occurred (404) when calling the HeadBucket operation: Not Found
+aws: [ERROR]: An error occurred (EntityNotFoundException) when calling the GetDatabase operation: Database eda_a29_grupo07_raw not found.
+aws: [ERROR]: An error occurred (EntityNotFoundException) when calling the GetDatabase operation: Database eda_a29_grupo07_trusted not found.
+aws: [ERROR]: An error occurred (EntityNotFoundException) when calling the GetDatabase operation: Database eda_a29_grupo07_refined not found.
+aws: [ERROR]: An error occurred (EntityNotFoundException) when calling the GetJob operation: Job not found.
+aws: [ERROR]: An error occurred (EntityNotFoundException) when calling the GetJob operation: Job not found.
+AthenaErrorCode: INVALID_INPUT
+aws: [ERROR]: An error occurred (NoSuchEntity) when calling the GetRole operation: The role with name eda-a29-grupo07-glue cannot be found.
+aws: [ERROR]: An error occurred (NoSuchEntity) when calling the GetRole operation: The role with name eda-a29-grupo07-lf cannot be found.
+aws: [ERROR]: An error occurred (NoSuchEntity) when calling the GetRole operation: The role with name eda-a29-grupo07-prefeitura cannot be found.
+aws: [ERROR]: An error occurred (NoSuchEntity) when calling the GetRole operation: The role with name eda-a29-grupo07-analista cannot be found.
+lake formation registrations for the bucket: []

@@ -1,0 +1,918 @@
+
+Warning: Deprecated Parameter
+
+The parameter "dynamodb_table" is deprecated. Use parameter "use_lockfile"
+instead.
+Acquiring state lock. This may take a few moments...
+data.aws_caller_identity.eu: Reading...
+data.aws_caller_identity.eu: Read complete after 0s [id=<account>]
+data.aws_iam_session_context.eu: Reading...
+data.aws_iam_session_context.eu: Read complete after 0s [id=arn:aws:iam::<account>:user/eda-grupo07]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # aws_athena_workgroup.wg will be created
+  + resource "aws_athena_workgroup" "wg" {
+      + arn           = (known after apply)
+      + force_destroy = true
+      + id            = (known after apply)
+      + name          = "eda-a29-grupo07-wg"
+      + state         = "ENABLED"
+      + tags_all      = {
+          + "Aula"       = "29"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "grupo07"
+          + "Turma"      = "TURMA-A"
+        }
+
+      + configuration {
+          + bytes_scanned_cutoff_per_query     = 209715200
+          + enforce_workgroup_configuration    = true
+          + publish_cloudwatch_metrics_enabled = false
+          + requester_pays_enabled             = false
+
+          + result_configuration {
+              + output_location = (known after apply)
+            }
+        }
+    }
+
+  # aws_glue_catalog_database.camada["raw"] will be created
+  + resource "aws_glue_catalog_database" "camada" {
+      + arn          = (known after apply)
+      + catalog_id   = (known after apply)
+      + id           = (known after apply)
+      + location_uri = (known after apply)
+      + name         = "eda_a29_grupo07_raw"
+      + tags_all     = {
+          + "Aula"       = "29"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "grupo07"
+          + "Turma"      = "TURMA-A"
+        }
+
+      + create_table_default_permission (known after apply)
+    }
+
+  # aws_glue_catalog_database.camada["refined"] will be created
+  + resource "aws_glue_catalog_database" "camada" {
+      + arn          = (known after apply)
+      + catalog_id   = (known after apply)
+      + id           = (known after apply)
+      + location_uri = (known after apply)
+      + name         = "eda_a29_grupo07_refined"
+      + tags_all     = {
+          + "Aula"       = "29"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "grupo07"
+          + "Turma"      = "TURMA-A"
+        }
+
+      + create_table_default_permission (known after apply)
+    }
+
+  # aws_glue_catalog_database.camada["trusted"] will be created
+  + resource "aws_glue_catalog_database" "camada" {
+      + arn          = (known after apply)
+      + catalog_id   = (known after apply)
+      + id           = (known after apply)
+      + location_uri = (known after apply)
+      + name         = "eda_a29_grupo07_trusted"
+      + tags_all     = {
+          + "Aula"       = "29"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "grupo07"
+          + "Turma"      = "TURMA-A"
+        }
+
+      + create_table_default_permission (known after apply)
+    }
+
+  # aws_glue_catalog_table.raw will be created
+  + resource "aws_glue_catalog_table" "raw" {
+      + arn           = (known after apply)
+      + catalog_id    = (known after apply)
+      + database_name = "eda_a29_grupo07_raw"
+      + description   = "Corridas como o export mandou. dt = dia em que o arquivo chegou."
+      + id            = (known after apply)
+      + name          = "corridas"
+      + parameters    = {
+          + "classification"              = "json"
+          + "projection.dt.format"        = "yyyy-MM-dd"
+          + "projection.dt.interval"      = "1"
+          + "projection.dt.interval.unit" = "DAYS"
+          + "projection.dt.range"         = "NOW-60DAYS,NOW+1DAYS"
+          + "projection.dt.type"          = "date"
+          + "projection.enabled"          = "true"
+          + "storage.location.template"   = "s3://eda-a29-lake-grupo07/raw/corridas/dt=${dt}/"
+        }
+      + table_type    = "EXTERNAL_TABLE"
+
+      + partition_index (known after apply)
+
+      + partition_keys {
+          + name = "dt"
+          + type = "string"
+        }
+
+      + storage_descriptor {
+          + input_format  = "org.apache.hadoop.mapred.TextInputFormat"
+          + location      = "s3://eda-a29-lake-grupo07/raw/corridas/"
+          + output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
+
+          + columns {
+              + name = "corrida_id"
+              + type = "string"
+            }
+          + columns {
+              + name = "motorista_id"
+              + type = "string"
+            }
+          + columns {
+              + name = "passageiro_id"
+              + type = "string"
+            }
+          + columns {
+              + name = "bairro"
+              + type = "string"
+            }
+          + columns {
+              + name = "data_corrida"
+              + type = "string"
+            }
+          + columns {
+              + name = "fim"
+              + type = "string"
+            }
+          + columns {
+              + name = "distancia_km"
+              + type = "double"
+            }
+          + columns {
+              + name = "duracao_min"
+              + type = "double"
+            }
+          + columns {
+              + name = "valor"
+              + type = "string"
+            }
+
+          + ser_de_info {
+              + serialization_library = "org.openx.data.jsonserde.JsonSerDe"
+            }
+        }
+    }
+
+  # aws_glue_catalog_table.refined will be created
+  + resource "aws_glue_catalog_table" "refined" {
+      + arn           = (known after apply)
+      + catalog_id    = (known after apply)
+      + database_name = "eda_a29_grupo07_refined"
+      + description   = "Corridas e receita da madrugada (início entre 00h e 05h59) por bairro e dia, para o painel da Secretaria de Mobilidade. Não tem nenhum id: nem de corrida, nem de motorista, nem de passageiro; para investigar uma corrida, a fonte é a trusted."
+      + id            = (known after apply)
+      + name          = "madrugada_bairro"
+      + parameters    = {
+          + "atualizacao"                 = "Diária, pelo job refined (trusted para refined), depois do job trusted; cada execução reescreve só os dias que calcula, e dt é o dia da corrida."
+          + "classification"              = "parquet"
+          + "dono"                        = "Engenharia de Dados (grupo 07)"
+          + "grao"                        = "uma linha por bairro e dia"
+          + "projection.dt.format"        = "yyyy-MM-dd"
+          + "projection.dt.interval"      = "1"
+          + "projection.dt.interval.unit" = "DAYS"
+          + "projection.dt.range"         = "NOW-60DAYS,NOW+1DAYS"
+          + "projection.dt.type"          = "date"
+          + "projection.enabled"          = "true"
+          + "storage.location.template"   = "s3://eda-a29-lake-grupo07/refined/madrugada_bairro/dt=${dt}/"
+        }
+      + table_type    = "EXTERNAL_TABLE"
+
+      + partition_index (known after apply)
+
+      + partition_keys {
+          + comment = "dia em que as corridas aconteceram (AAAA-MM-DD)"
+          + name    = "dt"
+          + type    = "string"
+        }
+
+      + storage_descriptor {
+          + input_format  = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat"
+          + location      = "s3://eda-a29-lake-grupo07/refined/madrugada_bairro/"
+          + output_format = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat"
+
+          + columns {
+              + comment = "Bairro do Recife ou da Região Metropolitana onde a corrida começou, como na trusted."
+              + name    = "bairro"
+              + type    = "string"
+            }
+          + columns {
+              + comment = "Número de corridas que começaram entre 00h e 05h59 (faixa_hora de 0 a 5) nesse bairro e dia; uma por corrida_id, sem duplicatas."
+              + name    = "corridas"
+              + type    = "bigint"
+            }
+          + columns {
+              + comment = "Soma do valor das corridas contadas em corridas, em reais, arredondada a 2 casas."
+              + name    = "receita"
+              + type    = "double"
+            }
+
+          + ser_de_info {
+              + serialization_library = "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe"
+            }
+        }
+    }
+
+  # aws_glue_catalog_table.trusted will be created
+  + resource "aws_glue_catalog_table" "trusted" {
+      + arn           = (known after apply)
+      + catalog_id    = (known after apply)
+      + database_name = "eda_a29_grupo07_trusted"
+      + description   = "Uma linha por corrida, limpa e tipada. dt = dia em que a corrida aconteceu."
+      + id            = (known after apply)
+      + name          = "corridas"
+      + parameters    = {
+          + "classification"              = "parquet"
+          + "projection.dt.format"        = "yyyy-MM-dd"
+          + "projection.dt.interval"      = "1"
+          + "projection.dt.interval.unit" = "DAYS"
+          + "projection.dt.range"         = "NOW-60DAYS,NOW+1DAYS"
+          + "projection.dt.type"          = "date"
+          + "projection.enabled"          = "true"
+          + "storage.location.template"   = "s3://eda-a29-lake-grupo07/trusted/corridas/dt=${dt}/"
+        }
+      + table_type    = "EXTERNAL_TABLE"
+
+      + partition_index (known after apply)
+
+      + partition_keys {
+          + name = "dt"
+          + type = "string"
+        }
+
+      + storage_descriptor {
+          + input_format  = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat"
+          + location      = "s3://eda-a29-lake-grupo07/trusted/corridas/"
+          + output_format = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat"
+
+          + columns {
+              + name = "corrida_id"
+              + type = "string"
+            }
+          + columns {
+              + name = "motorista_id"
+              + type = "string"
+            }
+          + columns {
+              + name = "passageiro_id"
+              + type = "string"
+            }
+          + columns {
+              + name = "bairro"
+              + type = "string"
+            }
+          + columns {
+              + name = "inicio"
+              + type = "timestamp"
+            }
+          + columns {
+              + name = "fim"
+              + type = "timestamp"
+            }
+          + columns {
+              + name = "distancia_km"
+              + type = "double"
+            }
+          + columns {
+              + name = "duracao_min"
+              + type = "double"
+            }
+          + columns {
+              + name = "valor"
+              + type = "double"
+            }
+          + columns {
+              + name = "faixa_hora"
+              + type = "int"
+            }
+          + columns {
+              + name = "chegada"
+              + type = "string"
+            }
+
+          + ser_de_info {
+              + serialization_library = "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe"
+            }
+        }
+    }
+
+  # aws_glue_job.refined will be created
+  + resource "aws_glue_job" "refined" {
+      + arn               = (known after apply)
+      + default_arguments = (known after apply)
+      + glue_version      = "4.0"
+      + id                = (known after apply)
+      + max_capacity      = (known after apply)
+      + max_retries       = 0
+      + name              = "eda-a29-grupo07-refined"
+      + number_of_workers = 2
+      + role_arn          = (known after apply)
+      + tags_all          = {
+          + "Aula"       = "29"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "grupo07"
+          + "Turma"      = "TURMA-A"
+        }
+      + timeout           = 15
+      + worker_type       = "G.1X"
+
+      + command {
+          + name            = "glueetl"
+          + python_version  = "3"
+          + runtime         = (known after apply)
+          + script_location = (known after apply)
+        }
+
+      + execution_property (known after apply)
+
+      + notification_property (known after apply)
+    }
+
+  # aws_glue_job.trusted will be created
+  + resource "aws_glue_job" "trusted" {
+      + arn               = (known after apply)
+      + default_arguments = (known after apply)
+      + glue_version      = "4.0"
+      + id                = (known after apply)
+      + max_capacity      = (known after apply)
+      + max_retries       = 0
+      + name              = "eda-a29-grupo07-trusted"
+      + number_of_workers = 2
+      + role_arn          = (known after apply)
+      + tags_all          = {
+          + "Aula"       = "29"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "grupo07"
+          + "Turma"      = "TURMA-A"
+        }
+      + timeout           = 15
+      + worker_type       = "G.1X"
+
+      + command {
+          + name            = "glueetl"
+          + python_version  = "3"
+          + runtime         = (known after apply)
+          + script_location = (known after apply)
+        }
+
+      + execution_property (known after apply)
+
+      + notification_property (known after apply)
+    }
+
+  # aws_iam_policy.consumo will be created
+  + resource "aws_iam_policy" "consumo" {
+      + arn              = (known after apply)
+      + attachment_count = (known after apply)
+      + id               = (known after apply)
+      + name             = "eda-a29-grupo07-consumo"
+      + name_prefix      = (known after apply)
+      + path             = "/"
+      + policy           = (known after apply)
+      + policy_id        = (known after apply)
+      + tags_all         = {
+          + "Aula"       = "29"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "grupo07"
+          + "Turma"      = "TURMA-A"
+        }
+    }
+
+  # aws_iam_role.job will be created
+  + resource "aws_iam_role" "job" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "glue.amazonaws.com"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "eda-a29-grupo07-glue"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags_all              = {
+          + "Aula"       = "29"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "grupo07"
+          + "Turma"      = "TURMA-A"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # aws_iam_role.lf will be created
+  + resource "aws_iam_role" "lf" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "lakeformation.amazonaws.com"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "eda-a29-grupo07-lf"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags_all              = {
+          + "Aula"       = "29"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "grupo07"
+          + "Turma"      = "TURMA-A"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # aws_iam_role.perfil["analista"] will be created
+  + resource "aws_iam_role" "perfil" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + AWS = "arn:aws:iam::<account>:root"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "eda-a29-grupo07-analista"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags_all              = {
+          + "Aula"       = "29"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "grupo07"
+          + "Turma"      = "TURMA-A"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # aws_iam_role.perfil["prefeitura"] will be created
+  + resource "aws_iam_role" "perfil" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + AWS = "arn:aws:iam::<account>:root"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "eda-a29-grupo07-prefeitura"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags_all              = {
+          + "Aula"       = "29"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "grupo07"
+          + "Turma"      = "TURMA-A"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # aws_iam_role_policy.bucket will be created
+  + resource "aws_iam_role_policy" "bucket" {
+      + id          = (known after apply)
+      + name        = "bucket-rw"
+      + name_prefix = (known after apply)
+      + policy      = (known after apply)
+      + role        = (known after apply)
+    }
+
+  # aws_iam_role_policy.lf will be created
+  + resource "aws_iam_role_policy" "lf" {
+      + id          = (known after apply)
+      + name        = "camadas-rw"
+      + name_prefix = (known after apply)
+      + policy      = (known after apply)
+      + role        = (known after apply)
+    }
+
+  # aws_iam_role_policy_attachment.glue will be created
+  + resource "aws_iam_role_policy_attachment" "glue" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
+      + role       = "eda-a29-grupo07-glue"
+    }
+
+  # aws_iam_role_policy_attachment.perfil["analista"] will be created
+  + resource "aws_iam_role_policy_attachment" "perfil" {
+      + id         = (known after apply)
+      + policy_arn = (known after apply)
+      + role       = "eda-a29-grupo07-analista"
+    }
+
+  # aws_iam_role_policy_attachment.perfil["prefeitura"] will be created
+  + resource "aws_iam_role_policy_attachment" "perfil" {
+      + id         = (known after apply)
+      + policy_arn = (known after apply)
+      + role       = "eda-a29-grupo07-prefeitura"
+    }
+
+  # aws_lakeformation_data_lake_settings.conta will be created
+  + resource "aws_lakeformation_data_lake_settings" "conta" {
+      + admins                             = [
+          + "arn:aws:iam::<account>:user/eda-grupo07",
+        ]
+      + authorized_session_tag_value_list  = (known after apply)
+      + external_data_filtering_allow_list = (known after apply)
+      + id                                 = (known after apply)
+      + parameters                         = (known after apply)
+      + read_only_admins                   = (known after apply)
+      + trusted_resource_owners            = (known after apply)
+
+      + create_database_default_permissions (known after apply)
+
+      + create_table_default_permissions (known after apply)
+    }
+
+  # aws_lakeformation_permissions.analista_refined will be created
+  + resource "aws_lakeformation_permissions" "analista_refined" {
+      + catalog_resource              = false
+      + id                            = (known after apply)
+      + permissions                   = [
+          + "DESCRIBE",
+          + "SELECT",
+        ]
+      + permissions_with_grant_option = (known after apply)
+      + principal                     = (known after apply)
+
+      + data_location (known after apply)
+
+      + database (known after apply)
+
+      + lf_tag (known after apply)
+
+      + lf_tag_policy (known after apply)
+
+      + table {
+          + catalog_id    = (known after apply)
+          + database_name = "eda_a29_grupo07_refined"
+          + name          = (known after apply)
+          + wildcard      = true
+        }
+
+      + table_with_columns (known after apply)
+    }
+
+  # aws_lakeformation_permissions.analista_trusted will be created
+  + resource "aws_lakeformation_permissions" "analista_trusted" {
+      + catalog_resource              = false
+      + id                            = (known after apply)
+      + permissions                   = [
+          + "SELECT",
+        ]
+      + permissions_with_grant_option = (known after apply)
+      + principal                     = (known after apply)
+
+      + data_location (known after apply)
+
+      + database (known after apply)
+
+      + lf_tag (known after apply)
+
+      + lf_tag_policy (known after apply)
+
+      + table (known after apply)
+
+      + table_with_columns {
+          + catalog_id            = (known after apply)
+          + database_name         = "eda_a29_grupo07_trusted"
+          + excluded_column_names = [
+              + "motorista_id",
+              + "passageiro_id",
+            ]
+          + name                  = "corridas"
+          + wildcard              = true
+        }
+    }
+
+  # aws_lakeformation_permissions.prefeitura_refined will be created
+  + resource "aws_lakeformation_permissions" "prefeitura_refined" {
+      + catalog_resource              = false
+      + id                            = (known after apply)
+      + permissions                   = [
+          + "DESCRIBE",
+          + "SELECT",
+        ]
+      + permissions_with_grant_option = (known after apply)
+      + principal                     = (known after apply)
+
+      + data_location (known after apply)
+
+      + database (known after apply)
+
+      + lf_tag (known after apply)
+
+      + lf_tag_policy (known after apply)
+
+      + table {
+          + catalog_id    = (known after apply)
+          + database_name = "eda_a29_grupo07_refined"
+          + name          = "madrugada_bairro"
+          + wildcard      = false
+        }
+
+      + table_with_columns (known after apply)
+    }
+
+  # aws_lakeformation_permissions.ver_banco["analista-refined"] will be created
+  + resource "aws_lakeformation_permissions" "ver_banco" {
+      + catalog_resource              = false
+      + id                            = (known after apply)
+      + permissions                   = [
+          + "DESCRIBE",
+        ]
+      + permissions_with_grant_option = (known after apply)
+      + principal                     = (known after apply)
+
+      + data_location (known after apply)
+
+      + database {
+          + catalog_id = (known after apply)
+          + name       = "eda_a29_grupo07_refined"
+        }
+
+      + lf_tag (known after apply)
+
+      + lf_tag_policy (known after apply)
+
+      + table (known after apply)
+
+      + table_with_columns (known after apply)
+    }
+
+  # aws_lakeformation_permissions.ver_banco["analista-trusted"] will be created
+  + resource "aws_lakeformation_permissions" "ver_banco" {
+      + catalog_resource              = false
+      + id                            = (known after apply)
+      + permissions                   = [
+          + "DESCRIBE",
+        ]
+      + permissions_with_grant_option = (known after apply)
+      + principal                     = (known after apply)
+
+      + data_location (known after apply)
+
+      + database {
+          + catalog_id = (known after apply)
+          + name       = "eda_a29_grupo07_trusted"
+        }
+
+      + lf_tag (known after apply)
+
+      + lf_tag_policy (known after apply)
+
+      + table (known after apply)
+
+      + table_with_columns (known after apply)
+    }
+
+  # aws_lakeformation_permissions.ver_banco["prefeitura-refined"] will be created
+  + resource "aws_lakeformation_permissions" "ver_banco" {
+      + catalog_resource              = false
+      + id                            = (known after apply)
+      + permissions                   = [
+          + "DESCRIBE",
+        ]
+      + permissions_with_grant_option = (known after apply)
+      + principal                     = (known after apply)
+
+      + data_location (known after apply)
+
+      + database {
+          + catalog_id = (known after apply)
+          + name       = "eda_a29_grupo07_refined"
+        }
+
+      + lf_tag (known after apply)
+
+      + lf_tag_policy (known after apply)
+
+      + table (known after apply)
+
+      + table_with_columns (known after apply)
+    }
+
+  # aws_lakeformation_resource.camada["raw"] will be created
+  + resource "aws_lakeformation_resource" "camada" {
+      + arn                   = (known after apply)
+      + hybrid_access_enabled = (known after apply)
+      + id                    = (known after apply)
+      + last_modified         = (known after apply)
+      + role_arn              = (known after apply)
+      + with_federation       = (known after apply)
+    }
+
+  # aws_lakeformation_resource.camada["refined"] will be created
+  + resource "aws_lakeformation_resource" "camada" {
+      + arn                   = (known after apply)
+      + hybrid_access_enabled = (known after apply)
+      + id                    = (known after apply)
+      + last_modified         = (known after apply)
+      + role_arn              = (known after apply)
+      + with_federation       = (known after apply)
+    }
+
+  # aws_lakeformation_resource.camada["trusted"] will be created
+  + resource "aws_lakeformation_resource" "camada" {
+      + arn                   = (known after apply)
+      + hybrid_access_enabled = (known after apply)
+      + id                    = (known after apply)
+      + last_modified         = (known after apply)
+      + role_arn              = (known after apply)
+      + with_federation       = (known after apply)
+    }
+
+  # aws_s3_bucket.lake will be created
+  + resource "aws_s3_bucket" "lake" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "eda-a29-lake-grupo07"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = true
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags_all                    = {
+          + "Aula"       = "29"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "grupo07"
+          + "Turma"      = "TURMA-A"
+        }
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # aws_s3_object.script["pipeline-corridas.py"] will be created
+  + resource "aws_s3_object" "script" {
+      + acl                    = (known after apply)
+      + arn                    = (known after apply)
+      + bucket                 = (known after apply)
+      + bucket_key_enabled     = (known after apply)
+      + checksum_crc32         = (known after apply)
+      + checksum_crc32c        = (known after apply)
+      + checksum_crc64nvme     = (known after apply)
+      + checksum_sha1          = (known after apply)
+      + checksum_sha256        = (known after apply)
+      + content_type           = (known after apply)
+      + etag                   = "7f112f6db60258e0195142ec5438d322"
+      + force_destroy          = false
+      + id                     = (known after apply)
+      + key                    = "scripts/pipeline-corridas.py"
+      + kms_key_id             = (known after apply)
+      + server_side_encryption = (known after apply)
+      + source                 = "./scripts/pipeline-corridas.py"
+      + storage_class          = (known after apply)
+      + tags_all               = {
+          + "Aula"       = "29"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "grupo07"
+          + "Turma"      = "TURMA-A"
+        }
+      + version_id             = (known after apply)
+    }
+
+  # aws_s3_object.script["refinar-madrugada.py"] will be created
+  + resource "aws_s3_object" "script" {
+      + acl                    = (known after apply)
+      + arn                    = (known after apply)
+      + bucket                 = (known after apply)
+      + bucket_key_enabled     = (known after apply)
+      + checksum_crc32         = (known after apply)
+      + checksum_crc32c        = (known after apply)
+      + checksum_crc64nvme     = (known after apply)
+      + checksum_sha1          = (known after apply)
+      + checksum_sha256        = (known after apply)
+      + content_type           = (known after apply)
+      + etag                   = "51e040edb032ade52e3b8c3bdb251fcb"
+      + force_destroy          = false
+      + id                     = (known after apply)
+      + key                    = "scripts/refinar-madrugada.py"
+      + kms_key_id             = (known after apply)
+      + server_side_encryption = (known after apply)
+      + source                 = "./scripts/refinar-madrugada.py"
+      + storage_class          = (known after apply)
+      + tags_all               = {
+          + "Aula"       = "29"
+          + "Disciplina" = "EDA"
+          + "Owner"      = "grupo07"
+          + "Turma"      = "TURMA-A"
+        }
+      + version_id             = (known after apply)
+    }
+
+Plan: 32 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + bucket           = (known after apply)
+  + database_raw     = "eda_a29_grupo07_raw"
+  + database_refined = "eda_a29_grupo07_refined"
+  + database_trusted = "eda_a29_grupo07_trusted"
+  + decisoes         = {
+      + colunas_ocultas_analista = [
+          + "motorista_id",
+          + "passageiro_id",
+        ]
+      + escopo_prefeitura        = "tabela"
+    }
+  + job_refined      = "eda-a29-grupo07-refined"
+  + job_trusted      = "eda-a29-grupo07-trusted"
+  + papel_analista   = (known after apply)
+  + papel_prefeitura = (known after apply)
+  + workgroup        = "eda-a29-grupo07-wg"
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: lab06.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "lab06.tfplan"

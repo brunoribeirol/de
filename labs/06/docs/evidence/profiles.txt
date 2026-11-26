@@ -1,0 +1,43 @@
+today=2026-11-25 since=2026-11-19
+
+--- as prefeitura: SELECT sum(corridas) FROM eda_a29_grupo07_refined.madrugada_bairro WHERE dt >= '2026-11-19'
+_col0
+11137
+Data scanned: 998 bytes
+
+--- as prefeitura: SELECT count(*) AS linhas, count(DISTINCT bairro) AS bairros, count(DISTINCT dt) AS dias FROM eda_a29_grupo07_refined.madrugada_bairro
+linhas	bairros	dias
+660	22	30
+Data scanned: 8762 bytes
+
+--- as prefeitura: SELECT count(*) FROM eda_a29_grupo07_trusted.corridas WHERE dt = '2026-11-25'
+RECUSADO: Insufficient permissions to execute the query. Insufficient Lake Formation permission(s): Required Describe on eda_a29_grupo07_trusted 
+
+--- as prefeitura: SELECT count(*) FROM eda_a29_grupo07_raw.corridas WHERE dt = '2026-11-25'
+RECUSADO: Insufficient permissions to execute the query. Insufficient Lake Formation permission(s): Required Describe on eda_a29_grupo07_raw 
+
+--- as analista: SELECT count(bairro) FROM eda_a29_grupo07_trusted.corridas
+_col0
+518400
+Data scanned: 334757 bytes
+
+--- as analista: SELECT count(DISTINCT corrida_id) FROM eda_a29_grupo07_trusted.corridas
+_col0
+518400
+Data scanned: 2559892 bytes
+
+--- as analista: SELECT * FROM eda_a29_grupo07_trusted.corridas WHERE dt = '2026-11-25' LIMIT 1
+corrida_id	bairro	inicio	fim	distancia_km	duracao_min	valor	faixa_hora	chegada	dt
+c-00501121	Bongi	2026-11-25 00:47:19.000	2026-11-25 00:53:13.000	2.86	5.9	14.4	0	2026-11-25	2026-11-25
+Data scanned: 460880 bytes
+
+--- as analista: SELECT passageiro_id FROM eda_a29_grupo07_trusted.corridas WHERE dt = '2026-11-25' LIMIT 1
+RECUSADO: COLUMN_NOT_FOUND: Column 'passageiro_id' cannot be resolved or requester is not authorized to access requested resources
+
+--- as analista: SELECT motorista_id FROM eda_a29_grupo07_trusted.corridas WHERE dt = '2026-11-25' LIMIT 1
+RECUSADO: COLUMN_NOT_FOUND: Column 'motorista_id' cannot be resolved or requester is not authorized to access requested resources
+
+--- as analista: SELECT sum(corridas) FROM eda_a29_grupo07_refined.madrugada_bairro WHERE dt >= '2026-11-19'
+_col0
+11137
+Data scanned: 998 bytes

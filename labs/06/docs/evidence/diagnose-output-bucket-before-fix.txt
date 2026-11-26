@@ -1,0 +1,8 @@
+--- as prefeitura: s3api get-bucket-location (what Athena checks first)
+
+aws: [ERROR]: An error occurred (AccessDenied) when calling the GetBucketLocation operation: User: arn:aws:sts::<account>:assumed-role/eda-a29-grupo07-prefeitura/diag-prefeitura is not authorized to perform: s3:GetBucketLocation on resource: "arn:aws:s3:::eda-a29-lake-grupo07" because no identity-based policy allows the s3:GetBucketLocation action
+--- as prefeitura: list athena-results/ (allowed by the prefix condition)
+None
+--- as prefeitura: list refined/ (must stay refused)
+
+aws: [ERROR]: An error occurred (AccessDenied) when calling the ListObjectsV2 operation: User: arn:aws:sts::<account>:assumed-role/eda-a29-grupo07-prefeitura/diag-prefeitura is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::eda-a29-lake-grupo07" because no identity-based policy allows the s3:ListBucket action

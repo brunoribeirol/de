@@ -1,0 +1,9 @@
+Acquiring state lock. This may take a few moments...
+Removed aws_lakeformation_data_lake_settings.conta
+
+Warning: Deprecated Parameter
+
+The parameter "dynamodb_table" is deprecated. Use parameter "use_lockfile"
+instead.
+
+Successfully removed 1 resource instance(s).

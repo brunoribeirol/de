@@ -1,0 +1,14 @@
+
+hoje (última pasta) .... dt=2026-11-25
+dado atrasado .......... 1.591 corridas da madrugada de 2026-11-22
+                         saíram de dt=2026-11-22/ e chegaram em dt=2026-11-25/parte-0002-atrasadas.json
+reentrega .............. 17.280 corridas de 2026-11-20 chegaram de novo em dt=2026-11-21/parte-0002-reenvio.json
+
+as linhas para o Athena, prontas para copiar:
+    WHERE dt >= '2026-11-19'          -- os últimos 7 dias
+    WHERE dt = '2026-11-22'      -- o dia da madrugada atrasada
+
+>> sincronizando com s3://eda-a29-lake-grupo07/raw/
+Total Objects: 32
+   Total Size: 121577638
+hoje=2026-11-25  desde=2026-11-19
